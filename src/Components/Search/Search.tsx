@@ -5,14 +5,19 @@ type Props = {};
 const Search: React.FC<Props> = (props: Props): JSX.Element => {
   const [search, setSearch] = useState<string>("");
 
-  const onclick = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    console.log(search);
+    console.log(e);
+  };
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(e);
   };
 
   return (
     <div>
-      <input value={search} onChange={(e) => onclick(e)}></input>
+      <input value={search} onChange={(e) => handleChange(e)}></input>
+      <button onClick={(e) => onClick(e)} />
     </div>
   );
 };
