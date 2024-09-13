@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 
 interface Props {
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick: (e: SyntheticEvent) => void;
   search: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
