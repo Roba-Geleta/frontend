@@ -17,11 +17,19 @@ function App() {
     setSearch(e.target.value);
   };
 
-  const onPortfolioCreate = (e: any) => {
+  const onPortfolioCreate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const exists = portfolioValues.find((value) => value === e.target[0].value);
+
+    const form = e.currentTarget;
+
+    const input = form.elements.namedItem("symbol") as HTMLInputElement;
+    const symbol = input.value;
+
+    const exists = portfolioValues.includes(symbol);
     if (exists) return;
-    const updatedPortfolio = [...portfolioValues, e.target[0].value];
+
+    // Update the portfolio
+    const updatedPortfolio = [...portfolioValues, symbol];
     setPortfolioValues(updatedPortfolio);
   };
 

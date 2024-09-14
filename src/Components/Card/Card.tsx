@@ -6,7 +6,7 @@ import AddPortfolio from "../Portfolio/AddPortfolio/AddPortfolio";
 interface Props {
   id: string;
   searchResult: CompanySearch;
-  onPortfolioCreate: (e: SyntheticEvent) => void;
+  onPortfolioCreate: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const Card: React.FC<Props> = ({
