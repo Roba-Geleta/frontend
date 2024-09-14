@@ -5,6 +5,8 @@ import Search from "./Components/Search/Search";
 import { CompanySearch } from "./company";
 import { searchCompanies } from "./api";
 import ListPortfolio from "./Components/Portfolio/ListPortfolio/ListPortfolio";
+import Navbar from "./Components/Navbar/Navbar";
+import Hero from "./Components/Hero/Hero";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -61,6 +63,7 @@ function App() {
   return (
     <>
       <div className="App">
+        <Navbar />
         <Search
           onSearchSubmit={onSearchSubmit}
           search={search}
