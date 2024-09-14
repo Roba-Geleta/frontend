@@ -3,7 +3,7 @@ import DeletePortfolio from "../DeletePortfolio/DeletePortfolio";
 
 interface Props {
   portfolioValue: string;
-  onPortfolioDelete: (e: SyntheticEvent) => void;
+  onPortfolioDelete: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 const CardPortfolio = ({ portfolioValue, onPortfolioDelete }: Props) => {
   return (
@@ -12,9 +12,7 @@ const CardPortfolio = ({ portfolioValue, onPortfolioDelete }: Props) => {
       <DeletePortfolio
         onPortfolioDelete={onPortfolioDelete}
         portfolioValue={portfolioValue}
-      >
-        X
-      </DeletePortfolio>
+      />
     </>
   );
 };

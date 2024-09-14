@@ -32,13 +32,18 @@ function App() {
     setPortfolioValues(updatedPortfolio);
   };
 
-  const onPortfolioDelete = (e: any) => {
+  const onPortfolioDelete = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const removed = portfolioValues.filter((value) => {
-      return value !== e.target[0].value;
-    });
+    const form = e.currentTarget;
+    const input = form.elements.namedItem("portfolioValue") as HTMLInputElement;
 
-    setPortfolioValues(removed);
+    if (input) {
+      const valueToDelete = input.value;
+      const removed = portfolioValues.filter(
+        (value) => value !== valueToDelete
+      );
+      setPortfolioValues(removed);
+    }
   };
 
   const onSearchSubmit = async (e: SyntheticEvent) => {
