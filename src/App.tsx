@@ -28,9 +28,17 @@ function App() {
     const exists = portfolioValues.includes(symbol);
     if (exists) return;
 
-    // Update the portfolio
     const updatedPortfolio = [...portfolioValues, symbol];
     setPortfolioValues(updatedPortfolio);
+  };
+
+  const onPortfolioDelete = (e: any) => {
+    e.preventDefault();
+    const removed = portfolioValues.filter((value) => {
+      return value !== e.target[0].value;
+    });
+
+    setPortfolioValues(removed);
   };
 
   const onSearchSubmit = async (e: SyntheticEvent) => {
@@ -53,7 +61,10 @@ function App() {
           search={search}
           handleSearchChange={handleSearchChange}
         />
-        <ListPortfolio portfolioValues={portfolioValues} />
+        <ListPortfolio
+          portfolioValues={portfolioValues}
+          onPortfolioDelete={onPortfolioDelete}
+        />
         <CardList
           searchResults={searchResult}
           onPortfolioCreate={onPortfolioCreate}
