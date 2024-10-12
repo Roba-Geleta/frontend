@@ -1,16 +1,25 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { searchCompanies } from "../../api";
 import { CompanySearch } from "../../company";
 import Search from "../../Components/Search/Search";
 import ListPortfolio from "../../Components/Portfolio/ListPortfolio/ListPortfolio";
 import CardList from "../../Components/CardList/CardList";
+import { PortfolioGet } from "../../Models/Portfolio";
+import {
+  portfolioAddAPI,
+  portfolioDeleteAPI,
+  portfolioGetAPI,
+} from "../../Services/PortfolioService";
+import { toast } from "react-toastify";
 
 interface Props {}
 
 const SearchPage = (props: Props) => {
   // const [count, setCount] = useState(0);
   const [search, setSearch] = useState<string>("");
-  const [portfolioValues, setPortfolioValues] = useState<string[]>([]);
+  const [portfolioValues, setPortfolioValues] = useState<PortfolioGet[] | null>(
+    []
+  );
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -18,33 +27,44 @@ const SearchPage = (props: Props) => {
     setSearch(e.target.value);
   };
 
-  const onPortfolioCreate = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    getPortfolio();
+  }, []);
 
-    const form = e.currentTarget;
-
-    const input = form.elements.namedItem("symbol") as HTMLInputElement;
-    const symbol = input.value;
-
-    const exists = portfolioValues.includes(symbol);
-    if (exists) return;
-
-    const updatedPortfolio = [...portfolioValues, symbol];
-    setPortfolioValues(updatedPortfolio);
+  const getPortfolio = async () => {
+    portfolioGetAPI()
+      .then((res) => {
+        if (res?.data) {
+          setPortfolioValues(res.data);
+        }
+      })
+      .catch((e) => {
+        toast.warning("Could not get portfolio values!");
+      });
   };
 
-  const onPortfolioDelete = (e: React.FormEvent<HTMLFormElement>) => {
+  const onPortfolioCreate = (e: any) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const input = form.elements.namedItem("portfolioValue") as HTMLInputElement;
+    portfolioAddAPI(e.target[0].value)
+      .then((res) => {
+        if (res?.status === 204) {
+          toast.success("Stock added to portfolio!");
+          getPortfolio();
+        }
+      })
+      .catch((e) => {
+        toast.warning("Could not create portfolio item!");
+      });
+  };
 
-    if (input) {
-      const valueToDelete = input.value;
-      const removed = portfolioValues.filter(
-        (value) => value !== valueToDelete
-      );
-      setPortfolioValues(removed);
-    }
+  const onPortfolioDelete = (e: any) => {
+    e.preventDefault();
+    portfolioDeleteAPI(e.currentTarget[0].value).then((res) => {
+      if (res?.status === 200) {
+        toast.success("Stock deleted from portfolio!");
+        getPortfolio();
+      }
+    });
   };
 
   const onSearchSubmit = async (e: SyntheticEvent) => {
@@ -68,7 +88,7 @@ const SearchPage = (props: Props) => {
           handleSearchChange={handleSearchChange}
         />
         <ListPortfolio
-          portfolioValues={portfolioValues}
+          portfolioValues={portfolioValues!}
           onPortfolioDelete={onPortfolioDelete}
         />
         <CardList
