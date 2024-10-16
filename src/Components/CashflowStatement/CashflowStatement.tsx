@@ -5,10 +5,11 @@ import { getCashflowStatement } from "../../api";
 import Table from "../Table/Table";
 import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
+import { ConfigItem } from "../RatioList/RatioList";
 
 type Props = {};
 
-const config = [
+const config: ConfigItem[] = [
   {
     label: "Date",
     render: (company: CompanyCashFlow) => company.date,
@@ -59,7 +60,7 @@ const CashflowStatement = (props: Props) => {
   useEffect(() => {
     const fetchCashflowData = async () => {
       const result = await getCashflowStatement(ticker!);
-      setCashflowData(result!.data);
+      setCashflowData(result);
     };
 
     fetchCashflowData();

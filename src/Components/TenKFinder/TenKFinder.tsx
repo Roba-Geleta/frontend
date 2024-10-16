@@ -14,7 +14,7 @@ const TenKFinder = ({ ticker }: Props) => {
   useEffect(() => {
     const getTenKData = async () => {
       const value = await getTenK(ticker);
-      setCompanyData(value?.data);
+      setCompanyData(value);
     };
     getTenKData();
   }, []);
@@ -23,7 +23,12 @@ const TenKFinder = ({ ticker }: Props) => {
     <div className="inline-flex rounded-md.shadow-sm.m-4">
       {companyData ? (
         companyData?.slice(0, 5).map((tenK) => {
-          return <TenKFinderItem tenk={tenK} />;
+          return (
+            <TenKFinderItem
+              tenk={tenK}
+              key={`${tenK.symbol}-${tenK.fillingDate}`}
+            />
+          );
         })
       ) : (
         <Spinner />

@@ -17,10 +17,11 @@ const CompanyPage = (props: Props) => {
   useEffect(() => {
     const getProfileInit = async () => {
       const result = await getCompanyProfile(ticker!);
-      setCompany(result?.data[0]);
+      console.log(result);
+      setCompany(result[0]);
     };
     getProfileInit();
-  }, []);
+  }, [ticker]);
 
   return (
     <>

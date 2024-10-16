@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { CompanyBalanceSheet, CompanyCashFlow } from "../../company";
+import { CompanyBalanceSheet } from "../../company";
 import { getBalanceSheet } from "../../api";
-import RatioList from "../RatioList/RatioList";
+import RatioList, { ConfigItem } from "../RatioList/RatioList";
 import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
 
 type Props = {};
 
-const config = [
+const config: ConfigItem[] = [
   {
     label: <div className="font-bold">Total Assets</div>,
     render: (company: CompanyBalanceSheet) =>
@@ -83,7 +83,7 @@ const BalanceSheet = (props: Props) => {
   useEffect(() => {
     const getData = async () => {
       const value = await getBalanceSheet(ticker!);
-      setBalanceSheet(value?.data[0]);
+      setBalanceSheet(value[0]);
     };
     getData();
   }, []);

@@ -8,10 +8,11 @@ import {
   formatLargeMonetaryNumber,
   formatRatio,
 } from "../../Helpers/NumberFormating";
+import { ConfigItem } from "../RatioList/RatioList";
 
 interface Props {}
 
-const configs = [
+const configs: ConfigItem[] = [
   {
     label: "Date",
     render: (company: CompanyIncomeStatement) => company.date,
@@ -85,7 +86,7 @@ const IncomeStatement = (props: Props) => {
   useEffect(() => {
     const incomeStatementFetch = async () => {
       const result = await getIncomeStatement(ticker);
-      setIncomeStatement(result!.data);
+      setIncomeStatement(result);
     };
     incomeStatementFetch();
   }, []);

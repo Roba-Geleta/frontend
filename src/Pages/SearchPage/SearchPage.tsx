@@ -71,9 +71,10 @@ const SearchPage = (props: Props) => {
     e.preventDefault();
     const result = await searchCompanies(search);
     if (typeof result === "string") {
+      console.log("error: ", result);
       setServerError(result);
-    } else if (Array.isArray(result.data)) {
-      setSearchResult(result.data);
+    } else if (Array.isArray(result)) {
+      setSearchResult(result);
     }
 
     console.log("searchResult: ", searchResult);
