@@ -9,11 +9,15 @@ type Props = {
 const StockCommentList = ({ comments }: Props) => {
   return (
     <>
-      {comments
-        ? comments.map((comment) => {
-            return <StockCommentListItem comment={comment} />;
-          })
-        : ""}
+      {comments ? (
+        comments.map((comment, index) => {
+          // Create a composite key using title, createdBy, and index
+          const key = `${comment.title}-${comment.createdBy}-${index}`;
+          return <StockCommentListItem comment={comment} key={key} />;
+        })
+      ) : (
+        <p>No comments available.</p>
+      )}
     </>
   );
 };
