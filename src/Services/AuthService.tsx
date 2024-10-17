@@ -1,6 +1,7 @@
 import axios from "axios";
 import { handleError } from "../Helpers/ErrorHandler";
 import { UserProfileToken } from "../Models/User";
+import { Token } from "../Models/Token";
 
 const api = "http://localhost:5121/api/";
 
@@ -27,6 +28,19 @@ export const registerAPI = async (
       email: email,
       username: username,
       password: password,
+    });
+
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const verifyTokenAPI = async (username: string, token: string) => {
+  try {
+    const data = await axios.post<Token>(api + "account/verify-token", {
+      userName: username,
+      token: token,
     });
 
     return data;

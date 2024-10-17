@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import { UserProfile } from "../Models/User";
 import { useNavigate } from "react-router-dom";
-import { loginAPI, registerAPI } from "../Services/AuthService";
+import { loginAPI, registerAPI, verifyTokenAPI } from "../Services/AuthService";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -25,14 +25,30 @@ export const UserProvider = ({ children }: Props) => {
   const [isReady, setIsReady] = React.useState(false);
 
   React.useEffect(() => {
-    const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    if (user && token) {
-      setUser(JSON.parse(user));
-      setToken(token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
+
+    if (storedUser && storedToken && !isReady) {
+      const userObj = JSON.parse(storedUser);
+      verifyTokenAPI(userObj.UserName, storedToken)
+        .then(() => {
+          setUser(userObj);
+          setToken(storedToken);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${storedToken}`;
+        })
+        .catch((error) => {
+          console.error("Token verification failed", error);
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+        })
+        .finally(() => {
+          setIsReady(true);
+        });
+    } else {
+      setIsReady(true);
     }
-    setIsReady(true);
   }, []);
 
   const registerUser = async (
