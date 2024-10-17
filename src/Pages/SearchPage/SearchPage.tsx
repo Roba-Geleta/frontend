@@ -76,8 +76,6 @@ const SearchPage = (props: Props) => {
     } else if (Array.isArray(result)) {
       setSearchResult(result);
     }
-
-    console.log("searchResult: ", searchResult);
   };
 
   return (

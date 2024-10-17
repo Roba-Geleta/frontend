@@ -4,12 +4,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Components/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "./Context/userAuth";
+import ResponsiveAppBar from "./Components/AppBar/AppBar";
 
 function App() {
   return (
     <>
       <UserProvider>
-        <Navbar />
+        <ResponsiveAppBar />
+        {/* <Navbar /> */}
         <Outlet />
         <ToastContainer />
       </UserProvider>
