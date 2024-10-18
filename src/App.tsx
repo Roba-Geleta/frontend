@@ -5,15 +5,20 @@ import Navbar from "./Components/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "./Context/userAuth";
 import ResponsiveAppBar from "./Components/AppBar/AppBar";
+import AppAppBar from "./Components/AppAppBar/AppAppBar";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 function App() {
   return (
     <>
       <UserProvider>
-        <ResponsiveAppBar />
-        {/* <Navbar /> */}
-        <Outlet />
-        <ToastContainer />
+        <ThemeProvider>
+          {/* <ResponsiveAppBar /> */}
+          <AppAppBar />
+          {/* <Navbar /> */}
+          <Outlet />
+          <ToastContainer />
+        </ThemeProvider>
       </UserProvider>
     </>
   );

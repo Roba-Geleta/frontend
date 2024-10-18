@@ -18,7 +18,7 @@ export default function RobaLogo(props: SvgIconProps) {
             height="140%"
             filterUnits="objectBoundingBox"
             primitiveUnits="userSpaceOnUse"
-            color-interpolation-filters="linearRGB"
+            colorInterpolationFilters="linearRGB"
           >
             <feMorphology
               operator="dilate"
@@ -26,7 +26,7 @@ export default function RobaLogo(props: SvgIconProps) {
               in="SourceAlpha"
               result="morphology"
             />
-            <feFlood flood-color="#ffffff" flood-opacity="1" result="flood" />
+            <feFlood floodColor="#ffffff" floodOpacity="1" result="flood" />
             <feComposite
               in="flood"
               in2="morphology"
@@ -46,16 +46,16 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Face/-14"
               stroke="none"
-              stroke-width="1"
-              fill-rule="evenodd"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1"
+              fillRule="evenodd"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path
                 d="M532,379 C664.54834,379 772,486.45166 772,619 C772,642.160109 783.234546,656.244677 777.453024,678.979248 C763.583554,733.517917 758.701879,941.343666 598,909 C539.618945,897.249936 461,880 433,858 C405,836 342.170039,758.772836 320.189513,718.584987 C317.498129,718.859681 314.765451,719 312,719 C267.81722,719 232,683.18278 232,639 C232,599.134956 261.158843,566.080325 299.312086,560.00055 C325.599297,455.979213 419.809919,379 532,379 Z M295.858895,624.545187 L304.141105,655.454813"
                 id="Path"
                 stroke="#000000"
-                stroke-width="24"
+                strokeWidth="24"
               />
             </g>
           </g>
@@ -64,17 +64,17 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Nose/-9"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              fillRule="evenodd"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path
                 d="M631,694.380659 C663.848549,704.811956 684.630284,697.576454 693.345205,672.674154 C706.417587,635.320703 637.033407,606.392531 660.161467,579"
                 id="Path"
                 stroke="#000000"
-                stroke-width="16"
+                strokeWidth="16"
               />
             </g>
           </g>
@@ -83,17 +83,17 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Mouth/-1"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              fillRule="evenodd"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path
                 d="M549,759 C575.12979,773.666667 603.12979,781 633,781 C662.87021,781 682.87021,773.666667 693,759"
                 id="Path"
                 stroke="#000000"
-                stroke-width="16"
+                strokeWidth="16"
               />
             </g>
           </g>
@@ -102,9 +102,9 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Eyes/-10"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g id="Group" transform="translate(520.000000, 512.000000)">
                 <g transform="translate(140.000000, 0.000000)">
@@ -113,9 +113,9 @@ export default function RobaLogo(props: SvgIconProps) {
                     d="M1,16 C24.2727273,8 41.7272727,4 53.3636364,4 C65,4 79.5454545,8 97,16"
                     id="Path"
                     stroke="#000000"
-                    stroke-width="12"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     transform="translate(49.000000, 10.000000) rotate(-4.000000) translate(-49.000000, -10.000000) "
                   />
                 </g>
@@ -132,9 +132,9 @@ export default function RobaLogo(props: SvgIconProps) {
                     d="M1,16 C24.2727273,8 41.7272727,4 53.3636364,4 C65,4 79.5454545,8 97,16"
                     id="Path"
                     stroke="#000000"
-                    stroke-width="12"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     transform="translate(49.000000, 10.000000) scale(-1, 1) rotate(-4.000000) translate(-49.000000, -10.000000) "
                   />
                 </g>
@@ -146,17 +146,17 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Eyebrows/-6"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              fillRule="evenodd"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path
                 d="M620,495.140162 C589.850248,491.823271 565.234864,491.823271 546.153846,495.140162 C527.072829,498.457053 511.688213,505.410333 500,516 C517.257672,497.488903 532.642287,487.058984 546.153846,484.710243 C559.665405,482.361502 584.280789,485.838142 620,495.140162 Z M658,495.140162 C693.719211,485.838142 718.334595,482.361502 731.846154,484.710243 C745.357713,487.058984 760.742328,497.488903 778,516 C766.311787,505.410333 750.927171,498.457053 731.846154,495.140162 C712.765136,491.823271 688.149752,491.823271 658,495.140162 Z"
                 id="Combined-Shape"
                 stroke="#000000"
-                stroke-width="8"
+                strokeWidth="8"
                 fill="#000000"
               />
             </g>
@@ -166,9 +166,9 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Glasses/-0"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             />
           </g>
           <g id="notion-avatar-hair">
@@ -176,17 +176,17 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Hairstyle/-8"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              fillRule="evenodd"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path
                 d="M589.5,149 C631.429764,149 667.646435,173.46066 684.658775,208.890741 C721.09813,214.498985 749,245.991077 749,284 C749,286.479516 748.88126,288.931299 748.649157,291.349973 C776.884031,307.885612 799.44561,330.956745 794,360 C786,402.666667 760.666667,438 718,466 L715.0861,463.567 C683.962033,437.635667 661.933333,421.113333 649,414 C615.112376,395.361807 560.361457,389 532,389 C494.328727,389 459.328727,395.666667 427,409 C427.442658,419.124205 429.109325,429.457538 432,440 C434.890675,450.542462 438.890675,460.875795 444,471 C418.42303,487.163731 403.86212,499.704664 400.317272,508.622798 C395.053173,521.866228 390.816933,592.760589 386.449154,651.362106 L386.17725,655 L366.146153,655 L328.203914,564.824988 L287.169322,564.824988 C281.896276,545.26754 277.997962,527.821458 275.474381,512.486743 C230.854476,504.457464 197,465.4323 197,418.5 C197,388.97181 210.401273,362.573655 231.453484,345.055871 C227.349851,337.983222 225,329.766029 225,321 C225,294.490332 246.490332,273 273,273 L273.516848,273.002725 L273.516848,273.002725 C278.783823,219.66548 323.776164,178 378.5,178 C395.981022,178 412.469019,182.251645 426.986338,189.77728 C440.350453,178.084255 457.847918,171 477,171 C490.487831,171 503.155028,174.513552 514.136247,180.675313 C533.28305,161.128247 559.975173,149 589.5,149 Z"
                 id="Path"
                 stroke="#000000"
-                stroke-width="12"
+                strokeWidth="12"
                 fill="#000000"
               />
             </g>
@@ -196,9 +196,9 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Accessories/-0"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             />
           </g>
           <g id="notion-avatar-details">
@@ -206,9 +206,9 @@ export default function RobaLogo(props: SvgIconProps) {
             <g
               id="Details/-0"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             />
           </g>
           <g id="notion-avatar-beard">
@@ -216,8 +216,8 @@ export default function RobaLogo(props: SvgIconProps) {
               <g id="Group">
                 <g id="Combined Shape">
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M369.784 644H359.784C359.784 644 341.471 799.286 411.784 857C482.098 914.714 569.784 925 615 925C660.216 925 690.216 905 707 887C723.784 869 756.082 808.293 743 804C740.172 803.072 729.363 801.658 713.81 800.202C710.947 812.016 705.396 824.233 697.53 835C696.321 836.654 695.156 838.263 694.023 839.826C675.301 865.663 665.637 879 621.229 879C574.135 879 564.884 878 525.238 840C514.752 829.95 507.447 819.544 502.766 809.407C500.067 811.055 497.593 812.617 495.291 814.07C475.74 826.412 468.584 830.929 441 814C406.784 793 369.784 644 369.784 644Z"
                     fill="black"
                   />
@@ -228,25 +228,25 @@ export default function RobaLogo(props: SvgIconProps) {
                 </g>
                 <path
                   id="Path"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M698.059 729.721C698.059 729.721 701.033 737.719 699.086 738.906C697.74 739.726 669 722.832 616 723C563 723.168 534.188 739.683 532.914 738.906C530.905 737.681 533 732 534.94 729.721C541.033 724.945 571.31 714.711 602.246 712.449C606.205 712.16 610 716.002 616 716.001C622 716 626.18 712.101 629.327 712.287C661.138 714.165 691.805 724.818 698.059 729.721Z"
                   fill="black"
                   stroke="black"
-                  stroke-width="12"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   id="Path_2"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M591 867C591 867 604.444 870 616 870C627.556 870 639 867 639 867L648 890H583L591 867Z"
                   fill="black"
                   stroke="black"
-                  stroke-width="12"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </g>
             </g>
