@@ -1,4 +1,3 @@
-import * as React from "react";
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
 export default function RobaLogo(props: SvgIconProps) {
@@ -41,8 +40,7 @@ export default function RobaLogo(props: SvgIconProps) {
         </defs>
         <g id="notion-avatar" filter="url(#filter)">
           <g id="notion-avatar-face" fill="#ffffff">
-            <title>Face/ 14</title>
-            <desc>Created with Sketch.</desc>
+            <desc></desc>
             <g
               id="Face/-14"
               stroke="none"
@@ -60,7 +58,6 @@ export default function RobaLogo(props: SvgIconProps) {
             </g>
           </g>
           <g id="notion-avatar-nose">
-            <title>Nose/ 9</title>
             <g
               id="Nose/-9"
               stroke="none"
@@ -79,7 +76,6 @@ export default function RobaLogo(props: SvgIconProps) {
             </g>
           </g>
           <g id="notion-avatar-mouth">
-            <title>Mouth/ 1</title>
             <g
               id="Mouth/-1"
               stroke="none"
@@ -98,7 +94,6 @@ export default function RobaLogo(props: SvgIconProps) {
             </g>
           </g>
           <g id="notion-avatar-eyes">
-            <title>Eyes/ 10</title>
             <g
               id="Eyes/-10"
               stroke="none"
@@ -142,7 +137,6 @@ export default function RobaLogo(props: SvgIconProps) {
             </g>
           </g>
           <g id="notion-avatar-eyebrows">
-            <title>Eyebrows/ 6</title>
             <g
               id="Eyebrows/-6"
               stroke="none"
@@ -162,7 +156,6 @@ export default function RobaLogo(props: SvgIconProps) {
             </g>
           </g>
           <g id="notion-avatar-glasses">
-            <title>Glasses/ 0</title>
             <g
               id="Glasses/-0"
               stroke="none"
@@ -172,7 +165,6 @@ export default function RobaLogo(props: SvgIconProps) {
             />
           </g>
           <g id="notion-avatar-hair">
-            <title>Hairstyle/ 8</title>
             <g
               id="Hairstyle/-8"
               stroke="none"
@@ -192,7 +184,6 @@ export default function RobaLogo(props: SvgIconProps) {
             </g>
           </g>
           <g id="notion-avatar-accessories">
-            <title>Accessories/ 0</title>
             <g
               id="Accessories/-0"
               stroke="none"
@@ -202,7 +193,6 @@ export default function RobaLogo(props: SvgIconProps) {
             />
           </g>
           <g id="notion-avatar-details">
-            <title>Details/ 0</title>
             <g
               id="Details/-0"
               stroke="none"

@@ -196,24 +196,28 @@ const AppAppBar: React.FC = () => {
               >
                 Projects
               </Button>
-              <Button
-                color="info"
-                size="small"
-                variant="text"
-                sx={{ minWidth: 0 }}
-                className="dark:text-gray-300"
-              >
-                <LinkedInIcon />
-              </Button>
-              <Button
-                color="info"
-                size="small"
-                variant="text"
-                sx={{ minWidth: 0 }}
-                className="dark:text-gray-300"
-              >
-                <GitHubIcon />
-              </Button>
+              <Tooltip title="Linkedin">
+                <Button
+                  color="info"
+                  size="small"
+                  variant="text"
+                  sx={{ minWidth: 0 }}
+                  className="dark:text-gray-300"
+                >
+                  <LinkedInIcon />
+                </Button>
+              </Tooltip>
+              <Tooltip title="GitHub">
+                <Button
+                  color="info"
+                  size="small"
+                  variant="text"
+                  sx={{ minWidth: 0 }}
+                  className="dark:text-gray-300"
+                >
+                  <GitHubIcon />
+                </Button>
+              </Tooltip>
             </Box>
           </Box>
 
@@ -324,24 +328,28 @@ const AppAppBar: React.FC = () => {
                   <MenuItem className="dark:text-gray-300">Experience</MenuItem>
                   <MenuItem className="dark:text-gray-300">Projects</MenuItem>
                   <MenuItem className="flex space-x-2">
-                    <Button
-                      color="info"
-                      size="small"
-                      variant="text"
-                      sx={{ minWidth: 0 }}
-                      className="dark:text-gray-300"
-                    >
-                      <LinkedInIcon />
-                    </Button>
-                    <Button
-                      color="info"
-                      size="small"
-                      variant="text"
-                      sx={{ minWidth: 0 }}
-                      className="dark:text-gray-300"
-                    >
-                      <GitHubIcon />
-                    </Button>
+                    <Tooltip title="linkedin">
+                      <Button
+                        color="info"
+                        size="small"
+                        variant="text"
+                        sx={{ minWidth: 0 }}
+                        className="dark:text-gray-300"
+                      >
+                        <LinkedInIcon />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="GitHub">
+                      <Button
+                        color="info"
+                        size="small"
+                        variant="text"
+                        sx={{ minWidth: 0 }}
+                        className="dark:text-gray-300"
+                      >
+                        <GitHubIcon />
+                      </Button>
+                    </Tooltip>
                   </MenuItem>
 
                   {isLoggedIn() ? (

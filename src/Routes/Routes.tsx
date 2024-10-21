@@ -11,6 +11,7 @@ import CashflowStatement from "../Components/CashflowStatement/CashflowStatement
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
+import Credits from "../Pages/Credits/Credits";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       { path: "", element: <HomePage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
+      { path: "credits", element: <Credits /> },
       {
         path: "search",
         element: (

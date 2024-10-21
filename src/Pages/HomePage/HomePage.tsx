@@ -1,12 +1,12 @@
 import React from "react";
-import Hero from "../../Components/UserProfile/UserProfile";
+import UserProfile from "../../Components/UserProfile/UserProfile";
 
 interface Props {}
 
 const HomePage = (props: Props) => {
   return (
     <div>
-      <Hero />
+      <UserProfile />
     </div>
   );
 };

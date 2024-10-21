@@ -7,6 +7,7 @@ import { UserProvider } from "./Context/userAuth";
 import ResponsiveAppBar from "./Components/AppBar/AppBar";
 import AppAppBar from "./Components/AppAppBar/AppAppBar";
 import { ThemeProvider } from "./Context/ThemeContext";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           {/* <Navbar /> */}
           <Outlet />
           <ToastContainer />
+          <Footer />
         </ThemeProvider>
       </UserProvider>
     </>
