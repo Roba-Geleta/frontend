@@ -122,7 +122,7 @@ export default function UserProfile() {
       summary:
         "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system. Developed 'roBot', a Discord bot hosted on Google Cloud Services, providing students with instant access to course information.",
       link: "/projects/aurora-selenium-robot",
-      image: "/src/assets/Roba.jpg",
+      image: "/src/assets/Projects/ScrapeRobot/ScrapeRobot.png",
     },
   ];
 
