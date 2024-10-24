@@ -67,17 +67,17 @@ export default function UserProfile() {
       summary:
         "Co-developed an advanced online booking platform that enables businesses to manage appointments and schedules in real-time, enhancing operational efficiency and user engagement.",
       link: "/projects/bookingwithme",
-      image: "/src/assets/Roba.jpg",
+      image: "/src/assets/Projects/AppBookingWithMe/AppBookingWithMe.png",
     },
-    {
-      title: "Portfolio Website (Ongoing)",
-      technologies: "React, TypeScript, ASP.NET Core, SQL Server",
-      date: "Sept 2024",
-      summary:
-        "Developing a personal portfolio site to showcase projects and skills. Building a responsive front-end with React and TypeScript, backed by ASP.NET Core and SQL Server.",
-      link: "/projects/portfolio",
-      image: "/src/assets/Roba.jpg",
-    },
+    // {
+    //   title: "Portfolio Website (Ongoing)",
+    //   technologies: "React, TypeScript, ASP.NET Core, SQL Server",
+    //   date: "Sept 2024",
+    //   summary:
+    //     "Developing a personal portfolio site to showcase projects and skills. Building a responsive front-end with React and TypeScript, backed by ASP.NET Core and SQL Server.",
+    //   link: "/projects/portfolio",
+    //   image: "/src/assets/Roba.jpg",
+    // },
     {
       title: "BookWorm Mobile Application",
       technologies: "Java, Android SDK, Gradle",
@@ -85,7 +85,7 @@ export default function UserProfile() {
       summary:
         "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
       link: "/projects/bookworm",
-      image: "/src/assets/Roba.jpg",
+      image: "/src/assets/Projects/BookWorm/BookWorm.png",
     },
     {
       title: "Succinct",
@@ -95,7 +95,7 @@ export default function UserProfile() {
       summary:
         "Developed backend using Python and Google Cloud Functions, integrating APIs for video summarization, text classification, and topic extraction. Created a responsive frontend with ReactJS and MaterialUI.",
       link: "/projects/succinct",
-      image: "/src/assets/Roba.jpg",
+      image: "/src/assets/Projects/Succinct/Succinct.png",
     },
     {
       title: "Dark/Night Mode For Wikipedia",
@@ -104,7 +104,7 @@ export default function UserProfile() {
       summary:
         "Developed a Chrome extension enabling dark mode for Wikipedia and sister projects, intelligently adjusting page elements’ colors to improve readability for 150+ users.",
       link: "/projects/dark-mode-wikipedia",
-      image: "/src/assets/Roba.jpg",
+      image: "/src/assets/Projects/Wikipedia/Wikipedia.png",
     },
     {
       title: "Gratitude Prototype",
@@ -113,7 +113,7 @@ export default function UserProfile() {
       summary:
         "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
       link: "/projects/gratitude-prototype",
-      image: "/src/assets/Roba.jpg",
+      image: "/src/assets/Projects/Gratitude/Gratitude.png",
     },
     {
       title: "Aurora-Selenium-Scrape & roBot",
