@@ -1,10 +1,13 @@
+// RegisterPage.tsx
+
 import React from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
-
-type Props = {};
+import { Link } from "react-router-dom";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Tooltip from "@mui/material/Tooltip";
 
 type RegisterFormsInputs = {
   email: string;
@@ -13,12 +16,14 @@ type RegisterFormsInputs = {
 };
 
 const validation = Yup.object().shape({
-  email: Yup.string().required("Email is required"),
+  email: Yup.string()
+    .email("Must be a valid email")
+    .required("Email is required"),
   userName: Yup.string().required("Username is required"),
   password: Yup.string().required("Password is required"),
 });
 
-const RegisterPage = (props: Props) => {
+const RegisterPage = () => {
   const { registerUser } = useAuth();
   const {
     register,
@@ -28,108 +33,123 @@ const RegisterPage = (props: Props) => {
     resolver: yupResolver(validation),
   });
 
-  const handleLogin = (form: RegisterFormsInputs) => {
+  const handleRegister = (form: RegisterFormsInputs) => {
     registerUser(form.email, form.userName, form.password);
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mb-20 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Sign in to your account
-            </h1>
-            <form
-              className="space-y-4 md:space-y-6"
-              onSubmit={handleSubmit(handleLogin)}
-            >
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Email
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Email"
-                  {...register("email")}
-                />
-                {errors.email ? (
-                  <p className="text-white">{errors.email.message}</p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Username"
-                  {...register("userName")}
-                />
-                {errors.userName ? (
-                  <p className="text-white">{errors.userName.message}</p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  {...register("password")}
-                />
-                {errors.password ? (
-                  <p className="text-white">{errors.password.message}</p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="flex items-center justify-between">
-                <a
-                  href="#"
-                  className="text-sm text-white font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
-              <button
-                type="submit"
-                className="w-full text-white bg-lightGreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Sign in
-              </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Sign up
-                </a>
-              </p>
-            </form>
-          </div>
+    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Create Your Account
+          </h1>
+          {/* Info Icon with Tooltip */}
+          <Tooltip
+            title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+            arrow
+            placement="right"
+          >
+            <InfoOutlinedIcon
+              className="text-gray-500 dark:text-gray-400 ml-1 cursor-pointer"
+              aria-label="Information"
+            />
+          </Tooltip>
         </div>
+        <form className="space-y-4" onSubmit={handleSubmit(handleRegister)}>
+          {/* Email Field */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className={`bg-gray-50 border ${
+                errors.email
+                  ? "border-red-500 dark:border-red-400"
+                  : "border-gray-300 dark:border-gray-600"
+              } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
+              placeholder="Email"
+              {...register("email")}
+            />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+          {/* Username Field */}
+          <div>
+            <label
+              htmlFor="username"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              className={`bg-gray-50 border ${
+                errors.userName
+                  ? "border-red-500 dark:border-red-400"
+                  : "border-gray-300 dark:border-gray-600"
+              } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
+              placeholder="Username"
+              {...register("userName")}
+            />
+            {errors.userName && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.userName.message}
+              </p>
+            )}
+          </div>
+          {/* Password Field */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              placeholder="••••••••"
+              className={`bg-gray-50 border ${
+                errors.password
+                  ? "border-red-500 dark:border-red-400"
+                  : "border-gray-300 dark:border-gray-600"
+              } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
+              {...register("password")}
+            />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+          {/* Action Buttons */}
+          <button
+            type="submit"
+            className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition duration-200"
+          >
+            Sign Up
+          </button>
+          {/* Sign In Link */}
+          <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+            >
+              Sign in
+            </Link>
+          </p>
+        </form>
       </div>
     </section>
   );

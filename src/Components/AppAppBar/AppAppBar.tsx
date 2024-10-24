@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useContext } from "react";
 import { Link } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -23,10 +23,15 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import RobaLogo from "../RobaLogo/RobaLogo";
 import ToggleColorMode from "../ToggleColorMode/ToggleColorMode";
 import { useAuth } from "../../Context/userAuth";
+import { ThemeContext } from "../../Context/ThemeContext";
 
 // Helper Functions
 const stringToColor = (string: string): string => {
@@ -70,6 +75,7 @@ const AppAppBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { isLoggedIn, user, logoutUser } = useAuth();
+  const { mode } = useContext(ThemeContext);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -88,57 +94,90 @@ const AppAppBar: React.FC = () => {
 
   // Menu Items for Authenticated Users
   const authenticatedMenu: React.ReactElement[] = [
-    <MenuItem key="username" className="flex flex-row" disabled>
+    <MenuItem key="username" disabled>
       <ListItemIcon>
         <AccountCircleIcon fontSize="small" />
       </ListItemIcon>
-      <ListItemText>{user?.userName}</ListItemText>
+      <ListItemText
+        primary={user?.userName}
+        primaryTypographyProps={{
+          color: "text.primary",
+          fontSize: "0.9rem",
+        }}
+      />
     </MenuItem>,
-    <MenuItem key="email" className="flex flex-row" disabled>
+    <MenuItem key="email" disabled>
       <ListItemIcon>
-        <AlternateEmailIcon fontSize="inherit" />
+        <AlternateEmailIcon fontSize="small" />
       </ListItemIcon>
-      <ListItemText sx={{ fontSize: "0.7rem" }}>{user?.email}</ListItemText>
+      <ListItemText
+        primary={user?.email}
+        primaryTypographyProps={{
+          color: "text.secondary",
+          fontSize: "0.8rem",
+        }}
+      />
     </MenuItem>,
     <Divider key="divider" />,
-    <MenuItem key="sign-out">
-      <Button
-        color="error"
-        variant="contained"
-        onClick={() => {
-          logoutUser();
-          handleMenuClose();
+    <MenuItem
+      key="sign-out"
+      onClick={() => {
+        logoutUser();
+        handleMenuClose();
+      }}
+    >
+      <ListItemIcon>
+        <LogoutIcon fontSize="small" color="error" />
+      </ListItemIcon>
+      <ListItemText
+        primary="Sign out"
+        primaryTypographyProps={{
+          color: "error.main",
+          fontWeight: "medium",
         }}
-        fullWidth
-      >
-        Sign out
-      </Button>
+      />
     </MenuItem>,
   ];
 
   // Menu Items for Unauthenticated Users
   const unauthenticatedMenu: React.ReactElement[] = [
-    <MenuItem key="login">
-      <Link to="/login" className="hover:text-darkBlue w-full">
+    <MenuItem key="login" onClick={handleMenuClose}>
+      <ListItemIcon>
+        <LoginIcon fontSize="small" color="primary" />
+      </ListItemIcon>
+      <ListItemText primary="Sign In" />
+      <Link to="/login" className="w-full">
         <Button
           color="primary"
-          variant="contained"
+          variant="text"
           fullWidth
-          onClick={handleMenuClose}
+          sx={{
+            textTransform: "none",
+            justifyContent: "flex-start",
+            padding: 0,
+          }}
         >
           Sign In
         </Button>
       </Link>
     </MenuItem>,
-    <MenuItem key="register">
+    <MenuItem key="register" onClick={handleMenuClose}>
+      <ListItemIcon>
+        <PersonAddIcon fontSize="small" color="secondary" />
+      </ListItemIcon>
+      <ListItemText primary="Sign Up" />
       <Link to="/register" className="w-full">
         <Button
-          color="inherit"
-          variant="contained"
+          color="secondary"
+          variant="text"
           fullWidth
-          onClick={handleMenuClose}
+          sx={{
+            textTransform: "none",
+            justifyContent: "flex-start",
+            padding: 0,
+          }}
         >
-          Sign up
+          Sign Up
         </Button>
       </Link>
     </MenuItem>,
@@ -247,11 +286,12 @@ const AppAppBar: React.FC = () => {
               onClose={handleMenuClose}
               onClick={handleMenuClose}
               PaperProps={{
-                elevation: 0,
+                elevation: 4,
                 sx: {
                   overflow: "visible",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                   mt: 1.5,
+                  minWidth: 200, // Set a minimum width
                   "& .MuiAvatar-root": {
                     width: 32,
                     height: 32,
@@ -270,17 +310,38 @@ const AppAppBar: React.FC = () => {
                     transform: "translateY(-50%) rotate(45deg)",
                     zIndex: 0,
                   },
-                  backgroundColor: "background.paper",
-                  "& .MuiMenu-paper": {
-                    // Ensuring dark mode for the menu
-                    backgroundColor: "gray-800",
-                  },
+                  backgroundColor:
+                    mode === "dark" ? "#1f2937" : "background.paper", // Adjust based on mode
                 },
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              {isLoggedIn() ? authenticatedMenu : unauthenticatedMenu}
+              {/* Info Tooltip */}
+              <MenuItem disabled>
+                <Tooltip
+                  title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+                  arrow
+                  placement="right"
+                >
+                  <InfoOutlinedIcon
+                    fontSize="small"
+                    sx={{
+                      color: mode === "dark" ? "grey.400" : "grey.600",
+                      mr: 1,
+                    }}
+                  />
+                </Tooltip>
+                <ListItemText
+                  primary="Account Information"
+                  primaryTypographyProps={{
+                    color: mode === "dark" ? "grey.300" : "grey.700",
+                    fontSize: "0.8rem",
+                  }}
+                />
+              </MenuItem>
+              <Divider />
+              {user ? authenticatedMenu : unauthenticatedMenu}
             </Menu>
           </Box>
 
