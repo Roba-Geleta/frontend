@@ -49,7 +49,7 @@ export const UserProvider = ({ children }: Props) => {
     } else {
       setIsReady(true);
     }
-  }, []);
+  }, [isReady]);
 
   const registerUser = async (
     email: string,
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }: Props) => {
           toast.success("User registered successfully");
         }
       })
-      .catch((e) => toast.warning("Server error occurred"));
+      .catch(() => toast.warning("Server error occurred"));
   };
 
   const loginUser = async (username: string, password: string) => {
@@ -92,7 +92,7 @@ export const UserProvider = ({ children }: Props) => {
           toast.success("Login successful");
         }
       })
-      .catch((e) => toast.warning("Server error occurred"));
+      .catch(() => toast.warning("Server error occurred"));
   };
 
   const isLoggedIn = () => {
@@ -116,4 +116,5 @@ export const UserProvider = ({ children }: Props) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => React.useContext(UserContext);
