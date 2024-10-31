@@ -7,19 +7,20 @@ interface Props {
 
 const DeletePortfolio = ({ onPortfolioDelete, portfolioValue }: Props) => {
   return (
-    <div>
-      <form onSubmit={onPortfolioDelete}>
-        <input
-          name="portfolioValue"
-          type="hidden"
-          readOnly
-          value={portfolioValue}
-        />
-        <button className="block w-full py-3 text-white duration-200 border-2 rounded-lg bg-red-500 hover:text-red-500 hover:bg-white border-red-500">
-          X
-        </button>
-      </form>
-    </div>
+    <form onSubmit={onPortfolioDelete}>
+      <input
+        name="portfolioValue"
+        type="hidden"
+        readOnly
+        value={portfolioValue}
+      />
+      <button
+        type="submit"
+        className="px-2 py-1 text-white bg-red-500 rounded-tl-md rounded-br-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 dark:bg-red-600 dark:hover:bg-red-700"
+      >
+        X
+      </button>
+    </form>
   );
 };
 
