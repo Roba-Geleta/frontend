@@ -21,6 +21,10 @@ export default {
       spacing: {
         180: "32rem",
       },
+      screens: {
+        'xs': '475px',
+        'smv': '550px'
+      }
     },
   },
   plugins: [],
