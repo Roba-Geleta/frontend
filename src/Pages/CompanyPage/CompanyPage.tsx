@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CompanyProfile } from "../../company";
 import { getCompanyProfile } from "../../api";
-import Sidebar from "../../Components/Sidebar/Sidebar";
+import Header from "../../Components/Header/Header";
 import CompanyDashboard from "../../Components/CompanyDashboard/CompanyDashboard";
 import Tile from "../../Components/Tile/Tile";
 import Spinner from "../../Components/Spinner/Spinner";
 import TenKFinder from "../../Components/TenKFinder/TenKFinder";
+import ReadMore from "../../Components/ReadMore/ReadMore";
+import { Box, Divider } from "@mui/material";
 
 interface Props {}
 
@@ -17,26 +19,42 @@ const CompanyPage = (props: Props) => {
   useEffect(() => {
     const getProfileInit = async () => {
       const result = await getCompanyProfile(ticker!);
-      console.log(result);
       setCompany(result[0]);
+      console.log(result[0]);
     };
     getProfileInit();
-  }, [ticker]);
+  }, []);
+
+  // Function to format DCF value
+  const formatDecimal = (num: number) => {
+    return num.toFixed(2);
+  };
 
   return (
     <>
       {company ? (
-        <div className="w-full relative flex ct-docs-disable-sidebar-content overflow-x-hidden">
-          <Sidebar />
+        <div className="w-full ">
           <CompanyDashboard ticker={ticker!}>
-            <Tile title="Company Name" subTitle={company.companyName} />
-            <Tile title="Price" subTitle={"$" + company.price.toString()} />
-            <Tile title="DCF" subTitle={"$" + company.dcf.toString()} />
-            <Tile title="Sector" subTitle={company.sector} />
+            {/* Tiles */}
+            <Box className="w-full flex flex-wrap mx-4 flex-grow justify-center">
+              <Tile title="Company Name" subTitle={company.companyName} />
+              <Tile
+                title="Price"
+                subTitle={`$${formatDecimal(company.price)}`}
+              />
+              <Tile title="DCF" subTitle={`$${formatDecimal(company.dcf)}`} />
+              <Tile title="Sector" subTitle={company.sector} />
+            </Box>
+            {/* TenKFinder */}
             <TenKFinder ticker={company.symbol} />
-            <p className="bg-white shadow rounded text-medium text-gray-900 p-3 mt-1 m-4">
-              {company.description}
-            </p>
+            <div className="bg-white dark:bg-gray-800 shadow rounded-t text-medium text-gray-900 dark:text-gray-100 p-6 mt-4 mx-4">
+              <h3 className="text-xl font-semibold ">Company Description</h3>
+              <ReadMore text={company.description} maxCharacters={300} />
+            </div>
+            <div className="w-full px-4 ">
+              <Divider className="border-gray-300 dark:border-gray-700  bg-white dark:bg-gray-800 " />
+              <Header />
+            </div>
           </CompanyDashboard>
         </div>
       ) : (
