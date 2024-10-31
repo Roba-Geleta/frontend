@@ -1,5 +1,6 @@
 import React, { useState, MouseEvent, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { scroller } from "react-scroll";
 import { styled, alpha } from "@mui/material/styles";
 import {
   AppBar,
@@ -16,13 +17,12 @@ import {
   ListItemText,
   Menu,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
@@ -76,6 +76,27 @@ const AppAppBar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { isLoggedIn, user, logoutUser } = useAuth();
   const { mode } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleProjectsClick = (place: string) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        scroller.scrollTo(place, {
+          smooth: true,
+          duration: 500,
+          offset: -100,
+        });
+      }, 100);
+    } else {
+      scroller.scrollTo(place, {
+        smooth: true,
+        duration: 500,
+        offset: -100,
+      });
+    }
+  };
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -94,30 +115,64 @@ const AppAppBar: React.FC = () => {
 
   // Menu Items for Authenticated Users
   const authenticatedMenu: React.ReactElement[] = [
-    <MenuItem key="username" disabled>
+    <Box
+      key="username"
+      display="flex"
+      alignItems="center"
+      px={2}
+      py={1}
+      maxWidth={250}
+      width="100%"
+      overflow="hidden"
+    >
       <ListItemIcon>
-        <AccountCircleIcon fontSize="small" />
+        <AccountCircleIcon
+          fontSize="small"
+          sx={{ color: mode === "dark" ? "grey.300" : "text.primary" }}
+        />
       </ListItemIcon>
-      <ListItemText
-        primary={user?.userName}
-        primaryTypographyProps={{
-          color: "text.primary",
-          fontSize: "0.9rem",
-        }}
-      />
-    </MenuItem>,
-    <MenuItem key="email" disabled>
+      <Tooltip title={user?.userName || "User Name"} placement="right">
+        <Typography
+          variant="body2"
+          noWrap
+          sx={{
+            color: mode === "dark" ? "grey.300" : "text.primary",
+            fontSize: "0.9rem",
+          }}
+        >
+          {user?.userName || "User Name"}
+        </Typography>
+      </Tooltip>
+    </Box>,
+    <Box
+      key="email"
+      display="flex"
+      alignItems="center"
+      px={2}
+      py={1}
+      maxWidth={250}
+      width="100%"
+      overflow="hidden"
+    >
       <ListItemIcon>
-        <AlternateEmailIcon fontSize="small" />
+        <AlternateEmailIcon
+          fontSize="small"
+          sx={{ color: mode === "dark" ? "grey.400" : "text.secondary" }}
+        />
       </ListItemIcon>
-      <ListItemText
-        primary={user?.email}
-        primaryTypographyProps={{
-          color: "text.secondary",
-          fontSize: "0.8rem",
-        }}
-      />
-    </MenuItem>,
+      <Tooltip title={user?.email || "Email"} placement="right">
+        <Typography
+          variant="body2"
+          noWrap
+          sx={{
+            color: mode === "dark" ? "grey.400" : "text.secondary",
+            fontSize: "0.8rem",
+          }}
+        >
+          {user?.email || "Email"}
+        </Typography>
+      </Tooltip>
+    </Box>,
     <Divider key="divider" />,
     <MenuItem
       key="sign-out"
@@ -125,14 +180,22 @@ const AppAppBar: React.FC = () => {
         logoutUser();
         handleMenuClose();
       }}
+      sx={{
+        "&:hover": {
+          backgroundColor: mode === "dark" ? "grey.800" : "grey.100",
+        },
+      }}
     >
       <ListItemIcon>
-        <LogoutIcon fontSize="small" color="error" />
+        <LogoutIcon
+          fontSize="small"
+          sx={{ color: mode === "dark" ? "error.light" : "error.main" }}
+        />
       </ListItemIcon>
       <ListItemText
         primary="Sign out"
         primaryTypographyProps={{
-          color: "error.main",
+          color: mode === "dark" ? "error.light" : "error.main",
           fontWeight: "medium",
         }}
       />
@@ -142,43 +205,31 @@ const AppAppBar: React.FC = () => {
   // Menu Items for Unauthenticated Users
   const unauthenticatedMenu: React.ReactElement[] = [
     <MenuItem key="login" onClick={handleMenuClose}>
-      <ListItemIcon>
-        <LoginIcon fontSize="small" color="primary" />
-      </ListItemIcon>
-      <ListItemText primary="Sign In" />
-      <Link to="/login" className="w-full">
-        <Button
-          color="primary"
-          variant="text"
-          fullWidth
-          sx={{
-            textTransform: "none",
-            justifyContent: "flex-start",
-            padding: 0,
+      <Link to="/login" className="w-full flex flex-row items-center">
+        <ListItemIcon>
+          <LoginIcon fontSize="small" color="primary" />
+        </ListItemIcon>
+        <ListItemText
+          primary="Sign In"
+          primaryTypographyProps={{
+            color: mode === "dark" ? "primary" : "primary",
+            fontWeight: "medium",
           }}
-        >
-          Sign In
-        </Button>
+        />
       </Link>
     </MenuItem>,
     <MenuItem key="register" onClick={handleMenuClose}>
-      <ListItemIcon>
-        <PersonAddIcon fontSize="small" color="secondary" />
-      </ListItemIcon>
-      <ListItemText primary="Sign Up" />
-      <Link to="/register" className="w-full">
-        <Button
-          color="secondary"
-          variant="text"
-          fullWidth
-          sx={{
-            textTransform: "none",
-            justifyContent: "flex-start",
-            padding: 0,
+      <Link to="/register" className="w-full flex flex-row items-center">
+        <ListItemIcon>
+          <PersonAddIcon fontSize="small" color="secondary" />
+        </ListItemIcon>
+        <ListItemText
+          primary="Sign Up "
+          primaryTypographyProps={{
+            color: mode === "dark" ? "secondary" : "secondary",
+            fontWeight: "medium",
           }}
-        >
-          Sign Up
-        </Button>
+        />
       </Link>
     </MenuItem>,
   ];
@@ -208,7 +259,7 @@ const AppAppBar: React.FC = () => {
             <Link to="/" className="flex flex-row items-center">
               <RobaLogo sx={{ fontSize: "50px" }} />
             </Link>
-            <Box className="hidden sm:flex">
+            <Box className="hidden smv:flex">
               <Link to="/" className="flex flex-row items-center">
                 <Button
                   variant="text"
@@ -220,6 +271,7 @@ const AppAppBar: React.FC = () => {
                 </Button>
               </Link>
               <Button
+                onClick={() => handleProjectsClick("Experience")}
                 variant="text"
                 color="info"
                 size="small"
@@ -228,6 +280,7 @@ const AppAppBar: React.FC = () => {
                 Experience
               </Button>
               <Button
+                onClick={() => handleProjectsClick("Projects")}
                 variant="text"
                 color="info"
                 size="small"
@@ -235,7 +288,32 @@ const AppAppBar: React.FC = () => {
               >
                 Projects
               </Button>
-              <Tooltip title="Linkedin">
+              <Button
+                onClick={() => handleProjectsClick("Skills")}
+                variant="text"
+                color="info"
+                size="small"
+                className="dark:text-gray-300"
+              >
+                Skills
+              </Button>
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                className="border-gray-300 dark:border-gray-700 !border-[0.09rem] !my-[6px] "
+                flexItem
+              />
+              <Link to="/stocks" className="flex flex-row items-center">
+                <Button
+                  variant="text"
+                  color="primary"
+                  size="small"
+                  className="dark:text-white"
+                >
+                  STOCKS
+                </Button>
+              </Link>
+              {/* <Tooltip title="Linkedin">
                 <Button
                   color="info"
                   size="small"
@@ -256,12 +334,12 @@ const AppAppBar: React.FC = () => {
                 >
                   <GitHubIcon />
                 </Button>
-              </Tooltip>
+              </Tooltip> */}
             </Box>
           </Box>
 
           {/* Right Section: Account and Theme Toggle */}
-          <Box className="hidden sm:flex items-center">
+          <Box className="hidden smv:flex items-center">
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleMenuOpen}
@@ -318,7 +396,16 @@ const AppAppBar: React.FC = () => {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               {/* Info Tooltip */}
-              <MenuItem disabled>
+              <Box
+                key="account-info"
+                display="flex"
+                alignItems="center"
+                px={2}
+                py={1}
+                maxWidth={250}
+                width="100%"
+                overflow="hidden"
+              >
                 <Tooltip
                   title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
                   arrow
@@ -339,14 +426,14 @@ const AppAppBar: React.FC = () => {
                     fontSize: "0.8rem",
                   }}
                 />
-              </MenuItem>
+              </Box>
               <Divider />
               {user ? authenticatedMenu : unauthenticatedMenu}
             </Menu>
           </Box>
 
           {/* Mobile Section: Drawer */}
-          <Box className="flex sm:hidden">
+          <Box className="flex smv:hidden">
             <IconButton
               aria-label="Menu button"
               onClick={toggleDrawer(true)}
@@ -377,81 +464,247 @@ const AppAppBar: React.FC = () => {
 
                 {/* Drawer Menu Items */}
                 <Box className="flex flex-col space-y-2">
-                  <MenuItem>
-                    <Link
-                      to="/"
-                      className="flex flex-row w-full dark:text-white"
-                      onClick={toggleDrawer(false)}
-                    >
-                      Home
-                    </Link>
-                  </MenuItem>
-                  <MenuItem className="dark:text-gray-300">Experience</MenuItem>
-                  <MenuItem className="dark:text-gray-300">Projects</MenuItem>
-                  <MenuItem className="flex space-x-2">
-                    <Tooltip title="linkedin">
-                      <Button
-                        color="info"
-                        size="small"
-                        variant="text"
-                        sx={{ minWidth: 0 }}
-                        className="dark:text-gray-300"
-                      >
-                        <LinkedInIcon />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="GitHub">
-                      <Button
-                        color="info"
-                        size="small"
-                        variant="text"
-                        sx={{ minWidth: 0 }}
-                        className="dark:text-gray-300"
-                      >
-                        <GitHubIcon />
-                      </Button>
-                    </Tooltip>
+                  {/* Home */}
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <Typography className="dark:text-white">Home</Typography>
                   </MenuItem>
 
+                  {/* Experience */}
+                  <MenuItem
+                    onClick={() => {
+                      handleProjectsClick("Experience");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <Typography className="dark:text-gray-300">
+                      Experience
+                    </Typography>
+                  </MenuItem>
+
+                  {/* Projects */}
+                  <MenuItem
+                    onClick={() => {
+                      handleProjectsClick("Projects");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <Typography className="dark:text-gray-300">
+                      Projects
+                    </Typography>
+                  </MenuItem>
+
+                  {/* Skills */}
+                  <MenuItem
+                    onClick={() => {
+                      handleProjectsClick("Skills");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <Typography className="dark:text-gray-300">
+                      Skills
+                    </Typography>
+                  </MenuItem>
+
+                  {/* Divider */}
+                  <Divider className="my-3 dark:bg-gray-700" />
+
+                  {/* Stocks */}
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/stocks");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <Typography className="dark:text-white">Stocks</Typography>
+                  </MenuItem>
+                  <Divider className="my-2 dark:bg-gray-700" />
+
+                  {/* Account Options */}
                   {isLoggedIn() ? (
-                    <MenuItem key="drawer-sign-out">
-                      <Button
-                        color="error"
-                        variant="contained"
+                    <>
+                      {/* Account Information */}
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        px={2}
+                        py={1}
+                        maxWidth={250}
+                        width="100%"
+                        overflow="hidden"
+                      >
+                        <Tooltip
+                          title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+                          arrow
+                          placement="bottom"
+                        >
+                          <InfoOutlinedIcon
+                            fontSize="small"
+                            sx={{
+                              color: mode === "dark" ? "grey.400" : "grey.600",
+                              mr: 1,
+                            }}
+                          />
+                        </Tooltip>
+                        <ListItemText
+                          primary="Account Information"
+                          primaryTypographyProps={{
+                            color: mode === "dark" ? "grey.300" : "grey.700",
+                            fontSize: "0.8rem",
+                          }}
+                        />
+                      </Box>
+                      <Divider className="my-2 dark:bg-gray-700" />
+
+                      {/* User Name */}
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        px={2}
+                        py={1}
+                        maxWidth={250}
+                        width="100%"
+                        overflow="hidden"
+                      >
+                        <ListItemIcon>
+                          <AccountCircleIcon
+                            fontSize="small"
+                            sx={{
+                              color:
+                                mode === "dark" ? "grey.300" : "text.primary",
+                            }}
+                          />
+                        </ListItemIcon>
+                        <Tooltip
+                          title={user?.userName || "User Name"}
+                          placement="bottom"
+                        >
+                          <Typography
+                            variant="body2"
+                            noWrap
+                            sx={{
+                              color:
+                                mode === "dark" ? "grey.300" : "text.primary",
+                              fontSize: "0.9rem",
+                            }}
+                          >
+                            {user?.userName || "User Name"}
+                          </Typography>
+                        </Tooltip>
+                      </Box>
+
+                      {/* Email */}
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        px={2}
+                        py={1}
+                        maxWidth={250}
+                        width="100%"
+                        overflow="hidden"
+                      >
+                        <ListItemIcon>
+                          <AlternateEmailIcon
+                            fontSize="small"
+                            sx={{
+                              color:
+                                mode === "dark" ? "grey.400" : "text.secondary",
+                            }}
+                          />
+                        </ListItemIcon>
+                        <Tooltip
+                          title={user?.email || "Email"}
+                          placement="bottom"
+                        >
+                          <Typography
+                            variant="body2"
+                            noWrap
+                            sx={{
+                              color:
+                                mode === "dark" ? "grey.400" : "text.secondary",
+                              fontSize: "0.8rem",
+                            }}
+                          >
+                            {user?.email || "Email"}
+                          </Typography>
+                        </Tooltip>
+                      </Box>
+                      <Divider className="my-2 dark:bg-gray-700" />
+
+                      {/* Sign Out */}
+                      <MenuItem
                         onClick={() => {
                           logoutUser();
                           setDrawerOpen(false);
                         }}
-                        fullWidth
+                        sx={{
+                          "&:hover": {
+                            backgroundColor:
+                              mode === "dark" ? "grey.800" : "grey.100",
+                          },
+                        }}
                       >
-                        Sign out
-                      </Button>
-                    </MenuItem>
+                        <ListItemIcon>
+                          <LogoutIcon
+                            fontSize="small"
+                            sx={{
+                              color:
+                                mode === "dark" ? "error.light" : "error.main",
+                            }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Sign out"
+                          primaryTypographyProps={{
+                            color:
+                              mode === "dark" ? "error.light" : "error.main",
+                            fontWeight: "medium",
+                          }}
+                        />
+                      </MenuItem>
+                    </>
                   ) : (
-                    [
-                      <MenuItem key="drawer-login">
+                    <>
+                      <MenuItem onClick={() => setDrawerOpen(false)}>
                         <Link
                           to="/login"
-                          className="hover:text-darkBlue w-full"
-                          onClick={toggleDrawer(false)}
+                          className="w-full flex flex-row items-center"
                         >
-                          <Button color="primary" variant="contained" fullWidth>
-                            Sign In
-                          </Button>
+                          <ListItemIcon>
+                            <LoginIcon fontSize="small" color="primary" />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary="Sign In"
+                            primaryTypographyProps={{
+                              color: mode === "dark" ? "primary" : "primary",
+                              fontWeight: "medium",
+                            }}
+                          />
                         </Link>
-                      </MenuItem>,
-                      <MenuItem key="drawer-register">
+                      </MenuItem>
+                      <MenuItem onClick={() => setDrawerOpen(false)}>
                         <Link
                           to="/register"
-                          className="w-full"
-                          onClick={toggleDrawer(false)}
+                          className="w-full flex flex-row items-center"
                         >
-                          <Button color="inherit" variant="contained" fullWidth>
-                            Sign up
-                          </Button>
+                          <ListItemIcon>
+                            <PersonAddIcon fontSize="small" color="secondary" />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary="Sign Up"
+                            primaryTypographyProps={{
+                              color:
+                                mode === "dark" ? "secondary" : "secondary",
+                              fontWeight: "medium",
+                            }}
+                          />
                         </Link>
-                      </MenuItem>,
-                    ]
+                      </MenuItem>
+                    </>
                   )}
                 </Box>
               </Box>
