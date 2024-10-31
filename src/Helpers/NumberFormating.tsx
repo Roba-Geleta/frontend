@@ -1,4 +1,4 @@
-export const formatLargeMonetaryNumber: any = (number: number) => {
+export const formatLargeMonetaryNumber = (number: number): string => {
   if (number < 0) {
     return "-" + formatLargeMonetaryNumber(-1 * number);
   }
@@ -13,15 +13,16 @@ export const formatLargeMonetaryNumber: any = (number: number) => {
   } else if (number >= 1_000_000_000_000 && number < 1_000_000_000_000_000) {
     return "$" + (number / 1_000_000_000_000).toFixed(1) + "T";
   }
+  return "$" + number; // Fallback case
 };
 
-export const formatLargeNonMonetaryNumber: any = (number: number) => {
+export const formatLargeNonMonetaryNumber = (number: number): string => {
   if (!number) return "-";
   if (number < 0) {
     return "-" + formatLargeMonetaryNumber(-1 * number);
   }
   if (number < 1000) {
-    return number;
+    return number.toString();
   } else if (number >= 1000 && number < 1_000_000) {
     return (number / 1000).toFixed(1) + "K";
   } else if (number >= 1_000_000 && number < 1_000_000_000) {
@@ -31,6 +32,7 @@ export const formatLargeNonMonetaryNumber: any = (number: number) => {
   } else if (number >= 1_000_000_000_000 && number < 1_000_000_000_000_000) {
     return (number / 1_000_000_000_000).toFixed(1) + "T";
   }
+  return number.toString(); // Fallback case
 };
 
 export const formatRatio = (ratio: number) => {
