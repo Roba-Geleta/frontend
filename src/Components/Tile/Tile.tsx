@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Props {
   title: string;
   subTitle: string;
@@ -7,19 +5,14 @@ interface Props {
 
 const Tile = ({ title, subTitle }: Props) => {
   return (
-    <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-      <div className="relative flex flex-col min-w-0 break-words bg-white rounded-lg mb-6 xl:mb-0 shadow-lg">
-        <div className="flex-auto p-4">
-          <div className="flex flex-wrap">
-            <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-              <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                {title}
-              </h5>
-
-              <span className="font-bold text-xl">{subTitle}</span>
-            </div>
-          </div>
-        </div>
+    <div className="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
+      <div className="h-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+        <h5 className="text-gray-500 dark:text-gray-400 uppercase font-semibold text-xs mb-1">
+          {title}
+        </h5>
+        <p className="text-lg font-bold text-gray-800 dark:text-gray-100 break-words">
+          {subTitle}
+        </p>
       </div>
     </div>
   );
