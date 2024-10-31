@@ -70,7 +70,6 @@ export const UserProvider = ({ children }: Props) => {
           setToken(res?.data.token);
 
           toast.success("User registered successfully");
-          navigate("/search");
         }
       })
       .catch((e) => toast.warning("Server error occurred"));
@@ -91,7 +90,6 @@ export const UserProvider = ({ children }: Props) => {
           setToken(res?.data.token);
 
           toast.success("Login successful");
-          navigate("/search");
         }
       })
       .catch((e) => toast.warning("Server error occurred"));
