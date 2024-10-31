@@ -61,7 +61,7 @@ const StockComment = ({ stockSymbol }: Props) => {
       ) : (
         <StockCommentList comments={comments!} />
       )}
-      <StockCommentForm symbol={stockSymbol} handleComment={handleComment} />
+      <StockCommentForm handleComment={handleComment} />
     </div>
   );
 };
