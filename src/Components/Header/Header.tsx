@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import {
   FaHome,
@@ -7,10 +6,7 @@ import {
   FaCashRegister,
 } from "react-icons/fa";
 
-interface Props {}
-
-const Header = (props: Props) => {
-  // Define the navigation items in an array for easier management
+const Header = () => {
   const navItems = [
     {
       to: "company-profile",
