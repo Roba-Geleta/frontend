@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import LinearProgress from "@mui/material/LinearProgress";
-import { Stack } from "@mui/material";
 
 interface Props {
   onSearchSubmit: (e: SyntheticEvent) => void;
