@@ -6,7 +6,7 @@ export type PortfolioGet = {
   lastDiv: number;
   industry: string;
   marketCap: number;
-  comments: any;
+  comments: unknown;
 };
 
 export type PortfolioPost = {
