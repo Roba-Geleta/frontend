@@ -1,4 +1,3 @@
-import React from "react";
 import { CommentGet } from "../../Models/Comment";
 
 type Props = {
@@ -7,18 +6,21 @@ type Props = {
 
 const StockCommentListItem = ({ comment }: Props) => {
   return (
-    <div className="relative grid grid-cols-1 gap-4 ml-4 p-4 mb-8 w-full border rounded-lg bg-white shadow-lg">
-      <div className="relative flex gap-4">
-        <div className="flex flex-col w-full">
-          <div className="flex flex-row justify-between">
-            <p className=" relative text-xl whitespace-nowrap truncate overflow-hidden">
-              {comment.title}
-            </p>
-          </div>
-          <p className="text-dark text-sm">@{comment.createdBy}</p>
+    <div className="bg-white dark:bg-gray-700 shadow rounded-lg p-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+            {comment.title}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            @{comment.createdBy}
+          </p>
         </div>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {new Date(comment.createdOn).toLocaleDateString()}
+        </p>
       </div>
-      <p className="-mt-4 text-gray-500">{comment.content}</p>
+      <p className="mt-2 text-gray-700 dark:text-gray-200">{comment.content}</p>
     </div>
   );
 };

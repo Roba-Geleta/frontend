@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import StockCommentForm from "./StockCommentForm/StockCommentForm";
 import { commentGetAPI, commentPostAPI } from "../../Services/CommentService";
 import { toast } from "react-toastify";
@@ -16,36 +16,51 @@ type CommentFormInputs = {
 };
 
 const StockComment = ({ stockSymbol }: Props) => {
-  const [comments, setComments] = React.useState<CommentGet[] | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [comments, setComments] = useState<CommentGet[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getComments();
   }, []);
 
-  const handleComment = (e: CommentFormInputs) => {
-    commentPostAPI(e.title, e.content, stockSymbol)
-      .then((res) => {
-        if (res) {
-          toast.success("Comment created successfully");
-          getComments();
-        }
-      })
-      .catch((e) => {
-        toast.warning(e);
-      });
+  const handleComment = async (e: CommentFormInputs) => {
+    try {
+      const res = await commentPostAPI(e.title, e.content, stockSymbol);
+      if (res) {
+        toast.success("Comment created successfully");
+        getComments();
+      }
+    } catch (error) {
+      console.error("Error posting comment:", error);
+      toast.error("Failed to post comment. Please try again.");
+    }
   };
 
-  const getComments = () => {
+  const getComments = async () => {
     setLoading(true);
-    commentGetAPI(stockSymbol).then((res) => {
+    try {
+      const res = await commentGetAPI(stockSymbol);
+      setComments(res?.data ?? []);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      setComments([]);
+    } finally {
       setLoading(false);
-      setComments(res?.data ?? null);
-    });
+    }
   };
+
   return (
-    <div className="flex flex-col">
-      {loading ? <Spinner /> : <StockCommentList comments={comments!} />}
+    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mx-4 my-6">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+        User Comments
+      </h2>
+      {loading ? (
+        <div className="flex justify-center items-center h-32">
+          <Spinner />
+        </div>
+      ) : (
+        <StockCommentList comments={comments!} />
+      )}
       <StockCommentForm symbol={stockSymbol} handleComment={handleComment} />
     </div>
   );
