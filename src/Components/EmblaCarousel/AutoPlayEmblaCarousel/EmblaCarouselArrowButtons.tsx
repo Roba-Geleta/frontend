@@ -1,5 +1,3 @@
-// EmblaCarouselArrowButtons.tsx
-
 import React, {
   ComponentPropsWithRef,
   useCallback,

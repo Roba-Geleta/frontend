@@ -1,5 +1,3 @@
-// AutoplayEmblaCarousel.tsx
-
 import React, { useEffect, useState } from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
@@ -40,7 +38,7 @@ const AutoplayEmblaCarousel: React.FC<AutoplayPropType> = ({
       delay: autoplayOptions.startDelay,
     }),
   ]);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [, setIsPlaying] = useState(false);
 
   const {
     prevBtnDisabled,
@@ -50,7 +48,6 @@ const AutoplayEmblaCarousel: React.FC<AutoplayPropType> = ({
   } = usePrevNextButtons(emblaApi);
 
   useEffect(() => {
-    console.log(slides);
     const autoplay = emblaApi?.plugins()?.autoplay;
     if (!autoplay) return;
 
