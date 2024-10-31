@@ -1,6 +1,6 @@
 // UserProfile.tsx
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {
@@ -18,6 +18,8 @@ import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
 import AutoScrollEmblaCarousel from "../EmblaCarousel/AutoScrollEmblaCarousel/AutoScrollEmblaCarousel";
 import AutoplayEmblaCarousel from "../EmblaCarousel/AutoPlayEmblaCarousel/AutoPlayEmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
+import ExperienceDialog from "../ExperienceDialog/ExperienceDialog";
+import ProjectDialog from "../ProjectDialog/ProjectDialog";
 // import "../../css/base.css";
 // import "../../css/sandbox.css";
 import "../../css/embla.css";
@@ -29,6 +31,10 @@ import { ThemeContext } from "../../Context/ThemeContext";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
+  const [openDialog, setOpenDialog] = useState<number | null>(null);
+  const [openProjectDialog, setOpenProjectDialog] = useState<number | null>(
+    null
+  );
 
   // Experience Data
   const experiences = [
@@ -42,6 +48,13 @@ export default function UserProfile() {
       link: "/experience/priceline",
       image: "/src/assets/PPSLogo.svg", // Default image path
       background: "/src/assets/PPSBackground.webp", // Default background path
+      technologies: "JavaScript, TypeScript, React, Go, Harness, SQL",
+      responsibilities: [
+        "Collaborated in a team to develop a user-friendly product activation page for Priceline’s partners across 200+ countries. Utilized React for UI components, Go for server-side logic, and SQL for database queries and analysis.",
+        "Implemented features to manage multiple inventory types and flexible payment options, applying agile methodologies and test-driven development throughout the process.",
+        "Enhanced project maintainability by updating documentation pages, converting JavaScript files to TypeScript, and resolving legacy lint errors, significantly improving code quality and type safety.",
+        "Implemented Google Secret Manager for Partner Services Division projects, replacing the outgoing Harness Secret Manager, thereby improving security and streamlining secret management processes.",
+      ],
     },
     {
       title: "Freelance Coding Expert | AI Model Trainer",
@@ -53,8 +66,12 @@ export default function UserProfile() {
       link: "/experience/outlier-ai",
       image: "/src/assets/OutlierAILogo.svg",
       background: "/src/assets/OutlierAIBackground.webp", // Default background path
+      technologies: "Python, Java, JavaScript, C++",
+      responsibilities: [
+        "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines.",
+        "Crafted, solved, and reviewed technical coding problems, developing test cases to refine AI model capabilities and improve code efficiency.",
+      ],
     },
-    // Add more experiences here if needed
   ];
 
   // Projects Data
@@ -63,29 +80,36 @@ export default function UserProfile() {
       title: "App.Bookingwith.me",
       technologies:
         "Svelte, JavaScript, Tailwind CSS, Flowbite, OpenAI API, OAuth, Twilio, Stripe",
-      date: "Jun 2024",
+      date: "Jun. 2024",
       summary:
         "Co-developed an advanced online booking platform that enables businesses to manage appointments and schedules in real-time, enhancing operational efficiency and user engagement.",
       link: "/projects/bookingwithme",
       image: "/src/assets/Projects/AppBookingWithMe/AppBookingWithMe.png",
+      logo: "/src/assets/Projects/AppBookingWithMe/AppBookingWithMeLogo.png",
+      githubLink: "https://github.com/ngDuyAnh/bookingwith.me-svelte",
+      websiteLink: "https://app.bookingwith.me",
+      details: [
+        "Co-developed an advanced online booking platform that enables businesses to manage appointments and schedules in real-time, enhancing operational efficiency and user engagement.",
+        "Designed and implemented a responsive, user-friendly interface using open-source libraries, featuring interactive calendars and drag-and-drop functionality to improve usability across various devices.",
+        "Spearheaded OAuth integration for secure authentication and deployed automated SMS notifications and Google review requests via Twilio. This feature is now used by 3 businesses, enhancing their customer interactions and business ratings.",
+        "Contributed to rapid feature deployment to meet tight deadlines, demonstrating adaptability and a commitment to timely, effective updates.",
+      ],
     },
-    // {
-    //   title: "Portfolio Website (Ongoing)",
-    //   technologies: "React, TypeScript, ASP.NET Core, SQL Server",
-    //   date: "Sept 2024",
-    //   summary:
-    //     "Developing a personal portfolio site to showcase projects and skills. Building a responsive front-end with React and TypeScript, backed by ASP.NET Core and SQL Server.",
-    //   link: "/projects/portfolio",
-    //   image: "/src/assets/Roba.jpg",
-    // },
     {
       title: "BookWorm Mobile Application",
-      technologies: "Java, Android SDK, Gradle",
-      date: "2023",
+      technologies: "Java, Android SDK, Gradle, Adobe Premiere Pro, GitLab",
+      date: "Sept. 2024",
       summary:
         "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
       link: "/projects/bookworm",
       image: "/src/assets/Projects/BookWorm/BookWorm.png",
+      logo: "/src/assets/Projects/BookWorm/bookWormLogo.webp",
+      githubLink: "https://github.com/jaredmdp/BookWorm",
+      websiteLink: "https://bookwormhonda.vercel.app/",
+      details: [
+        "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
+        "Contributed to promotional content creation using Adobe Premiere Pro and managed version control with Git.",
+      ],
     },
     {
       title: "Succinct",
@@ -93,9 +117,15 @@ export default function UserProfile() {
         "ReactJS, TypeScript, Python, MaterialUI, Google Cloud Functions",
       date: "2022",
       summary:
-        "Developed backend using Python and Google Cloud Functions, integrating APIs for video summarization, text classification, and topic extraction. Created a responsive frontend with ReactJS and MaterialUI.",
+        "Developed backend using Python and Google Cloud Functions, integrating APIs for video summarization, text classification, and topic extraction.",
       link: "/projects/succinct",
       image: "/src/assets/Projects/Succinct/Succinct.png",
+      logo: "/src/assets/Projects/Succinct/SuccinctLogo.png",
+      githubLink: "https://github.com/ArshSB/Succinct",
+      details: [
+        "Developed backend using Python and Google Cloud Functions,integrating APIs for video summarization, text classification, and topic extraction.",
+        "Collaborated to create a responsive frontend with ReactJS and MaterialUI, enabling users to obtain and interact with YouTube video summaries.",
+      ],
     },
     {
       title: "Dark/Night Mode For Wikipedia",
@@ -105,6 +135,13 @@ export default function UserProfile() {
         "Developed a Chrome extension enabling dark mode for Wikipedia and sister projects, intelligently adjusting page elements’ colors to improve readability for 150+ users.",
       link: "/projects/dark-mode-wikipedia",
       image: "/src/assets/Projects/Wikipedia/Wikipedia.png",
+      logo: "/src/assets/Projects/Wikipedia/Logo.png",
+      githubLink:
+        "https://github.com/Roba-Geleta/Dark-Night-Mode-For-Wikipedia",
+      details: [
+        "Developed a Chrome extension enabling dark mode for Wikipedia and sister projects, intelligently adjusting page elements’ colors to improve readability for 150+ users.",
+        "Implemented efficient tab management and state persistence, ensuring seamless dark mode activation across browser sessions.",
+      ],
     },
     {
       title: "Gratitude Prototype",
@@ -114,6 +151,12 @@ export default function UserProfile() {
         "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
       link: "/projects/gratitude-prototype",
       image: "/src/assets/Projects/Gratitude/Gratitude.png",
+      logo: "/src/assets/Projects/Gratitude/GratitudeLogo.png",
+      githubLink: "https://github.com/scottjodoin/gratitude-prototype",
+      details: [
+        "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
+        "Worked closely with stakeholders to gather requirements and feedback, ensuring the final product met user needs and expectations.",
+      ],
     },
     {
       title: "Aurora-Selenium-Scrape & roBot",
@@ -123,6 +166,12 @@ export default function UserProfile() {
         "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system. Developed 'roBot', a Discord bot hosted on Google Cloud Services, providing students with instant access to course information.",
       link: "/projects/aurora-selenium-robot",
       image: "/src/assets/Projects/ScrapeRobot/ScrapeRobot.png",
+      logo: "/src/assets/Projects/ScrapeRobot/ScrapeRobot.png",
+      githubLink: "https://github.com/Roba-Geleta/roBot",
+      details: [
+        "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system, implementing error handling and JSON storage for efficient management.",
+        "Developed and deployed ’roBot’, a Discord bot hosted on Google Cloud Services, which served 10 servers and provided students with instant access to course information, enhancing course planning efficiency.",
+      ],
     },
   ];
 
@@ -170,6 +219,7 @@ export default function UserProfile() {
       "ASP.NET Core",
       "SQL Server",
       "Gradle",
+      "Adobe Premiere Pro",
     ],
     practices: [
       "Agile Methodologies",
@@ -197,18 +247,16 @@ export default function UserProfile() {
       />
     ));
 
-  // Prepare Experience slides as React nodes (Experience Cards)
   const experienceSlides = experiences.map((exp, index) => (
     <Box
       key={index}
-      className="experience-slide"
+      className="experience-slide border-2 border-gray-300 dark:border-gray-500"
       sx={{
-        position: "relative", // Establish a positioning context for the pseudo-element
+        position: "relative",
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         alignItems: "center",
         padding: 3,
-        // backgroundColor: mode === "dark" ? "grey.900" : "background.paper",
         borderRadius: 2,
         boxShadow: 3,
         height: "100%",
@@ -221,12 +269,12 @@ export default function UserProfile() {
           width: "100%",
           height: "100%",
           backgroundImage: `url(${exp.background})`,
-          backgroundSize: "cover", // Adjust as needed (contain, cover, etc.)
+          backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          filter: mode === "dark" ? "invert(1)" : "invert(0)", // Invert only the background image
-          opacity: 0.1, // Adjust opacity as needed to ensure readability
-          zIndex: -1, // Place the pseudo-element behind the content
+          filter: mode === "dark" ? "invert(1)" : "invert(0)",
+          opacity: 0.1,
+          zIndex: -1,
         },
       }}
     >
@@ -280,7 +328,8 @@ export default function UserProfile() {
           size="small"
           variant="contained"
           color="primary"
-          href={exp.link}
+          // href={exp.link} // Remove this since we're not navigating
+          onClick={() => setOpenDialog(index)} // Open the dialog for this experience
           sx={{ mt: 2, alignSelf: { xs: "center", md: "flex-start" } }}
         >
           Read More
@@ -349,7 +398,13 @@ export default function UserProfile() {
         >
           <strong>Technologies:</strong> {project.technologies}
         </Typography>
-        <Button size="small" color="primary" href={project.link} sx={{ mt: 2 }}>
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => setOpenProjectDialog(index)} // Open the dialog
+          sx={{ mt: 2 }}
+        >
           Read More
         </Button>
       </Grid>
@@ -363,29 +418,18 @@ export default function UserProfile() {
   };
 
   return (
-    <Box
-      id="hero"
-      sx={{
-        width: "100%",
-        backgroundRepeat: "no-repeat",
-        backgroundImage:
-          "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)",
-      }}
-      className="bg-orange-100 dark:bg-gray-900 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,_hsl(210,_100%,_90%),_transparent)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,_hsl(210,_100%,_16%),_transparent)]"
-    >
+    <>
       <Container
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          pt: { xs: 12, sm: 14 },
-          pb: { xs: 6, sm: 8 },
         }}
       >
         {/* Avatar */}
         <AnimatedAvatar
           alt="Roba Geleta"
-          src="/src/assets/Roba.jpg"
+          src="/src/assets/Roba.webp"
           sx={{ width: 270, height: 270, mb: 2 }}
         />
         {/* Name */}
@@ -423,19 +467,7 @@ export default function UserProfile() {
           thrive in collaborative environments and am committed to building
           efficient, user-friendly digital solutions.
         </Typography>
-        {/* Action Buttons */}
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={2}
-          justifyContent="center"
-        >
-          <Button variant="contained" color="primary" href="#projects">
-            View Projects
-          </Button>
-          <Button variant="outlined" color="primary" href="#contact">
-            Contact Me
-          </Button>
-        </Stack>
+
         {/* Social Media Links */}
         <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
           <Tooltip title="LinkedIn">
@@ -477,6 +509,7 @@ export default function UserProfile() {
         {/* Experiences Section */}
         <Box sx={{ mt: 6, width: "100%", maxWidth: 1000 }}>
           <Typography
+            id="Experience"
             variant="h4"
             component="h2"
             align="center"
@@ -505,12 +538,16 @@ export default function UserProfile() {
         {/* Projects Section */}
         <Box sx={{ mt: 6, width: "100%", maxWidth: 1200 }}>
           <Typography
-            variant="h5"
+            id="Projects"
+            variant="h4"
             component="h2"
             align="center"
             gutterBottom
+            className="text-gray-900 dark:text-white"
             sx={{
-              color: mode === "dark" ? "common.white" : "text.primary",
+              fontWeight: "bold",
+              mb: 3,
+              fontSize: { xs: "2rem", sm: "2.5rem" },
             }}
           >
             Projects
@@ -521,6 +558,7 @@ export default function UserProfile() {
         <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
           {/* Main Technical Skills Header */}
           <Typography
+            id="Skills"
             variant="h4"
             component="h2"
             align="center"
@@ -652,6 +690,26 @@ export default function UserProfile() {
           </Box>
         </Box>
       </Container>
-    </Box>
+
+      {/* Experience Dialog */}
+      {openDialog !== null && (
+        <ExperienceDialog
+          open={openDialog !== null}
+          onClose={() => setOpenDialog(null)}
+          experience={experiences[openDialog]}
+          mode={mode}
+        />
+      )}
+
+      {/* Project Dialog */}
+      {openProjectDialog !== null && (
+        <ProjectDialog
+          open={openProjectDialog !== null}
+          onClose={() => setOpenProjectDialog(null)}
+          project={projects[openProjectDialog]}
+          mode={mode}
+        />
+      )}
+    </>
   );
 }
