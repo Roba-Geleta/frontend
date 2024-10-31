@@ -10,10 +10,8 @@ import TenKFinder from "../../Components/TenKFinder/TenKFinder";
 import ReadMore from "../../Components/ReadMore/ReadMore";
 import { Box, Divider } from "@mui/material";
 
-interface Props {}
-
-const CompanyPage = (props: Props) => {
-  let { ticker } = useParams();
+const CompanyPage = () => {
+  const { ticker } = useParams();
   const [company, setCompany] = useState<CompanyProfile>();
 
   useEffect(() => {
@@ -23,7 +21,7 @@ const CompanyPage = (props: Props) => {
       console.log(result[0]);
     };
     getProfileInit();
-  }, []);
+  }, [ticker]);
 
   // Function to format DCF value
   const formatDecimal = (num: number) => {
