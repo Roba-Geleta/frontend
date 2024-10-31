@@ -15,18 +15,25 @@ type Props = {
 const RatioList = ({ config, data }: Props) => {
   const renderedRows = config.map((row, index) => {
     return (
-      <li key={`ratio-${index}`} className="py-3 sm:py-4">
-        <div className="flex items-center space-x-4">
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">
+      <li
+        key={`ratio-${index}`}
+        className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-4"
+      >
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+          <div>
+            <p className="text-sm sm:text-base font-medium text-gray-800 dark:text-gray-100">
               {row.label}
             </p>
             {row.subTitle && (
-              <p className="text-sm text-gray-500 truncate">{row.subTitle}</p>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">
+                {row.subTitle}
+              </p>
             )}
           </div>
-          <div className="inline-flex items-center text-base font-semibold text-gray-900">
-            {row.render(data)}
+          <div className="mt-2 md:mt-0">
+            <span className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {row.render(data)}
+            </span>
           </div>
         </div>
       </li>
@@ -34,8 +41,13 @@ const RatioList = ({ config, data }: Props) => {
   });
 
   return (
-    <div className="bg-white shadow rounded-lg ml-4 mt-4 mb-4 p-4 sm:p-6 h-full">
-      <ul className="divide-y divided-gray-200">{renderedRows}</ul>
+    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 sm:p-8 mx-4">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+        Key Metrics
+      </h2>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {renderedRows}
+      </ul>
     </div>
   );
 };
