@@ -1,42 +1,55 @@
 import React from "react";
+import { ConfigItem } from "../RatioList/RatioList";
 
 type Props = {
-  config: any;
-  data: any;
+  config: ConfigItem[];
+  data: any[]; // Ideally, specify a more precise type based on data structure
 };
 
 const Table = ({ config, data }: Props) => {
-  const renderedRows = data.map((company: any) => {
+  const renderedRows = data.map((company, index) => {
+    const uniqueKey = company.cik ? company.cik : index;
+
     return (
-      <tr key={company.cik}>
-        {config.map((val: any) => {
-          return (
-            <td className="p-4 whitespace-nowrap test-sm font-normal text-gray-900">
-              {val.render(company)}
-            </td>
-          );
-        })}
+      <tr
+        key={`row-${uniqueKey}-${index}`}
+        className={`${
+          index % 2 === 0
+            ? "bg-white dark:bg-gray-800"
+            : "bg-gray-50 dark:bg-gray-700"
+        } hover:bg-gray-100 dark:hover:bg-gray-600`}
+      >
+        {config.map((val, idx) => (
+          <td
+            className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 dark:text-gray-100"
+            key={`cell-${uniqueKey}-${idx}`}
+          >
+            {val.render(company)}
+          </td>
+        ))}
       </tr>
     );
   });
 
-  const renderedHeaders = config.map((config: any) => {
-    return (
-      <th
-        className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        key={config.label}
-      >
-        {config.label}
-      </th>
-    );
-  });
+  const renderedHeaders = config.map((configItem, index) => (
+    <th
+      className="p-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+      key={`header-${index}-${configItem.label}`}
+      scope="col"
+    >
+      {configItem.label}
+    </th>
+  ));
+
   return (
-    <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
-      <table>
-        <thead className="min-w-full divide-y divide=gray-200 m-5">
+    <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead className="bg-gray-50 dark:bg-gray-700">
           <tr>{renderedHeaders}</tr>
         </thead>
-        <tbody>{renderedRows}</tbody>
+        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+          {renderedRows}
+        </tbody>
       </table>
     </div>
   );
