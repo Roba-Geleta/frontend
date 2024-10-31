@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CompanyIncomeStatement } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getIncomeStatement } from "../../api";
@@ -8,78 +8,103 @@ import {
   formatLargeMonetaryNumber,
   formatRatio,
 } from "../../Helpers/NumberFormating";
-import { ConfigItem } from "../RatioList/RatioList";
+import { ConfigItem, RenderData } from "../RatioList/RatioList";
 
-interface Props {}
-
-// Define a more precise ConfigItem type if possible
 const configs: ConfigItem[] = [
   {
     label: "Date",
-    render: (company: CompanyIncomeStatement) => company.date,
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return company.date;
+    },
   },
   {
     label: "Revenue",
-    render: (company: CompanyIncomeStatement) =>
-      formatLargeMonetaryNumber(company.revenue),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatLargeMonetaryNumber(company.revenue);
+    },
   },
   {
     label: "Cost Of Revenue",
-    render: (company: CompanyIncomeStatement) =>
-      formatLargeMonetaryNumber(company.costOfRevenue),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatLargeMonetaryNumber(company.costOfRevenue);
+    },
   },
   {
     label: "Depreciation",
-    render: (company: CompanyIncomeStatement) =>
-      formatLargeMonetaryNumber(company.depreciationAndAmortization),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatLargeMonetaryNumber(company.depreciationAndAmortization);
+    },
   },
   {
     label: "Operating Income",
-    render: (company: CompanyIncomeStatement) =>
-      formatLargeMonetaryNumber(company.operatingIncome),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatLargeMonetaryNumber(company.operatingIncome);
+    },
   },
   {
     label: "Income Before Taxes",
-    render: (company: CompanyIncomeStatement) =>
-      formatLargeMonetaryNumber(company.incomeBeforeTax),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatLargeMonetaryNumber(company.incomeBeforeTax);
+    },
   },
   {
     label: "Net Income",
-    render: (company: CompanyIncomeStatement) =>
-      formatLargeMonetaryNumber(company.netIncome),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatLargeMonetaryNumber(company.netIncome);
+    },
   },
   {
     label: "Net Income Ratio",
-    render: (company: CompanyIncomeStatement) =>
-      formatRatio(company.netIncomeRatio),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatRatio(company.netIncomeRatio);
+    },
   },
   {
     label: "Earnings Per Share",
-    render: (company: CompanyIncomeStatement) => formatRatio(company.eps),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatRatio(company.eps);
+    },
   },
   {
     label: "Earnings Per Diluted",
-    render: (company: CompanyIncomeStatement) =>
-      formatRatio(company.epsdiluted),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatRatio(company.epsdiluted);
+    },
   },
   {
     label: "Gross Profit Ratio",
-    render: (company: CompanyIncomeStatement) =>
-      formatRatio(company.grossProfitRatio),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatRatio(company.grossProfitRatio);
+    },
   },
   {
     label: "Operating Income Ratio",
-    render: (company: CompanyIncomeStatement) =>
-      formatRatio(company.operatingIncomeRatio),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatRatio(company.operatingIncomeRatio);
+    },
   },
   {
     label: "Income Before Taxes Ratio",
-    render: (company: CompanyIncomeStatement) =>
-      formatRatio(company.incomeBeforeTaxRatio),
+    render: (data: RenderData) => {
+      const company = data as CompanyIncomeStatement;
+      return formatRatio(company.incomeBeforeTaxRatio);
+    },
   },
 ];
 
-const IncomeStatement = (props: Props) => {
+const IncomeStatement = () => {
   const ticker = useOutletContext<string>();
   const [incomeStatement, setIncomeStatement] = useState<
     CompanyIncomeStatement[] | null

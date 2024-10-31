@@ -1,15 +1,26 @@
 import React from "react";
+import {
+  CompanyBalanceSheet,
+  CompanyCashFlow,
+  CompanyIncomeStatement,
+  CompanyKeyMetrics,
+} from "../../company";
 
-// Define a type for the config item
+export type RenderData =
+  | CompanyCashFlow
+  | CompanyIncomeStatement
+  | CompanyBalanceSheet
+  | CompanyKeyMetrics;
+
 export type ConfigItem = {
   label: string | JSX.Element;
   subTitle?: string;
-  render: (data: any) => React.ReactNode;
+  render: (data: RenderData) => React.ReactNode;
 };
 
 type Props = {
   config: ConfigItem[];
-  data: unknown;
+  data: RenderData;
 };
 
 const RatioList = ({ config, data }: Props) => {

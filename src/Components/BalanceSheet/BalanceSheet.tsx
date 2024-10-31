@@ -2,70 +2,94 @@ import { useEffect, useState } from "react";
 import { CompanyBalanceSheet } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getBalanceSheet } from "../../api";
-import RatioList from "../RatioList/RatioList";
+import RatioList, { ConfigItem, RenderData } from "../RatioList/RatioList";
 import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
 
-const configs = [
+const configs: ConfigItem[] = [
   {
     label: <div className="font-bold">Total Assets</div>,
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.totalAssets),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.totalAssets);
+    },
   },
   {
     label: "Current Assets",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.totalCurrentAssets),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.totalCurrentAssets);
+    },
   },
   {
     label: "Total Cash",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.cashAndCashEquivalents),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.cashAndCashEquivalents);
+    },
   },
   {
     label: "Property & Equipment",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.propertyPlantEquipmentNet),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.propertyPlantEquipmentNet);
+    },
   },
   {
     label: "Intangible Assets",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.intangibleAssets),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.intangibleAssets);
+    },
   },
   {
     label: "Long Term Debt",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.longTermDebt),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.longTermDebt);
+    },
   },
   {
     label: "Total Liabilities",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.totalLiabilities),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.totalLiabilities);
+    },
   },
   {
     label: "Current Liabilities",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.totalCurrentLiabilities),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.totalCurrentLiabilities);
+    },
   },
   {
     label: "Long-Term Debt",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.longTermDebt),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.longTermDebt);
+    },
   },
   {
     label: "Long-Term Income Taxes",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.otherLiabilities),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.otherLiabilities);
+    },
   },
   {
     label: "Stakeholder's Equity",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.totalStockholdersEquity),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.totalStockholdersEquity);
+    },
   },
   {
     label: "Retained Earnings",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.retainedEarnings),
+    render: (data: RenderData) => {
+      const company = data as CompanyBalanceSheet;
+      return formatLargeMonetaryNumber(company.retainedEarnings);
+    },
   },
 ];
 

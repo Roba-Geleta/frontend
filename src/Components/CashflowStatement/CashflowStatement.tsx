@@ -5,50 +5,68 @@ import { getCashflowStatement } from "../../api";
 import Table from "../Table/Table";
 import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
-import { ConfigItem } from "../RatioList/RatioList";
+import { ConfigItem, RenderData } from "../RatioList/RatioList";
 
-// Define a more precise ConfigItem type if possible
 const configs: ConfigItem[] = [
   {
     label: "Date",
-    render: (company: CompanyCashFlow) => company.date,
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return company.date;
+    },
   },
   {
     label: "Operating Cashflow",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(company.operatingCashFlow),
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(company.operatingCashFlow);
+    },
   },
   {
     label: "Investing Cashflow",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(company.netCashUsedForInvestingActivites),
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(
+        company.netCashUsedForInvestingActivites
+      );
+    },
   },
   {
     label: "Financing Cashflow",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(
         company.netCashUsedProvidedByFinancingActivities
-      ),
+      );
+    },
   },
   {
     label: "Cash At End of Period",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(company.cashAtEndOfPeriod),
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(company.cashAtEndOfPeriod);
+    },
   },
   {
     label: "CapEX",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(company.capitalExpenditure),
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(company.capitalExpenditure);
+    },
   },
   {
     label: "Issuance Of Stock",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(company.commonStockIssued),
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(company.commonStockIssued);
+    },
   },
   {
     label: "Free Cash Flow",
-    render: (company: CompanyCashFlow) =>
-      formatLargeMonetaryNumber(company.freeCashFlow),
+    render: (data: RenderData) => {
+      const company = data as CompanyCashFlow;
+      return formatLargeMonetaryNumber(company.freeCashFlow);
+    },
   },
 ];
 
