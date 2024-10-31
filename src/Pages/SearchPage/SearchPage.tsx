@@ -11,13 +11,10 @@ import {
   portfolioGetAPI,
 } from "../../Services/PortfolioService";
 import { toast } from "react-toastify";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { handleError } from "../../Helpers/ErrorHandler";
 
-interface Props {}
-
-const SearchPage = (props: Props) => {
-  // const [count, setCount] = useState(0);
+const SearchPage = () => {
   const [search, setSearch] = useState<string>("");
   const [portfolioValues, setPortfolioValues] = useState<PortfolioGet[] | null>(
     []
@@ -47,9 +44,11 @@ const SearchPage = (props: Props) => {
       });
   };
 
-  const onPortfolioCreate = (e: any) => {
+  const onPortfolioCreate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    portfolioAddAPI(e.target[0].value)
+    const target = e.target as HTMLFormElement;
+    const input = target[0] as HTMLInputElement;
+    portfolioAddAPI(input.value)
       .then((res) => {
         if (res?.status === 204) {
           toast.success("Stock added to portfolio!");
@@ -62,9 +61,11 @@ const SearchPage = (props: Props) => {
       });
   };
 
-  const onPortfolioDelete = (e: any) => {
+  const onPortfolioDelete = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    portfolioDeleteAPI(e.currentTarget[0].value).then((res) => {
+    const target = e.currentTarget as HTMLFormElement;
+    const input = target[0] as HTMLInputElement;
+    portfolioDeleteAPI(input.value).then((res) => {
       if (res?.status === 200) {
         toast.success("Stock deleted from portfolio!");
         getPortfolio();
