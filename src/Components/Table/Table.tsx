@@ -1,9 +1,11 @@
-import React from "react";
+import { CompanyCashFlow, CompanyIncomeStatement } from "../../company";
 import { ConfigItem } from "../RatioList/RatioList";
+
+type TableData = CompanyCashFlow | CompanyIncomeStatement;
 
 type Props = {
   config: ConfigItem[];
-  data: any[]; // Ideally, specify a more precise type based on data structure
+  data: TableData[];
 };
 
 const Table = ({ config, data }: Props) => {
