@@ -8,4 +8,7 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: false,
   },
+  esbuild: {
+    drop: ["console", "debugger"],
+  },
 });
