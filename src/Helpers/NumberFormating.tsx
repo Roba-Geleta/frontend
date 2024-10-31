@@ -16,6 +16,7 @@ export const formatLargeMonetaryNumber: any = (number: number) => {
 };
 
 export const formatLargeNonMonetaryNumber: any = (number: number) => {
+  if (!number) return "-";
   if (number < 0) {
     return "-" + formatLargeMonetaryNumber(-1 * number);
   }
