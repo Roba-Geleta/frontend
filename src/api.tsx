@@ -23,8 +23,12 @@ export const searchCompanies = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error searching companies:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error searching companies:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
@@ -39,8 +43,12 @@ export const getCompanyProfile = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error fetching company profile:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching company profile:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
@@ -54,8 +62,12 @@ export const getKeyMetrics = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error fetching key metrics:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching key metrics:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
@@ -69,8 +81,12 @@ export const getIncomeStatement = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error fetching income statement:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching income statement:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
@@ -84,8 +100,12 @@ export const getBalanceSheet = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error fetching balance sheet:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching balance sheet:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
@@ -99,8 +119,12 @@ export const getCashflowStatement = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error fetching cashflow statement:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching cashflow statement:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
@@ -114,8 +138,12 @@ export const getTenK = async (query: string) => {
       }
     );
     return data;
-  } catch (error: any) {
-    console.error("Error fetching Ten-K filings:", error.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching Ten-K filings:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
     throw error;
   }
 };
