@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CompanyTenK } from "../../company";
 import { getTenK } from "../../api";
 import TenKFinderItem from "./TenKFinderItem/TenKFinderItem";
@@ -17,19 +17,19 @@ const TenKFinder = ({ ticker }: Props) => {
       setCompanyData(value);
     };
     getTenKData();
-  }, []);
+  }, [ticker]);
 
   return (
-    <div className="inline-flex rounded-md.shadow-sm.m-4">
+    <div className="flex flex-wrap m-4">
       {companyData ? (
-        companyData?.slice(0, 5).map((tenK) => {
-          return (
+        companyData
+          .slice(0, 5)
+          .map((tenK) => (
             <TenKFinderItem
               tenk={tenK}
               key={`${tenK.symbol}-${tenK.fillingDate}`}
             />
-          );
-        })
+          ))
       ) : (
         <Spinner />
       )}
