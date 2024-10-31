@@ -1,6 +1,3 @@
-// RegisterPage.tsx
-
-import React from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
@@ -38,7 +35,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="bg-gray-50 dark:bg-gray-900 rounded-xl bg-opacity-50 border-[1px] min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
