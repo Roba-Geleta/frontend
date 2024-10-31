@@ -1,11 +1,8 @@
-// LoginPage.tsx
-
-import React from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Import Link for navigation
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"; // Import Info Icon
 import Tooltip from "@mui/material/Tooltip"; // Import Tooltip from MUI
 
@@ -21,6 +18,9 @@ const validation = Yup.object().shape({
 
 const LoginPage = () => {
   const { loginUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -28,13 +28,15 @@ const LoginPage = () => {
   } = useForm<LoginFormsInputs>({
     resolver: yupResolver(validation),
   });
+  const from = (location.state as { from?: string })?.from || "/";
 
   const handleLogin = (form: LoginFormsInputs) => {
     loginUser(form.userName, form.password);
+    navigate(from, { replace: true });
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="bg-gray-50 dark:bg-gray-900 rounded-xl bg-opacity-50 border-[1px]  min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -68,6 +70,7 @@ const LoginPage = () => {
               } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
               placeholder="Username"
               {...register("userName")}
+              autoComplete="username"
             />
             {errors.userName && (
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">
@@ -93,6 +96,7 @@ const LoginPage = () => {
                   : "border-gray-300 dark:border-gray-600"
               } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
               {...register("password")}
+              autoComplete="current-password"
             />
             {errors.password && (
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">
