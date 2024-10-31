@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CompanyCashFlow } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getCashflowStatement } from "../../api";
@@ -7,9 +7,8 @@ import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
 import { ConfigItem } from "../RatioList/RatioList";
 
-type Props = {};
-
-const config: ConfigItem[] = [
+// Define a more precise ConfigItem type if possible
+const configs: ConfigItem[] = [
   {
     label: "Date",
     render: (company: CompanyCashFlow) => company.date,
@@ -53,26 +52,60 @@ const config: ConfigItem[] = [
   },
 ];
 
-const CashflowStatement = (props: Props) => {
+const CashflowStatement = () => {
   const ticker = useOutletContext<string>();
-  const [cashflowData, setCashflowData] = useState<CompanyCashFlow[]>([]);
+  const [cashflowData, setCashflowData] = useState<CompanyCashFlow[] | null>(
+    null
+  );
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!ticker) {
+      console.warn("Ticker is undefined. Skipping fetch.");
+      setLoading(false);
+      return;
+    }
+
     const fetchCashflowData = async () => {
-      const result = await getCashflowStatement(ticker!);
-      setCashflowData(result);
+      try {
+        const result = await getCashflowStatement(ticker!);
+        setCashflowData(result);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching cashflow statement:", err);
+        setError("Failed to load cashflow statement data.");
+        setCashflowData(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCashflowData();
-  }, []);
+  }, [ticker]);
+
   return (
-    <>
-      {cashflowData ? (
-        <Table config={config} data={cashflowData} />
+    <div className="w-full px-4 py-6">
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <Spinner />
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-red-500">{error}</p>
+        </div>
+      ) : cashflowData && cashflowData.length > 0 ? (
+        <div className="space-y-6">
+          <Table config={configs} data={cashflowData} />
+        </div>
       ) : (
-        <Spinner />
+        <div className="flex justify-center items-center h-64">
+          <p className="text-gray-600 dark:text-gray-300">
+            No cashflow data available.
+          </p>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

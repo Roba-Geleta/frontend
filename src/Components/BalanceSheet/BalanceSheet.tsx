@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
 import { CompanyBalanceSheet } from "../../company";
+import { useOutletContext } from "react-router-dom";
 import { getBalanceSheet } from "../../api";
-import RatioList, { ConfigItem } from "../RatioList/RatioList";
+import RatioList from "../RatioList/RatioList";
 import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
 
-type Props = {};
-
-const config: ConfigItem[] = [
+const configs = [
   {
     label: <div className="font-bold">Total Assets</div>,
     render: (company: CompanyBalanceSheet) =>
@@ -25,7 +23,7 @@ const config: ConfigItem[] = [
       formatLargeMonetaryNumber(company.cashAndCashEquivalents),
   },
   {
-    label: "Property & equipment",
+    label: "Property & Equipment",
     render: (company: CompanyBalanceSheet) =>
       formatLargeMonetaryNumber(company.propertyPlantEquipmentNet),
   },
@@ -40,12 +38,7 @@ const config: ConfigItem[] = [
       formatLargeMonetaryNumber(company.longTermDebt),
   },
   {
-    label: "Total Debt",
-    render: (company: CompanyBalanceSheet) =>
-      formatLargeMonetaryNumber(company.otherCurrentLiabilities),
-  },
-  {
-    label: <div className="font-bold">Total Liabilites</div>,
+    label: "Total Liabilities",
     render: (company: CompanyBalanceSheet) =>
       formatLargeMonetaryNumber(company.totalLiabilities),
   },
@@ -76,26 +69,58 @@ const config: ConfigItem[] = [
   },
 ];
 
-const BalanceSheet = (props: Props) => {
+const BalanceSheet = () => {
   const ticker = useOutletContext<string>();
-  const [balanceSheet, setBalanceSheet] = useState<CompanyBalanceSheet>();
+  const [balanceSheet, setBalanceSheet] =
+    useState<CompanyBalanceSheet | null>();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const getData = async () => {
-      const value = await getBalanceSheet(ticker!);
-      setBalanceSheet(value[0]);
+    const fetchBalanceSheet = async () => {
+      try {
+        const result = await getBalanceSheet(ticker!);
+        setBalanceSheet(result[0]);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching balance sheet:", err);
+        setError("Failed to load balance sheet data.");
+        setBalanceSheet(null);
+      } finally {
+        setLoading(false);
+      }
     };
-    getData();
-  }, []);
+
+    fetchBalanceSheet();
+  }, [ticker]);
 
   return (
-    <>
-      {balanceSheet ? (
-        <RatioList config={config} data={balanceSheet} />
+    <div className="w-full px-4 py-6">
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <Spinner />
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-red-500">{error}</p>
+        </div>
+      ) : balanceSheet ? (
+        <div className="space-y-6">
+          <div className="text-center">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              Calendar Year: {balanceSheet.calendarYear}
+            </h2>
+          </div>
+          <RatioList data={balanceSheet} config={configs} />
+        </div>
       ) : (
-        <Spinner />
+        <div className="flex justify-center items-center h-64">
+          <p className="text-gray-600 dark:text-gray-300">
+            No balance sheet data available.
+          </p>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

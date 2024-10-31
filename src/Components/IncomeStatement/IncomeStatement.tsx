@@ -12,6 +12,7 @@ import { ConfigItem } from "../RatioList/RatioList";
 
 interface Props {}
 
+// Define a more precise ConfigItem type if possible
 const configs: ConfigItem[] = [
   {
     label: "Date",
@@ -67,7 +68,7 @@ const configs: ConfigItem[] = [
       formatRatio(company.grossProfitRatio),
   },
   {
-    label: "Opearting Income Ratio",
+    label: "Operating Income Ratio",
     render: (company: CompanyIncomeStatement) =>
       formatRatio(company.operatingIncomeRatio),
   },
@@ -80,27 +81,51 @@ const configs: ConfigItem[] = [
 
 const IncomeStatement = (props: Props) => {
   const ticker = useOutletContext<string>();
-  const [incomeStatement, setIncomeStatement] =
-    useState<CompanyIncomeStatement[]>();
+  const [incomeStatement, setIncomeStatement] = useState<
+    CompanyIncomeStatement[] | null
+  >(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const incomeStatementFetch = async () => {
-      const result = await getIncomeStatement(ticker);
-      setIncomeStatement(result);
+      try {
+        const result = await getIncomeStatement(ticker);
+        setIncomeStatement(result);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching income statement:", err);
+        setError("Failed to load income statement data.");
+        setIncomeStatement(null);
+      } finally {
+        setLoading(false);
+      }
     };
     incomeStatementFetch();
-  }, []);
+  }, [ticker]);
 
   return (
-    <>
-      {incomeStatement ? (
-        <>
-          <Table config={configs} data={incomeStatement}></Table>
-        </>
+    <div className="w-full px-4 py-6">
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <Spinner />
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-red-500">{error}</p>
+        </div>
+      ) : incomeStatement && incomeStatement.length > 0 ? (
+        <div className="space-y-6">
+          <Table config={configs} data={incomeStatement} />
+        </div>
       ) : (
-        <Spinner />
+        <div className="flex justify-center items-center h-64">
+          <p className="text-gray-600 dark:text-gray-300">
+            No income statement data available.
+          </p>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

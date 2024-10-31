@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CompanyKeyMetrics } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getKeyMetrics } from "../../api";
@@ -9,8 +9,6 @@ import {
   formatRatio,
 } from "../../Helpers/NumberFormating";
 import StockComment from "../StockComment/StockComment";
-
-interface Props {}
 
 const tableConfig = [
   {
@@ -81,30 +79,39 @@ const tableConfig = [
   },
 ];
 
-const CompanyProfile = (props: Props) => {
+const CompanyProfile = () => {
   const ticker = useOutletContext<string>();
   const [companyData, setCompanyData] = useState<CompanyKeyMetrics>();
 
   useEffect(() => {
     const getCompanyKeyMetrics = async () => {
-      const value = await getKeyMetrics(ticker);
-      setCompanyData(value[0]);
+      try {
+        const value = await getKeyMetrics(ticker);
+        setCompanyData(value[0]);
+        console.log("Company Key Metrics:", value);
+      } catch (error) {
+        console.error("Error fetching company key metrics:", error);
+      }
     };
     getCompanyKeyMetrics();
-  }, []);
+  }, [ticker]);
 
   return (
-    <>
+    <div className="w-full px-4 py-6">
       {companyData ? (
-        <>
-          {" "}
+        <div className="space-y-6">
+          {/* Ratio List */}
           <RatioList data={companyData} config={tableConfig} />
+
+          {/* Stock Comments */}
           <StockComment stockSymbol={ticker} />
-        </>
+        </div>
       ) : (
-        <Spinner />
+        <div className="flex justify-center items-center h-64">
+          <Spinner />
+        </div>
       )}
-    </>
+    </div>
   );
 };
 
