@@ -1,8 +1,9 @@
+// src/Pages/RegisterPage/RegisterPage.tsx
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -17,11 +18,19 @@ const validation = Yup.object().shape({
     .email("Must be a valid email")
     .required("Email is required"),
   userName: Yup.string().required("Username is required"),
-  password: Yup.string().required("Password is required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(12, "Password must be at least 12 characters long")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/\d/, "Password must contain at least one digit")
+    .matches(/\W/, "Password must contain at least one special character"),
 });
 
 const RegisterPage = () => {
   const { registerUser } = useAuth();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -30,8 +39,15 @@ const RegisterPage = () => {
     resolver: yupResolver(validation),
   });
 
-  const handleRegister = (form: RegisterFormsInputs) => {
-    registerUser(form.email, form.userName, form.password);
+  const handleRegister = async (form: RegisterFormsInputs) => {
+    const success = await registerUser(
+      form.email,
+      form.userName,
+      form.password
+    );
+    if (success) {
+      navigate("/stocks", { replace: true });
+    }
   };
 
   return (
@@ -128,6 +144,17 @@ const RegisterPage = () => {
                 {errors.password.message}
               </p>
             )}
+            {/* Display password requirements */}
+            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              <p>Password must contain:</p>
+              <ul className="list-disc list-inside">
+                <li>At least 12 characters</li>
+                <li>One uppercase letter</li>
+                <li>One lowercase letter</li>
+                <li>One number</li>
+                <li>One special character</li>
+              </ul>
+            </div>
           </div>
           {/* Action Buttons */}
           <button

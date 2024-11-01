@@ -1,3 +1,4 @@
+// src/Pages/LoginPage/LoginPage.tsx
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
@@ -28,11 +29,14 @@ const LoginPage = () => {
   } = useForm<LoginFormsInputs>({
     resolver: yupResolver(validation),
   });
+
   const from = (location.state as { from?: string })?.from || "/";
 
-  const handleLogin = (form: LoginFormsInputs) => {
-    loginUser(form.userName, form.password);
-    navigate(from, { replace: true });
+  const handleLogin = async (form: LoginFormsInputs) => {
+    const success = await loginUser(form.userName, form.password);
+    if (success) {
+      navigate(from, { replace: true });
+    }
   };
 
   return (

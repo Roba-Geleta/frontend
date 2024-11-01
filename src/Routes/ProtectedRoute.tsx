@@ -8,10 +8,14 @@ const ProtectedRoute = ({ children }: Props) => {
   const location = useLocation();
   const { isLoggedIn } = useAuth();
 
-  return isLoggedIn() ? (
+  return isLoggedIn ? (
     <>{children}</>
   ) : (
-    <Navigate to="/login" state={{ from: location.pathname }} replace />
+    <Navigate
+      to="/login"
+      replace
+      state={{ from: location.pathname + location.search }}
+    />
   );
 };
 
