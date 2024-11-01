@@ -349,7 +349,7 @@ const AppAppBar: React.FC = () => {
                 aria-haspopup="true"
                 aria-expanded={isMenuOpen ? "true" : undefined}
               >
-                {isLoggedIn() ? (
+                {isLoggedIn ? (
                   <Avatar {...stringAvatar(user?.userName || "User Name")} />
                 ) : (
                   <Avatar sx={{ bgcolor: "black" }} />
@@ -525,7 +525,7 @@ const AppAppBar: React.FC = () => {
                   <Divider className="my-2 dark:bg-gray-700" />
 
                   {/* Account Options */}
-                  {isLoggedIn() ? (
+                  {isLoggedIn ? (
                     <>
                       {/* Account Information */}
                       <Box

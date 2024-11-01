@@ -9,7 +9,7 @@ type PublicRouteProps = {
 const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   const { isLoggedIn } = useAuth();
 
-  return isLoggedIn() ? <Navigate to="/" replace /> : <>{children}</>;
+  return isLoggedIn ? <Navigate to="/" replace /> : <>{children}</>;
 };
 
 export default PublicRoute;
