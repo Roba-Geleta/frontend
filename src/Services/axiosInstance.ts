@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5121/api/",
+  baseURL:
+    "https://geletaazureapi-ckc6d5fagpc7awhh.canadacentral-01.azurewebsites.net/api/",
   withCredentials: true, // Enables sending cookies with requests
 });
 
