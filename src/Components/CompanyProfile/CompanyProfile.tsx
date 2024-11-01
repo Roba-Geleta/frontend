@@ -130,7 +130,9 @@ const CompanyProfile = () => {
         </div>
       ) : (
         <div className="flex justify-center items-center h-64">
-          <Spinner />
+          <p className="text-gray-600 dark:text-gray-300">
+            No Company Key Metrics data available.
+          </p>
         </div>
       )}
     </div>
