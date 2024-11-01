@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   build: {
     target: "es2022",
@@ -9,6 +9,6 @@ export default defineConfig({
     sourcemap: false,
   },
   esbuild: {
-    drop: ["console", "debugger"],
+    drop: mode === "production" ? ["console", "debugger"] : [],
   },
-});
+}));
