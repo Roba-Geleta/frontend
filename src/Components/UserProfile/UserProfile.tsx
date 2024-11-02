@@ -26,6 +26,7 @@ import CodeIcon from "@mui/icons-material/Code";
 import BuildIcon from "@mui/icons-material/Build";
 import SpeedIcon from "@mui/icons-material/Speed";
 import Settings from "@mui/icons-material/Settings";
+import ConstructionIcon from "@mui/icons-material/Construction";
 import { ThemeContext } from "../../Context/ThemeContext";
 import Roba from "../../assets/Roba.webp";
 // Experience Images
@@ -209,6 +210,8 @@ export default function UserProfile() {
       "ESLint",
       "Azure",
       "Cloudflare",
+      "Financial Modeling API",
+      "Google Cloud Functions",
     ],
     images: [StocksImage1, StocksImage2],
     link: "/stocks",
@@ -602,30 +605,35 @@ export default function UserProfile() {
             sx={{
               position: "relative",
               display: "flex",
-              flexDirection: { xs: "column", md: "row" },
+              flexDirection: { xs: "column-reverse", md: "row" },
               width: "100%",
               maxWidth: 1200,
-              height: { xs: "auto", md: 300 },
               borderRadius: 2,
               overflow: "hidden",
-              boxShadow: 3,
+              boxShadow:
+                mode === "dark"
+                  ? "0 0 15px rgba(255, 215, 0, 0.7)" // Enhanced shadow for dark mode
+                  : "0 0 15px rgba(255, 165, 0, 0.7)", // Enhanced shadow for light mode
+              border: `2px solid ${mode === "dark" ? "#FFD700" : "#FFA500"}`, // Gold for dark mode, orange for light mode
               mb: 4,
-              backgroundColor: mode === "dark" ? "grey.900" : "grey.100",
+              backgroundColor: mode === "dark" ? "#2c2c2c" : "#fff8e1", // Slightly highlighted background
+              padding: { xs: 2, md: 0 }, // Padding on small screens
             }}
           >
             {/* "Latest Project" Label */}
             <Box
               sx={{
                 position: "absolute",
-                top: -2,
-                left: -2,
+                top: 0,
+                left: 0,
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "rgba(255, 255, 255, 1)", // Added semi-transparent background for better visibility
-                padding: "3px 6px",
+                backgroundColor: "rgba(255, 255, 255, 0.9)", // Semi-transparent background for visibility
+                padding: "4px 8px",
                 zIndex: 2,
+                boxShadow: 1,
               }}
-              className=" rounded-tl-lg rounded-br-lg"
+              className="rounded-tl-lg rounded-br-lg"
             >
               <NewReleasesIcon sx={{ color: "warning.main", mr: 0.5 }} />
               <Typography
@@ -639,119 +647,103 @@ export default function UserProfile() {
               </Typography>
             </Box>
 
-            {/* Images Section */}
+            {/* Content Section */}
             <Box
               sx={{
                 display: "flex",
-                width: "100%",
-                height: "100%",
-                flexDirection: { xs: "column", md: "row" },
+                flexDirection: "column",
+                justifyContent: "center",
+                width: { xs: "100%", md: "60%" },
+                padding: { xs: 2, md: 4 }, // Added padding for better spacing
+                textAlign: { xs: "center", md: "left" },
               }}
             >
-              {/* First Image */}
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: "bold",
+                  mb: 1,
+                  color: mode === "dark" ? "grey.100" : "grey.900",
+                }}
+              >
+                {latestProject.title}
+                {/* "In Progress" Indicator */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: { xs: "center", md: "flex-start" },
+                  }}
+                >
+                  <ConstructionIcon
+                    sx={{ color: "warning.main", fontSize: "1rem", mr: 0.3 }}
+                  />
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "warning.main",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    In Progress
+                  </Typography>
+                </Box>
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: 2, color: mode === "dark" ? "grey.300" : "grey.800" }}
+              >
+                {latestProject.description}
+              </Typography>
+              {/* Technologies Section */}
+              <Typography
+                variant="caption"
+                sx={{
+                  mt: 1,
+                  display: "block",
+                  color: mode === "dark" ? "grey.500" : "grey.600",
+                }}
+              >
+                <strong>Technologies:</strong>{" "}
+                {renderTechnologyText(latestProject.technologies)}
+              </Typography>
+              <Button
+                size="medium"
+                variant="contained"
+                color="primary"
+                href={latestProject.link}
+                sx={{ mt: 2 }}
+              >
+                Visit Stocks Page
+              </Button>
+            </Box>
+
+            {/* Image Section */}
+            <Box
+              sx={{
+                width: { xs: "100%", md: "40%" },
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: { xs: 2, md: 1 }, // Padding to create space around the image
+                order: { xs: 1, md: 2 }, // Image second on large screens
+              }}
+            >
               <Box
                 component="img"
                 src={latestProject.images[0]}
-                alt="Stocks Project Screenshot 1"
+                alt="Stocks Project Screenshot"
                 sx={{
-                  width: { xs: "100%", md: "50%" },
-                  height: { xs: 200, md: "100%" },
+                  width: { xs: "100%", md: "100%" },
+                  height: "auto",
                   objectFit: "cover",
-                  borderBottomLeftRadius: { xs: "0", md: "0.5rem" },
-                  borderTopLeftRadius: "0.5rem",
-                  borderTopRightRadius: { xs: "0.5rem", md: "0" },
+                  borderRadius: 1,
+                  boxShadow: 2,
                 }}
-                className="border-gray-300 dark:border-gray-500"
               />
-              {/* Second Image */}
-              <Box
-                component="img"
-                src={latestProject.images[1]}
-                alt="Stocks Project Screenshot 2"
-                sx={{
-                  width: { xs: "100%", md: "50%" },
-                  height: { xs: 200, md: "100%" },
-                  objectFit: "cover",
-                  borderTopRightRadius: { xs: "0", md: "0.5rem" },
-                  borderBottomRightRadius: "0.5rem",
-                  borderBottomLeftRadius: { xs: "0.5rem", md: "0" },
-                }}
-                className=" border-gray-300 dark:border-gray-500 "
-              />
-            </Box>
-
-            {/* Overlay Box */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "common.white",
-                textAlign: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  background: `radial-gradient(
-                    circle at center,
-                    rgba(0, 0, 0, 0.95) 0%,
-                    rgba(0, 0, 0, 0.85) 20%,
-                    rgba(0, 0, 0, 0.7) 40%,
-                    rgba(0, 0, 0, 0.6) 60%,
-                    rgba(0, 0, 0, 0.3) 80%,
-                    rgba(0, 0, 0, 0) 100%
-                  )`,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 6,
-                  maxWidth: 1000,
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: "bold",
-                    mb: 1,
-                  }}
-                >
-                  {latestProject.title}
-                </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                  {latestProject.description}
-                </Typography>
-                {/* Technologies Section */}
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 1,
-                    display: "block",
-                    color: mode === "dark" ? "grey.500" : "grey.600",
-                  }}
-                >
-                  <strong>Technologies:</strong>{" "}
-                  {renderTechnologyText(latestProject.technologies)}
-                </Typography>
-                <Button
-                  size="medium"
-                  variant="contained"
-                  color="primary"
-                  href={latestProject.link}
-                  sx={{ mt: 2 }}
-                >
-                  Visit Stocks Page
-                </Button>
-              </Box>
             </Box>
           </Box>
+
           <Box sx={{ mt: 2 }}>{projectsSlides}</Box>
         </Box>
         {/* Technical Skills Carousel at the Bottom */}
