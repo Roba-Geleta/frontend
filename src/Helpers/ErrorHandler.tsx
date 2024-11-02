@@ -2,6 +2,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const PUBLIC_ROUTES = ["/", "/credits", "/login", "/register"];
+
 export const handleError = (error: unknown) => {
   if (axios.isAxiosError(error)) {
     const err = error.response;
@@ -104,12 +106,15 @@ const handleBadRequest = (data: BadRequestData) => {
 
 // Helper function to handle 401 Unauthorized errors
 const handleUnauthorizedError = (err: any) => {
+  const currentPath = window.location.pathname;
   if (err.data && typeof err.data === "string") {
     // Display the error message from the server
     toast.warning(err.data);
   } else {
-    // Default message
-    toast.warning("Please login");
+    if (!PUBLIC_ROUTES.includes(currentPath)) {
+      // Default message
+      toast.warning("Please login");
+    }
   }
 };
 

@@ -12,6 +12,7 @@ import {
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
+import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
 import AutoScrollEmblaCarousel from "../EmblaCarousel/AutoScrollEmblaCarousel/AutoScrollEmblaCarousel";
 import AutoplayEmblaCarousel from "../EmblaCarousel/AutoPlayEmblaCarousel/AutoPlayEmblaCarousel";
@@ -45,6 +46,8 @@ import SuccinctLogo from "../../assets/Projects/Succinct/SuccinctLogo.png";
 import Wikipedia from "../../assets/Projects/Wikipedia/Wikipedia.png";
 import WikipediaLogo from "../../assets/Projects/Wikipedia/Logo.png";
 import ScrapeRobot from "../../assets/Projects/ScrapeRobot/ScrapeRobot.png";
+import StocksImage1 from "../../assets/Projects/Stocks/Company.png";
+import StocksImage2 from "../../assets/Projects/Stocks/Stocks.png";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
@@ -191,6 +194,30 @@ export default function UserProfile() {
       ],
     },
   ];
+
+  // Latest Project Data
+  const latestProject = {
+    title: "Financial Insights Platform",
+    description:
+      "Developed a secure platform for users to search and analyze comprehensive financial data of various companies. Features user authentication and a community commenting system to foster engagement and collaboration.",
+    technologies: [
+      "ASP.NET Core",
+      "SQL Server",
+      "C#",
+      "TypeScript",
+      "React",
+      "ESLint",
+      "Azure",
+      "Cloudflare",
+    ],
+    images: [StocksImage1, StocksImage2],
+    link: "/stocks",
+  };
+
+  // Function to render technologies as Typography
+  const renderTechnologyText = (technologies: string[]) => {
+    return technologies.join(", ");
+  };
 
   // Technical Skills
   const technicalSkills = {
@@ -569,6 +596,162 @@ export default function UserProfile() {
           >
             Projects
           </Typography>
+
+          {/* Latest Project Section */}
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              width: "100%",
+              maxWidth: 1200,
+              height: { xs: "auto", md: 300 },
+              borderRadius: 2,
+              overflow: "hidden",
+              boxShadow: 3,
+              mb: 4,
+              backgroundColor: mode === "dark" ? "grey.900" : "grey.100",
+            }}
+          >
+            {/* "Latest Project" Label */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: -2,
+                left: -2,
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "rgba(255, 255, 255, 1)", // Added semi-transparent background for better visibility
+                padding: "3px 6px",
+                zIndex: 2,
+              }}
+              className=" rounded-tl-lg rounded-br-lg"
+            >
+              <NewReleasesIcon sx={{ color: "warning.main", mr: 0.5 }} />
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  fontWeight: "bold",
+                  color: "warning.main",
+                }}
+              >
+                Latest Project
+              </Typography>
+            </Box>
+
+            {/* Images Section */}
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
+              {/* First Image */}
+              <Box
+                component="img"
+                src={latestProject.images[0]}
+                alt="Stocks Project Screenshot 1"
+                sx={{
+                  width: { xs: "100%", md: "50%" },
+                  height: { xs: 200, md: "100%" },
+                  objectFit: "cover",
+                  borderBottomLeftRadius: { xs: "0", md: "0.5rem" },
+                  borderTopLeftRadius: "0.5rem",
+                  borderTopRightRadius: { xs: "0.5rem", md: "0" },
+                }}
+                className="border-gray-300 dark:border-gray-500"
+              />
+              {/* Second Image */}
+              <Box
+                component="img"
+                src={latestProject.images[1]}
+                alt="Stocks Project Screenshot 2"
+                sx={{
+                  width: { xs: "100%", md: "50%" },
+                  height: { xs: 200, md: "100%" },
+                  objectFit: "cover",
+                  borderTopRightRadius: { xs: "0", md: "0.5rem" },
+                  borderBottomRightRadius: "0.5rem",
+                  borderBottomLeftRadius: { xs: "0.5rem", md: "0" },
+                }}
+                className=" border-gray-300 dark:border-gray-500 "
+              />
+            </Box>
+
+            {/* Overlay Box */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "common.white",
+                textAlign: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  background: `radial-gradient(
+                    circle at center,
+                    rgba(0, 0, 0, 0.95) 0%,
+                    rgba(0, 0, 0, 0.85) 20%,
+                    rgba(0, 0, 0, 0.7) 40%,
+                    rgba(0, 0, 0, 0.6) 60%,
+                    rgba(0, 0, 0, 0.3) 80%,
+                    rgba(0, 0, 0, 0) 100%
+                  )`,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 6,
+                  maxWidth: 1000,
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: "bold",
+                    mb: 1,
+                  }}
+                >
+                  {latestProject.title}
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                  {latestProject.description}
+                </Typography>
+                {/* Technologies Section */}
+                <Typography
+                  variant="caption"
+                  sx={{
+                    mt: 1,
+                    display: "block",
+                    color: mode === "dark" ? "grey.500" : "grey.600",
+                  }}
+                >
+                  <strong>Technologies:</strong>{" "}
+                  {renderTechnologyText(latestProject.technologies)}
+                </Typography>
+                <Button
+                  size="medium"
+                  variant="contained"
+                  color="primary"
+                  href={latestProject.link}
+                  sx={{ mt: 2 }}
+                >
+                  Visit Stocks Page
+                </Button>
+              </Box>
+            </Box>
+          </Box>
           <Box sx={{ mt: 2 }}>{projectsSlides}</Box>
         </Box>
         {/* Technical Skills Carousel at the Bottom */}

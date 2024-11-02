@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
 import HomePage from "../Pages/HomePage/HomePage";
 import SearchPage from "../Pages/SearchPage/SearchPage";
@@ -57,6 +57,10 @@ export const router = createBrowserRouter([
           { path: "balance-sheet", element: <BalanceSheet /> },
           { path: "cashflow-statement", element: <CashflowStatement /> },
         ],
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" replace />,
       },
     ],
   },

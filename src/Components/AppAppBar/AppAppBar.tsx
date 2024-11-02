@@ -297,7 +297,7 @@ const AppAppBar: React.FC = () => {
               >
                 Skills
               </Button>
-              <Divider
+              {/* <Divider
                 orientation="vertical"
                 variant="middle"
                 className="border-gray-300 dark:border-gray-700 !border-[0.09rem] !my-[6px] "
@@ -312,7 +312,7 @@ const AppAppBar: React.FC = () => {
                 >
                   STOCKS
                 </Button>
-              </Link>
+              </Link> */}
               {/* <Tooltip title="Linkedin">
                 <Button
                   color="info"
@@ -510,10 +510,10 @@ const AppAppBar: React.FC = () => {
                     </Typography>
                   </MenuItem>
 
-                  {/* Divider */}
+                  {/* Divider
                   <Divider className="my-3 dark:bg-gray-700" />
 
-                  {/* Stocks */}
+                  
                   <MenuItem
                     onClick={() => {
                       navigate("/stocks");
@@ -521,7 +521,7 @@ const AppAppBar: React.FC = () => {
                     }}
                   >
                     <Typography className="dark:text-white">Stocks</Typography>
-                  </MenuItem>
+                  </MenuItem> */}
                   <Divider className="my-2 dark:bg-gray-700" />
 
                   {/* Account Options */}
