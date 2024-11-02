@@ -1,4 +1,3 @@
-// src/Pages/RegisterPage/RegisterPage.tsx
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
