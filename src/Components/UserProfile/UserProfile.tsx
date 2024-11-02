@@ -28,6 +28,25 @@ import BuildIcon from "@mui/icons-material/Build";
 import SpeedIcon from "@mui/icons-material/Speed";
 import Settings from "@mui/icons-material/Settings";
 import { ThemeContext } from "../../Context/ThemeContext";
+import Roba from "../../assets/Roba.webp";
+// Experience Images
+import PPSLogo from "../../assets/PPSLogo.svg";
+import PPSBackground from "../../assets/PPSBackground.webp";
+import OutlierAILogo from "../../assets/OutlierAILogo.svg";
+import OutlierAIBackground from "../../assets/OutlierAIBackground.webp";
+
+// Projects Images
+import AppBookingWithMe from "../../assets/Projects/AppBookingWithMe/AppBookingWithMe.png";
+import AppBookingWithMeLogo from "../../assets/Projects/AppBookingWithMe/AppBookingWithMeLogo.png";
+import BookWorm from "../../assets/Projects/BookWorm/BookWorm.png";
+import BookWormLogo from "../../assets/Projects/BookWorm/bookWormLogo.webp";
+import Gratitude from "../../assets/Projects/Gratitude/Gratitude.png";
+import GratitudeLogo from "../../assets/Projects/Gratitude/GratitudeLogo.png";
+import Succinct from "../../assets/Projects/Succinct/Succinct.png";
+import SuccinctLogo from "../../assets/Projects/Succinct/SuccinctLogo.png";
+import Wikipedia from "../../assets/Projects/Wikipedia/Wikipedia.png";
+import WikipediaLogo from "../../assets/Projects/Wikipedia/Logo.png";
+import ScrapeRobot from "../../assets/Projects/ScrapeRobot/ScrapeRobot.png";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
@@ -46,8 +65,8 @@ export default function UserProfile() {
       summary:
         "Collaborated in a team to develop a user-friendly product activation page for Priceline’s partners across 200+ countries. Utilized React for UI components, Go for server-side logic, and SQL for database queries and analysis.",
       link: "/experience/priceline",
-      image: "/src/assets/PPSLogo.svg", // Default image path
-      background: "/src/assets/PPSBackground.webp", // Default background path
+      image: PPSLogo, // Default image path
+      background: PPSBackground, // Default background path
       technologies: "JavaScript, TypeScript, React, Go, Harness, SQL",
       responsibilities: [
         "Collaborated in a team to develop a user-friendly product activation page for Priceline’s partners across 200+ countries. Utilized React for UI components, Go for server-side logic, and SQL for database queries and analysis.",
@@ -64,8 +83,8 @@ export default function UserProfile() {
       summary:
         "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines. Crafted, solved, and reviewed technical coding problems, developing test cases to refine AI model capabilities and improve code efficiency.",
       link: "/experience/outlier-ai",
-      image: "/src/assets/OutlierAILogo.svg",
-      background: "/src/assets/OutlierAIBackground.webp", // Default background path
+      image: OutlierAILogo,
+      background: OutlierAIBackground, // Default background path
       technologies: "Python, Java, JavaScript, C++",
       responsibilities: [
         "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines.",
@@ -84,8 +103,8 @@ export default function UserProfile() {
       summary:
         "Co-developed an advanced online booking platform that enables businesses to manage appointments and schedules in real-time, enhancing operational efficiency and user engagement.",
       link: "/projects/bookingwithme",
-      image: "/src/assets/Projects/AppBookingWithMe/AppBookingWithMe.png",
-      logo: "/src/assets/Projects/AppBookingWithMe/AppBookingWithMeLogo.png",
+      image: AppBookingWithMe,
+      logo: AppBookingWithMeLogo,
       githubLink: "https://github.com/ngDuyAnh/bookingwith.me-svelte",
       websiteLink: "https://app.bookingwith.me",
       details: [
@@ -102,8 +121,8 @@ export default function UserProfile() {
       summary:
         "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
       link: "/projects/bookworm",
-      image: "/src/assets/Projects/BookWorm/BookWorm.png",
-      logo: "/src/assets/Projects/BookWorm/bookWormLogo.webp",
+      image: BookWorm,
+      logo: BookWormLogo,
       githubLink: "https://github.com/jaredmdp/BookWorm",
       websiteLink: "https://bookwormhonda.vercel.app/",
       details: [
@@ -119,8 +138,8 @@ export default function UserProfile() {
       summary:
         "Developed backend using Python and Google Cloud Functions, integrating APIs for video summarization, text classification, and topic extraction.",
       link: "/projects/succinct",
-      image: "/src/assets/Projects/Succinct/Succinct.png",
-      logo: "/src/assets/Projects/Succinct/SuccinctLogo.png",
+      image: Succinct,
+      logo: SuccinctLogo,
       githubLink: "https://github.com/ArshSB/Succinct",
       details: [
         "Developed backend using Python and Google Cloud Functions,integrating APIs for video summarization, text classification, and topic extraction.",
@@ -134,8 +153,8 @@ export default function UserProfile() {
       summary:
         "Developed a Chrome extension enabling dark mode for Wikipedia and sister projects, intelligently adjusting page elements’ colors to improve readability for 150+ users.",
       link: "/projects/dark-mode-wikipedia",
-      image: "/src/assets/Projects/Wikipedia/Wikipedia.png",
-      logo: "/src/assets/Projects/Wikipedia/Logo.png",
+      image: Wikipedia,
+      logo: WikipediaLogo,
       githubLink:
         "https://github.com/Roba-Geleta/Dark-Night-Mode-For-Wikipedia",
       details: [
@@ -150,8 +169,8 @@ export default function UserProfile() {
       summary:
         "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
       link: "/projects/gratitude-prototype",
-      image: "/src/assets/Projects/Gratitude/Gratitude.png",
-      logo: "/src/assets/Projects/Gratitude/GratitudeLogo.png",
+      image: Gratitude,
+      logo: GratitudeLogo,
       githubLink: "https://github.com/scottjodoin/gratitude-prototype",
       details: [
         "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
@@ -165,8 +184,8 @@ export default function UserProfile() {
       summary:
         "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system. Developed 'roBot', a Discord bot hosted on Google Cloud Services, providing students with instant access to course information.",
       link: "/projects/aurora-selenium-robot",
-      image: "/src/assets/Projects/ScrapeRobot/ScrapeRobot.png",
-      logo: "/src/assets/Projects/ScrapeRobot/ScrapeRobot.png",
+      image: ScrapeRobot,
+      logo: ScrapeRobot,
       githubLink: "https://github.com/Roba-Geleta/roBot",
       details: [
         "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system, implementing error handling and JSON storage for efficient management.",
@@ -429,7 +448,7 @@ export default function UserProfile() {
         {/* Avatar */}
         <AnimatedAvatar
           alt="Roba Geleta"
-          src="/src/assets/Roba.webp"
+          src={Roba}
           sx={{ width: 270, height: 270, mb: 2 }}
         />
         {/* Name */}
