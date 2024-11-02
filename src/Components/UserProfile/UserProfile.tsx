@@ -1,6 +1,4 @@
-// UserProfile.tsx
-
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {

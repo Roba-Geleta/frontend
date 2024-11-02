@@ -1,8 +1,9 @@
 import axios from "axios";
 
+const APP_AZURE_BASE_URL = import.meta.env.VITE_APP_AZURE_BASE_URL;
+
 const axiosInstance = axios.create({
-  baseURL:
-    "https://geletaazureapi-ckc6d5fagpc7awhh.canadacentral-01.azurewebsites.net/api/",
+  baseURL: APP_AZURE_BASE_URL,
   withCredentials: true, // Enables sending cookies with requests
 });
 
