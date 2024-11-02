@@ -74,7 +74,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 const AppAppBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { isLoggedIn, user, logoutUser } = useAuth();
+  const { authLoading, user, isLoggedIn, logoutUser } = useAuth();
   const { mode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -234,6 +234,25 @@ const AppAppBar: React.FC = () => {
     </MenuItem>,
   ];
 
+  // Handle authLoading state
+  const renderAccountIcon = () => {
+    if (authLoading) {
+      // While authentication is loading, you can show a placeholder or nothing
+      return (
+        <Avatar
+          sx={{ bgcolor: "grey.500", width: 32, height: 32 }}
+          variant="circular"
+        />
+      );
+    } else if (isLoggedIn && user) {
+      // User is authenticated
+      return <Avatar {...stringAvatar(user.userName || "User Name")} />;
+    } else {
+      // User is not authenticated
+      return <Avatar sx={{ bgcolor: "grey.500", width: 32, height: 32 }} />;
+    }
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -349,87 +368,85 @@ const AppAppBar: React.FC = () => {
                 aria-haspopup="true"
                 aria-expanded={isMenuOpen ? "true" : undefined}
               >
-                {isLoggedIn ? (
-                  <Avatar {...stringAvatar(user?.userName || "User Name")} />
-                ) : (
-                  <Avatar sx={{ bgcolor: "black" }} />
-                )}
+                {renderAccountIcon()}
               </IconButton>
             </Tooltip>
             <ToggleColorMode />
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={isMenuOpen}
-              onClose={handleMenuClose}
-              onClick={handleMenuClose}
-              PaperProps={{
-                elevation: 4,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  minWidth: 200, // Set a minimum width
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&::before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                  backgroundColor:
-                    mode === "dark" ? "#1f2937" : "background.paper", // Adjust based on mode
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              {/* Info Tooltip */}
-              <Box
-                key="account-info"
-                display="flex"
-                alignItems="center"
-                px={2}
-                py={1}
-                maxWidth={250}
-                width="100%"
-                overflow="hidden"
-              >
-                <Tooltip
-                  title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
-                  arrow
-                  placement="right"
-                >
-                  <InfoOutlinedIcon
-                    fontSize="small"
-                    sx={{
-                      color: mode === "dark" ? "grey.400" : "grey.600",
+            {!authLoading && (
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={isMenuOpen}
+                onClose={handleMenuClose}
+                onClick={handleMenuClose}
+                PaperProps={{
+                  elevation: 4,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    minWidth: 200, // Set a minimum width
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
                       mr: 1,
+                    },
+                    "&::before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                    backgroundColor:
+                      mode === "dark" ? "#1f2937" : "background.paper", // Adjust based on mode
+                  },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                {/* Info Tooltip */}
+                <Box
+                  key="account-info"
+                  display="flex"
+                  alignItems="center"
+                  px={2}
+                  py={1}
+                  maxWidth={250}
+                  width="100%"
+                  overflow="hidden"
+                >
+                  <Tooltip
+                    title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+                    arrow
+                    placement="right"
+                  >
+                    <InfoOutlinedIcon
+                      fontSize="small"
+                      sx={{
+                        color: mode === "dark" ? "grey.400" : "grey.600",
+                        mr: 1,
+                      }}
+                    />
+                  </Tooltip>
+                  <ListItemText
+                    primary="Account Information"
+                    primaryTypographyProps={{
+                      color: mode === "dark" ? "grey.300" : "grey.700",
+                      fontSize: "0.8rem",
                     }}
                   />
-                </Tooltip>
-                <ListItemText
-                  primary="Account Information"
-                  primaryTypographyProps={{
-                    color: mode === "dark" ? "grey.300" : "grey.700",
-                    fontSize: "0.8rem",
-                  }}
-                />
-              </Box>
-              <Divider />
-              {user ? authenticatedMenu : unauthenticatedMenu}
-            </Menu>
+                </Box>
+                <Divider />
+                {user ? authenticatedMenu : unauthenticatedMenu}
+              </Menu>
+            )}
           </Box>
 
           {/* Mobile Section: Drawer */}
@@ -525,7 +542,28 @@ const AppAppBar: React.FC = () => {
                   <Divider className="my-2 dark:bg-gray-700" />
 
                   {/* Account Options */}
-                  {isLoggedIn ? (
+                  {authLoading ? (
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      px={2}
+                      py={1}
+                      maxWidth={250}
+                      width="100%"
+                      overflow="hidden"
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color:
+                            mode === "dark" ? "grey.400" : "text.secondary",
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        Loading...
+                      </Typography>
+                    </Box>
+                  ) : isLoggedIn ? (
                     <>
                       {/* Account Information */}
                       <Box

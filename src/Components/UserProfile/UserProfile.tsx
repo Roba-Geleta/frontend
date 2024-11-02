@@ -628,7 +628,7 @@ export default function UserProfile() {
                 left: 0,
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.9)", // Semi-transparent background for visibility
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
                 padding: "4px 8px",
                 zIndex: 2,
                 boxShadow: 1,
@@ -654,7 +654,7 @@ export default function UserProfile() {
                 flexDirection: "column",
                 justifyContent: "center",
                 width: { xs: "100%", md: "60%" },
-                padding: { xs: 2, md: 4 }, // Added padding for better spacing
+                padding: { xs: 2, md: 4 },
                 textAlign: { xs: "center", md: "left" },
               }}
             >
@@ -725,8 +725,8 @@ export default function UserProfile() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                padding: { xs: 2, md: 1 }, // Padding to create space around the image
-                order: { xs: 1, md: 2 }, // Image second on large screens
+                padding: { xs: 2, md: 1 },
+                order: { xs: 1, md: 2 },
               }}
             >
               <Box

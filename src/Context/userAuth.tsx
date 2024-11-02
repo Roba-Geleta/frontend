@@ -7,10 +7,10 @@ import {
 } from "../Services/AuthService";
 import { toast } from "react-toastify";
 import { UserProfile } from "../Models/User";
-import Spinner from "../Components/Spinner/Spinner";
 
 type UserContextType = {
-  user: UserProfile | null;
+  user: UserProfile | null | undefined;
+  authLoading: boolean;
   registerUser: (
     email: string,
     username: string,
@@ -25,6 +25,7 @@ type Props = { children: React.ReactNode };
 
 const UserContext = createContext<UserContextType>({
   user: null,
+  authLoading: true,
   registerUser: async () => false,
   loginUser: async () => false,
   logoutUser: async () => {},
@@ -32,8 +33,8 @@ const UserContext = createContext<UserContextType>({
 });
 
 export const UserProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [isReady, setIsReady] = useState(false);
+  const [user, setUser] = useState<UserProfile | null | undefined>(undefined);
+  const [authLoading, setAuthLoading] = useState(false);
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -41,12 +42,14 @@ export const UserProvider = ({ children }: Props) => {
         const res = await verifyTokenAPI();
         if (res && res.user) {
           setUser(res.user);
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.error("Token verification failed", error);
         setUser(null);
       } finally {
-        setIsReady(true);
+        setAuthLoading(true);
       }
     };
 
@@ -105,15 +108,16 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ user, registerUser, loginUser, logoutUser, isLoggedIn }}
+      value={{
+        user,
+        authLoading,
+        registerUser,
+        loginUser,
+        logoutUser,
+        isLoggedIn,
+      }}
     >
-      {isReady ? (
-        children
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <Spinner />
-        </div>
-      )}{" "}
+      {children}
     </UserContext.Provider>
   );
 };
