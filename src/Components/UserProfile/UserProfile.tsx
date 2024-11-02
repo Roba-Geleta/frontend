@@ -719,7 +719,6 @@ export default function UserProfile() {
           mode={mode}
         />
       )}
-
       {/* Project Dialog */}
       {openProjectDialog !== null && (
         <ProjectDialog
