@@ -14,7 +14,10 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
     // Authentication is in progress
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <Spinner />
+        <>
+          <Spinner />
+          Loading...
+        </>
       </div>
     );
   }

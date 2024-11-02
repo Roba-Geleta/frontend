@@ -34,7 +34,7 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<UserProfile | null | undefined>(undefined);
-  const [authLoading, setAuthLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -49,7 +49,7 @@ export const UserProvider = ({ children }: Props) => {
         console.error("Token verification failed", error);
         setUser(null);
       } finally {
-        setAuthLoading(true);
+        setAuthLoading(false);
       }
     };
 
