@@ -788,7 +788,7 @@ export default function UserProfile() {
                 options={carouselOptions}
                 autoplayOptions={{
                   playOnInit: true,
-                  speed: 2,
+                  speed: 1.2,
                 }}
               />
             </Box>
@@ -817,7 +817,7 @@ export default function UserProfile() {
                 options={carouselOptions}
                 autoplayOptions={{
                   playOnInit: true,
-                  speed: 2,
+                  speed: 1,
                 }}
               />
             </Box>
@@ -846,7 +846,7 @@ export default function UserProfile() {
                 options={carouselOptions}
                 autoplayOptions={{
                   playOnInit: true,
-                  speed: 2,
+                  speed: 1,
                 }}
               />
             </Box>
@@ -875,7 +875,7 @@ export default function UserProfile() {
                 options={carouselOptions}
                 autoplayOptions={{
                   playOnInit: true,
-                  speed: 2,
+                  speed: 1,
                 }}
               />
             </Box>
