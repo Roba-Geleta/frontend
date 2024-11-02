@@ -3,7 +3,6 @@ import { CompanyKeyMetrics } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getKeyMetrics } from "../../api";
 import RatioList, { ConfigItem, RenderData } from "../RatioList/RatioList";
-import Spinner from "../Spinner/Spinner";
 import {
   formatLargeNonMonetaryNumber,
   formatRatio,
