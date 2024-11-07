@@ -3,8 +3,9 @@ import StockCommentForm from "./StockCommentForm/StockCommentForm";
 import { commentGetAPI, commentPostAPI } from "../../Services/CommentService";
 import { toast } from "react-toastify";
 import { CommentGet } from "../../Models/Comment";
-import Spinner from "../Spinner/Spinner";
 import StockCommentList from "../StockCommentList/StockCommentList";
+import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
+import { BarLoader } from "react-spinners";
 
 type Props = {
   stockSymbol: string;
@@ -52,12 +53,15 @@ const StockComment = ({ stockSymbol }: Props) => {
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mx-4 my-6">
+      <div className="max-w-[30rem] mx-auto">
+        <ConnectionStatusFeedBack />
+      </div>
       <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
         User Comments
       </h2>
       {loading ? (
-        <div className="flex justify-center items-center h-32">
-          <Spinner />
+        <div className="flex justify-center items-center h-3">
+          <BarLoader />
         </div>
       ) : (
         <StockCommentList comments={comments!} />

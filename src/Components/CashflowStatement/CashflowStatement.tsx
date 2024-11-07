@@ -3,9 +3,9 @@ import { CompanyCashFlow } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getCashflowStatement } from "../../api";
 import Table from "../Table/Table";
-import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
 import { ConfigItem, RenderData } from "../RatioList/RatioList";
+import { BarLoader } from "react-spinners";
 
 const configs: ConfigItem[] = [
   {
@@ -106,7 +106,7 @@ const CashflowStatement = () => {
     <div className="w-full px-4 py-6">
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <Spinner />
+          <BarLoader />
         </div>
       ) : error ? (
         <div className="flex justify-center items-center h-64">

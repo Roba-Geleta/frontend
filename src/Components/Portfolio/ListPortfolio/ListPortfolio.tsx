@@ -3,6 +3,7 @@ import CardPortfolio from "../CardPortfolio/CardPortfolio";
 import { PortfolioGet } from "../../../Models/Portfolio";
 import { FaBriefcase, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Grid2 as Grid, Tooltip, Button } from "@mui/material";
+import ConnectionStatusFeedBack from "../../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 
 interface Props {
   portfolioValues: PortfolioGet[];
@@ -52,6 +53,9 @@ const ListPortfolio = ({ portfolioValues, onPortfolioDelete }: Props) => {
             </span>
           )}
         </h2>
+      </div>
+      <div className="max-w-[30rem] mx-auto">
+        <ConnectionStatusFeedBack />
       </div>
       {portfolioCount > 0 && isExpanded ? (
         <>

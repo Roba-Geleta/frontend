@@ -5,45 +5,50 @@ import { toast } from "react-toastify";
 const PUBLIC_ROUTES = ["/", "/credits", "/login", "/register"];
 
 export const handleError = (error: unknown) => {
-  if (axios.isAxiosError(error)) {
-    const err = error.response;
-    console.log("error is", err);
-    if (err) {
-      // Handle specific status codes
-      switch (err.status) {
-        case 400:
-          handleBadRequest(err.data);
-          break;
-        case 401:
-          console.log("401 error", err);
-          handleUnauthorizedError(err);
-          break;
-        case 403:
-          toast.warning("Access denied");
-          break;
-        case 404:
-          toast.warning("Resource not found");
-          break;
-        case 500:
-          handleServerError(err.data);
-          break;
-        default:
-          handleUnknownError(err);
-          break;
+  const currentPath = window.location.pathname;
+  if (!["/"].includes(currentPath)) {
+    if (axios.isAxiosError(error)) {
+      const err = error.response;
+      console.log("error is", err);
+      if (err) {
+        // Handle specific status codes
+        switch (err.status) {
+          case 400:
+            handleBadRequest(err.data);
+            break;
+          case 401:
+            console.log("401 error", err);
+            handleUnauthorizedError(err);
+            break;
+          case 403:
+            toast.warning("Access denied");
+            break;
+          case 404:
+            toast.warning("Resource not found");
+            break;
+          case 500:
+            handleServerError(err.data);
+            break;
+          default:
+            handleUnknownError(err);
+            break;
+        }
+      } else if (error.message) {
+        // No response from server
+        toast.error(`Connection Error: ${error.message}`, {
+          toastId: "network-error",
+        });
+      } else {
+        // Unknown Axios error
+        toast.error("An unknown error occurred.");
       }
-    } else if (error.message) {
-      // No response from server
-      toast.warning(`Network Error: ${error.message}`);
+    } else if (error instanceof Error) {
+      // Non-Axios errors
+      toast.warning(error.message);
     } else {
-      // Unknown Axios error
-      toast.warning("An unknown error occurred.");
+      // Completely unknown errors
+      toast.warning("An unexpected error occurred.");
     }
-  } else if (error instanceof Error) {
-    // Non-Axios errors
-    toast.warning(error.message);
-  } else {
-    // Completely unknown errors
-    toast.warning("An unexpected error occurred.");
   }
 };
 
@@ -113,7 +118,23 @@ const handleUnauthorizedError = (err: any) => {
   } else {
     if (!PUBLIC_ROUTES.includes(currentPath)) {
       // Default message
-      toast.warning("Please login");
+      // toast.warning("Please login", {
+      //   toastId: "unauthorized",
+      //   autoClose: 1000,
+      //   onClose: () => {
+      //     console.log(currentPath, "currentPath");
+      //     if (currentPath !== "/login") {
+      //       window.location.href = `/login?redirect=${encodeURIComponent(
+      //         currentPath
+      //       )}`;
+      //     }
+      //   },
+      // });
+      if (currentPath !== "/login") {
+        window.location.href = `/login?redirect=${encodeURIComponent(
+          currentPath
+        )}`;
+      }
     }
   }
 };

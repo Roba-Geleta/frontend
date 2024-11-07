@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CompanyTenK } from "../../company";
 import { getTenK } from "../../api";
 import TenKFinderItem from "./TenKFinderItem/TenKFinderItem";
-import Spinner from "../Spinner/Spinner";
+import { BarLoader } from "react-spinners";
 
 type Props = {
   ticker: string;
@@ -31,7 +31,7 @@ const TenKFinder = ({ ticker }: Props) => {
             />
           ))
       ) : (
-        <Spinner />
+        <BarLoader />
       )}
     </div>
   );

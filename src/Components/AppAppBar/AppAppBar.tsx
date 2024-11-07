@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, useContext } from "react";
+import React, { useState, MouseEvent, useContext, useMemo } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { scroller } from "react-scroll";
 import { styled, alpha } from "@mui/material/styles";
@@ -32,6 +32,9 @@ import RobaLogo from "../RobaLogo/RobaLogo";
 import ToggleColorMode from "../ToggleColorMode/ToggleColorMode";
 import { useAuth } from "../../Context/userAuth";
 import { ThemeContext } from "../../Context/ThemeContext";
+import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
+import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
+import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 
 // Helper Functions
 const stringToColor = (string: string): string => {
@@ -76,6 +79,26 @@ const AppAppBar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { authLoading, user, isLoggedIn, logoutUser } = useAuth();
   const { mode } = useContext(ThemeContext);
+  const { isBackendReachable, hasNetworkErrorRetriesExceeded } =
+    useContext(NetworkStatusContext);
+  const { isDatabaseResuming, hasDatabaseRetriesExceeded } = useContext(
+    DatabaseStatusContext
+  );
+
+  const valid = useMemo(
+    () =>
+      isDatabaseResuming ||
+      hasDatabaseRetriesExceeded ||
+      hasNetworkErrorRetriesExceeded ||
+      !isBackendReachable,
+    [
+      isDatabaseResuming,
+      hasDatabaseRetriesExceeded,
+      hasNetworkErrorRetriesExceeded,
+      isBackendReachable,
+    ]
+  );
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -180,6 +203,7 @@ const AppAppBar: React.FC = () => {
         logoutUser();
         handleMenuClose();
       }}
+      disabled={valid}
       sx={{
         "&:hover": {
           backgroundColor: mode === "dark" ? "grey.800" : "grey.100",
@@ -204,7 +228,7 @@ const AppAppBar: React.FC = () => {
 
   // Menu Items for Unauthenticated Users
   const unauthenticatedMenu: React.ReactElement[] = [
-    <MenuItem key="login" onClick={handleMenuClose}>
+    <MenuItem key="login" disabled={valid} onClick={handleMenuClose}>
       <Link to="/login" className="w-full flex flex-row items-center">
         <ListItemIcon>
           <LoginIcon fontSize="small" color="primary" />
@@ -218,7 +242,7 @@ const AppAppBar: React.FC = () => {
         />
       </Link>
     </MenuItem>,
-    <MenuItem key="register" onClick={handleMenuClose}>
+    <MenuItem key="register" disabled={valid} onClick={handleMenuClose}>
       <Link to="/register" className="w-full flex flex-row items-center">
         <ListItemIcon>
           <PersonAddIcon fontSize="small" color="secondary" />
@@ -316,44 +340,6 @@ const AppAppBar: React.FC = () => {
               >
                 Skills
               </Button>
-              {/* <Divider
-                orientation="vertical"
-                variant="middle"
-                className="border-gray-300 dark:border-gray-700 !border-[0.09rem] !my-[6px] "
-                flexItem
-              />
-              <Link to="/stocks" className="flex flex-row items-center">
-                <Button
-                  variant="text"
-                  color="primary"
-                  size="small"
-                  className="dark:text-white"
-                >
-                  STOCKS
-                </Button>
-              </Link> */}
-              {/* <Tooltip title="Linkedin">
-                <Button
-                  color="info"
-                  size="small"
-                  variant="text"
-                  sx={{ minWidth: 0 }}
-                  className="dark:text-gray-300"
-                >
-                  <LinkedInIcon />
-                </Button>
-              </Tooltip>
-              <Tooltip title="GitHub">
-                <Button
-                  color="info"
-                  size="small"
-                  variant="text"
-                  sx={{ minWidth: 0 }}
-                  className="dark:text-gray-300"
-                >
-                  <GitHubIcon />
-                </Button>
-              </Tooltip> */}
             </Box>
           </Box>
 
@@ -372,81 +358,83 @@ const AppAppBar: React.FC = () => {
               </IconButton>
             </Tooltip>
             <ToggleColorMode />
-            {!authLoading && (
-              <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={isMenuOpen}
-                onClose={handleMenuClose}
-                onClick={handleMenuClose}
-                PaperProps={{
-                  elevation: 4,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    minWidth: 200, // Set a minimum width
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&::before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                    backgroundColor:
-                      mode === "dark" ? "#1f2937" : "background.paper", // Adjust based on mode
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={isMenuOpen}
+              onClose={handleMenuClose}
+              onClick={handleMenuClose}
+              PaperProps={{
+                elevation: 4,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  minWidth: 250, // Set a minimum width
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
                   },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                  "&::before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                  backgroundColor:
+                    mode === "dark" ? "#1f2937" : "background.paper", // Adjust based on mode
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              {/* Info Tooltip */}
+              <Box
+                key="account-info"
+                display="flex"
+                alignItems="center"
+                px={2}
+                py={1}
+                maxWidth={250}
+                width="100%"
+                overflow="hidden"
               >
-                {/* Info Tooltip */}
-                <Box
-                  key="account-info"
-                  display="flex"
-                  alignItems="center"
-                  px={2}
-                  py={1}
-                  maxWidth={250}
-                  width="100%"
-                  overflow="hidden"
+                <Tooltip
+                  title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+                  arrow
+                  placement="right"
                 >
-                  <Tooltip
-                    title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
-                    arrow
-                    placement="right"
-                  >
-                    <InfoOutlinedIcon
-                      fontSize="small"
-                      sx={{
-                        color: mode === "dark" ? "grey.400" : "grey.600",
-                        mr: 1,
-                      }}
-                    />
-                  </Tooltip>
-                  <ListItemText
-                    primary="Account Information"
-                    primaryTypographyProps={{
-                      color: mode === "dark" ? "grey.300" : "grey.700",
-                      fontSize: "0.8rem",
+                  <InfoOutlinedIcon
+                    fontSize="small"
+                    sx={{
+                      color: mode === "dark" ? "grey.400" : "grey.600",
+                      mr: 1,
                     }}
                   />
-                </Box>
-                <Divider />
-                {user ? authenticatedMenu : unauthenticatedMenu}
-              </Menu>
-            )}
+                </Tooltip>
+                <ListItemText
+                  primary="Account Information"
+                  primaryTypographyProps={{
+                    color: mode === "dark" ? "grey.300" : "grey.700",
+                    fontSize: "0.8rem",
+                  }}
+                />
+              </Box>
+              <Divider />
+              <div className="w-[250px] text-sm p-2">
+                <ConnectionStatusFeedBack />
+              </div>
+
+              {user ? authenticatedMenu : unauthenticatedMenu}
+            </Menu>
           </Box>
 
           {/* Mobile Section: Drawer */}
@@ -542,28 +530,7 @@ const AppAppBar: React.FC = () => {
                   <Divider className="my-2 dark:bg-gray-700" />
 
                   {/* Account Options */}
-                  {authLoading ? (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      px={2}
-                      py={1}
-                      maxWidth={250}
-                      width="100%"
-                      overflow="hidden"
-                    >
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color:
-                            mode === "dark" ? "grey.400" : "text.secondary",
-                          fontSize: "0.8rem",
-                        }}
-                      >
-                        Loading...
-                      </Typography>
-                    </Box>
-                  ) : isLoggedIn ? (
+                  {isLoggedIn ? (
                     <>
                       {/* Account Information */}
                       <Box
@@ -707,7 +674,13 @@ const AppAppBar: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <MenuItem onClick={() => setDrawerOpen(false)}>
+                      <div className="w-full items-center justify-center text-sm p-2">
+                        <ConnectionStatusFeedBack />
+                      </div>
+                      <MenuItem
+                        onClick={() => setDrawerOpen(false)}
+                        disabled={valid}
+                      >
                         <Link
                           to="/login"
                           className="w-full flex flex-row items-center"
@@ -724,7 +697,10 @@ const AppAppBar: React.FC = () => {
                           />
                         </Link>
                       </MenuItem>
-                      <MenuItem onClick={() => setDrawerOpen(false)}>
+                      <MenuItem
+                        onClick={() => setDrawerOpen(false)}
+                        disabled={valid}
+                      >
                         <Link
                           to="/register"
                           className="w-full flex flex-row items-center"

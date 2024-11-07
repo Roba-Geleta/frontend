@@ -29,12 +29,22 @@ const LoginPage = () => {
     resolver: yupResolver(validation),
   });
 
-  const from = (location.state as { from?: string })?.from || "/";
+  // Check both location state and URL parameters for redirect
+  const params = new URLSearchParams(location.search);
+  const redirectPath = params.get("redirect");
+  const stateRedirect = (location.state as { from?: string })?.from;
+  const from = redirectPath || stateRedirect || "/";
 
   const handleLogin = async (form: LoginFormsInputs) => {
     const success = await loginUser(form.userName, form.password);
     if (success) {
-      navigate(from, { replace: true });
+      // If it's a URL parameter redirect, use window.location
+      if (redirectPath) {
+        window.location.href = redirectPath;
+      } else {
+        // Otherwise use navigate for smoother transitions
+        navigate(from, { replace: true });
+      }
     }
   };
 

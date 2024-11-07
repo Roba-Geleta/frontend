@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {
@@ -49,12 +49,34 @@ import WikipediaLogo from "../../assets/Projects/Wikipedia/Logo.png";
 import ScrapeRobot from "../../assets/Projects/ScrapeRobot/ScrapeRobot.png";
 import StocksImage1 from "../../assets/Projects/Stocks/Company.png";
 import StocksImage2 from "../../assets/Projects/Stocks/Stocks.png";
+import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
+import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
+import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
+  const { isDatabaseResuming, hasDatabaseRetriesExceeded } = useContext(
+    DatabaseStatusContext
+  );
+  const { isBackendReachable, hasNetworkErrorRetriesExceeded } =
+    useContext(NetworkStatusContext);
   const [openDialog, setOpenDialog] = useState<number | null>(null);
   const [openProjectDialog, setOpenProjectDialog] = useState<number | null>(
     null
+  );
+
+  const valid = useMemo(
+    () =>
+      isDatabaseResuming ||
+      hasDatabaseRetriesExceeded ||
+      hasNetworkErrorRetriesExceeded ||
+      !isBackendReachable,
+    [
+      isDatabaseResuming,
+      hasDatabaseRetriesExceeded,
+      hasNetworkErrorRetriesExceeded,
+      isBackendReachable,
+    ]
   );
 
   // Experience Data
@@ -707,14 +729,32 @@ export default function UserProfile() {
                 <strong>Technologies:</strong>{" "}
                 {renderTechnologyText(latestProject.technologies)}
               </Typography>
+              <ConnectionStatusFeedBack />
               <Button
                 size="medium"
-                variant="contained"
-                color="primary"
+                variant={"contained"}
+                color={"primary"}
                 href={latestProject.link}
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  color: !valid
+                    ? mode == "light"
+                      ? "white !important"
+                      : "gray !important"
+                    : mode == "dark"
+                    ? "white !important"
+                    : "gray !important",
+                }}
+                disabled={valid}
               >
-                Visit Stocks Page
+                {/* {isDatabaseResumin || } */}
+                {!isBackendReachable && !hasNetworkErrorRetriesExceeded ? (
+                  <span>Connecting to Backend... </span>
+                ) : isDatabaseResuming && !hasDatabaseRetriesExceeded ? (
+                  <span>Database Resuming... </span>
+                ) : (
+                  "Visit Stocks Page"
+                )}
               </Button>
             </Box>
 

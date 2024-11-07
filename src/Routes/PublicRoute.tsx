@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Context/userAuth";
-import Spinner from "../Components/Spinner/Spinner";
+import { BarLoader } from "react-spinners";
 
 type PublicRouteProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <>
-          <Spinner />
+          <BarLoader />
           Loading...
         </>
       </div>

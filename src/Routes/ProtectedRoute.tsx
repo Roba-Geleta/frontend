@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/userAuth";
-import Spinner from "../Components/Spinner/Spinner";
+import { BarLoader } from "react-spinners";
 
 type Props = { children: React.ReactNode };
 
@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }: Props) => {
     // Authentication is in progress
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <Spinner />
+        <BarLoader />
       </div>
     );
   }

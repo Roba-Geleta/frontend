@@ -3,12 +3,12 @@ import { CompanyIncomeStatement } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getIncomeStatement } from "../../api";
 import Table from "../Table/Table";
-import Spinner from "../Spinner/Spinner";
 import {
   formatLargeMonetaryNumber,
   formatRatio,
 } from "../../Helpers/NumberFormating";
 import { ConfigItem, RenderData } from "../RatioList/RatioList";
+import { BarLoader } from "react-spinners";
 
 const configs: ConfigItem[] = [
   {
@@ -133,7 +133,7 @@ const IncomeStatement = () => {
     <div className="w-full px-4 py-6">
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <Spinner />
+          <BarLoader />
         </div>
       ) : error ? (
         <div className="flex justify-center items-center h-64">

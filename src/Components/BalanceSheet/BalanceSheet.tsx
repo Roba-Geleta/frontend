@@ -3,8 +3,8 @@ import { CompanyBalanceSheet } from "../../company";
 import { useOutletContext } from "react-router-dom";
 import { getBalanceSheet } from "../../api";
 import RatioList, { ConfigItem, RenderData } from "../RatioList/RatioList";
-import Spinner from "../Spinner/Spinner";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
+import { BarLoader } from "react-spinners";
 
 const configs: ConfigItem[] = [
   {
@@ -122,7 +122,7 @@ const BalanceSheet = () => {
     <div className="w-full px-4 py-6">
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <Spinner />
+          <BarLoader />
         </div>
       ) : error ? (
         <div className="flex justify-center items-center h-64">

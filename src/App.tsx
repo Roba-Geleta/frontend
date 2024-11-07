@@ -23,6 +23,17 @@ function App() {
           }}
           className="bg-orange-100 dark:bg-gray-900 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,_hsl(210,_100%,_90%),_transparent)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,_hsl(210,_100%,_16%),_transparent)]"
         >
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable={false}
+            theme="light"
+            containerId="unauthorized"
+          />
           <Container
             sx={{
               pt: { xs: 12, sm: 14 },
