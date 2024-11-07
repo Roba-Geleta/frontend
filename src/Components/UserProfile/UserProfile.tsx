@@ -740,7 +740,7 @@ export default function UserProfile() {
                   color: !valid
                     ? mode == "light"
                       ? "white !important"
-                      : "gray !important"
+                      : "white !important"
                     : mode == "dark"
                     ? "white !important"
                     : "gray !important",

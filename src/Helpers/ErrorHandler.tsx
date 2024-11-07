@@ -117,24 +117,10 @@ const handleUnauthorizedError = (err: any) => {
     toast.warning(err.data);
   } else {
     if (!PUBLIC_ROUTES.includes(currentPath)) {
-      // Default message
-      // toast.warning("Please login", {
-      //   toastId: "unauthorized",
-      //   autoClose: 1000,
-      //   onClose: () => {
-      //     console.log(currentPath, "currentPath");
-      //     if (currentPath !== "/login") {
-      //       window.location.href = `/login?redirect=${encodeURIComponent(
-      //         currentPath
-      //       )}`;
-      //     }
-      //   },
-      // });
-      if (currentPath !== "/login") {
-        window.location.href = `/login?redirect=${encodeURIComponent(
-          currentPath
-        )}`;
-      }
+      toast.warning("Please login", {
+        toastId: "unauthorized",
+        autoClose: 1000,
+      });
     }
   }
 };

@@ -1,12 +1,13 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/userAuth";
 import { BarLoader } from "react-spinners";
+import { Navigate, useLocation } from "react-router-dom";
 
 type Props = { children: React.ReactNode };
 
 const ProtectedRoute = ({ children }: Props) => {
   const location = useLocation();
+
   const { user, authLoading } = useAuth();
 
   if (authLoading) {
@@ -22,9 +23,10 @@ const ProtectedRoute = ({ children }: Props) => {
     // User is not authenticated
     return (
       <Navigate
-        to="/login"
+        to={`/login?redirect=${encodeURIComponent(
+          location.pathname + location.search
+        )}`}
         replace
-        state={{ from: location.pathname + location.search }}
       />
     );
   }
