@@ -53,8 +53,14 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       // Reset flags because the backend is reachable
       resetNetworkAndDatabaseFlags();
+      const statusCode = error.response.status;
 
-      if (error.response.status === 503) {
+      const errorMessage = error.response.data?.message || "";
+
+      if (
+        statusCode === 503 ||
+        (statusCode === 403 && errorMessage.includes("Site Disabled"))
+      ) {
         // Handle 503 Service Unavailable errors
         originalRequest._retryCount = originalRequest._retryCount || 0;
 
