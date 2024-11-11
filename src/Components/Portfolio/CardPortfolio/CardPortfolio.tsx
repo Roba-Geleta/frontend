@@ -2,6 +2,7 @@ import React from "react";
 import DeletePortfolio from "../DeletePortfolio/DeletePortfolio";
 import { Link } from "react-router-dom";
 import { PortfolioGet } from "../../../Models/Portfolio";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 interface Props {
   portfolioValue: PortfolioGet;
@@ -17,9 +18,13 @@ const CardPortfolio = ({ portfolioValue, onPortfolioDelete }: Props) => {
       <div className="flex-grow">
         <Link
           to={`/company/${portfolioValue.symbol}/company-profile`}
-          className="text-xl font-bold text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-xl font-bold text-blue-600 dark:text-blue-400 hover:underline relative inline-block"
         >
           {portfolioValue.symbol}
+          <OpenInNewIcon
+            // fontSize="small"
+            className="absolute !text-sm top-0 right-[-15px] text-blue-600 dark:text-blue-400"
+          />
         </Link>
         <p className="text-xs text-gray-700 dark:text-gray-500 mt-1 break-words">
           {portfolioValue.companyName}
