@@ -11,21 +11,24 @@ import {
 } from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
-
 import {
   SiMui,
   SiTypescript,
   SiReact,
   SiDotnet,
-  SiMicrosoftsqlserver,
+  SiPostgresql,
+  SiAwsamplify,
+  SiCloudflare,
+  SiAmazonwebservices,
+  SiAmazonrds,
 } from "react-icons/si";
 
-// Import generic icons for logos if specific ones are not available
 import BusinessIcon from "@mui/icons-material/Business";
 import ComputerIcon from "@mui/icons-material/Computer";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 import { ThemeContext } from "../../Context/ThemeContext";
+import { lime } from "@mui/material/colors";
 
 const Credits: React.FC = () => {
   const { mode } = useContext(ThemeContext);
@@ -90,7 +93,6 @@ const Credits: React.FC = () => {
               secondaryTypographyProps={{
                 color: mode === "dark" ? "grey.500" : "grey",
               }}
-              color="red"
             />
           </ListItem>
         </List>
@@ -159,7 +161,6 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
-          {/* Priceline Partner Solutions Logo */}
           <ListItem>
             <ListItemIcon>
               <TravelExploreIcon
@@ -187,7 +188,6 @@ const Credits: React.FC = () => {
           </ListItem>
         </List>
 
-        {/* Libraries & Tools */}
         <Typography
           variant="h6"
           className={`${mode === "dark" ? "text-gray-200" : "text-gray-800"}`}
@@ -197,7 +197,6 @@ const Credits: React.FC = () => {
           Libraries & Tools
         </Typography>
         <List>
-          {/* Embla Carousel */}
           <ListItem>
             <ListItemIcon>
               <ViewCarouselIcon
@@ -224,7 +223,6 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
-          {/* Material UI */}
           <ListItem>
             <ListItemIcon>
               <SiMui
@@ -244,7 +242,6 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
-          {/* TypeScript */}
           <ListItem>
             <ListItemIcon>
               <SiTypescript size={24} color="#3178C6" />
@@ -261,7 +258,6 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
-          {/* React */}
           <ListItem>
             <ListItemIcon>
               <SiReact size={24} color="#61DAFB" />
@@ -278,7 +274,6 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
-          {/* ASP.NET */}
           <ListItem>
             <ListItemIcon>
               <SiDotnet size={24} color="#512BD4" />
@@ -295,55 +290,179 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
-          {/* SQL Server */}
           <ListItem>
             <ListItemIcon>
-              <SiMicrosoftsqlserver size={24} color="#CC2927" />
+              <SiPostgresql size={24} color="#336791" />
             </ListItemIcon>
             <ListItemText
-              primary="SQL Server"
+              primary="PostgreSQL"
               primaryTypographyProps={{
                 color: mode === "dark" ? "grey.500" : "black",
               }}
-              secondary="Utilized for database management."
+              secondary={
+                <>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    sx={{
+                      display: "block",
+                      color: mode === "dark" ? "grey.700" : "grey",
+                    }}
+                  >
+                    Utilized for database management.
+                  </Typography>
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    sx={{
+                      color: lime[900],
+                    }}
+                  >
+                    Migrated from SQL Server in November 2024.
+                  </Typography>
+                </>
+              }
               secondaryTypographyProps={{
-                color: mode === "dark" ? "grey.700" : "grey",
+                component: "div",
               }}
             />
           </ListItem>
         </List>
 
-        {/* Front-end & Backend Technologies */}
         <Typography
           variant="h6"
           className={`${mode === "dark" ? "text-gray-200" : "text-gray-800"}`}
           gutterBottom
           sx={{ mt: 4 }}
         >
-          Front-end & Backend Technologies
+          Cloud & Hosting Services
         </Typography>
         <List>
+          {/* NameSilo */}
           <ListItem>
+            <ListItemIcon>
+              <BusinessIcon
+                sx={{
+                  color: mode === "dark" ? "grey.400" : "grey.800",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
-              primary="Front-end"
+              primary="NameSilo"
               primaryTypographyProps={{
                 color: mode === "dark" ? "grey.500" : "black",
               }}
-              secondary="Material UI, TypeScript, React"
+              secondary=".ca domain registrar"
               secondaryTypographyProps={{
                 color: mode === "dark" ? "grey.700" : "grey",
               }}
             />
           </ListItem>
+
           <ListItem>
+            <ListItemIcon>
+              <SiCloudflare size={24} color="#F38020" />
+            </ListItemIcon>
             <ListItemText
-              primary="Backend"
+              primary="Cloudflare"
               primaryTypographyProps={{
                 color: mode === "dark" ? "grey.500" : "black",
               }}
-              secondary="ASP.NET, SQL Server"
+              secondary="Used for CDN and security."
               secondaryTypographyProps={{
                 color: mode === "dark" ? "grey.700" : "grey",
+              }}
+            />
+          </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <SiAwsamplify size={24} color="#FF9900" />
+            </ListItemIcon>
+            <ListItemText
+              primary="AWS Amplify"
+              primaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "black",
+              }}
+              secondary="Used for front-end hosting."
+              secondaryTypographyProps={{
+                color: mode === "dark" ? "grey.700" : "grey",
+              }}
+            />
+          </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <SiAmazonwebservices size={24} color="#FF9900" />
+            </ListItemIcon>
+            <ListItemText
+              primary="AWS Elastic Beanstalk"
+              primaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "black",
+              }}
+              secondary={
+                <>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    sx={{
+                      display: "block",
+                      color: mode === "dark" ? "grey.700" : "grey",
+                    }}
+                  >
+                    Used for back-end hosting.
+                  </Typography>
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    sx={{
+                      color: lime[900],
+                    }}
+                  >
+                    Migrated from Azure Web App in November 2024.
+                  </Typography>
+                </>
+              }
+              secondaryTypographyProps={{
+                component: "div",
+              }}
+            />
+          </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <SiAmazonrds size={24} color="#FF9900" />
+            </ListItemIcon>
+            <ListItemText
+              primary="AWS RDS"
+              primaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "black",
+              }}
+              secondary={
+                <>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    sx={{
+                      display: "block",
+                      color: mode === "dark" ? "grey.700" : "grey",
+                    }}
+                  >
+                    Managed PostgreSQL database service.
+                  </Typography>
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    sx={{
+                      color: lime[900],
+                    }}
+                  >
+                    Migrated from Azure SQL database in November 2024.
+                  </Typography>
+                </>
+              }
+              secondaryTypographyProps={{
+                component: "div",
               }}
             />
           </ListItem>

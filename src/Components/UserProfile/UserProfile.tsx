@@ -222,17 +222,19 @@ export default function UserProfile() {
   const latestProject = {
     title: "Financial Insights Platform",
     description:
-      "Developed a secure platform for users to search and analyze comprehensive financial data of various companies. Features user authentication and a community commenting system to foster engagement and collaboration.",
+      "Developed a secure platform for users to search and analyze comprehensive financial data of various companies. The platform features user authentication, portfolio management, and a community commenting system to foster user engagement and discussion.",
     technologies: [
       "ASP.NET Core",
-      "SQL Server",
+      "PostgreSQL",
       "C#",
       "TypeScript",
       "React",
       "ESLint",
-      "Azure",
+      "AWS Amplify",
+      "AWS Elastic Beanstalk",
+      "AWS RDS",
       "Cloudflare",
-      "Financial Modeling API",
+      "Financial Modeling Prep API",
       "Google Cloud Functions",
     ],
     images: [StocksImage1, StocksImage2],
@@ -707,7 +709,7 @@ export default function UserProfile() {
                       fontWeight: "bold",
                     }}
                   >
-                    In Progress
+                    Work In Progress
                   </Typography>
                 </Box>
               </Typography>
