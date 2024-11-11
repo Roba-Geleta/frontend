@@ -11,8 +11,9 @@ import {
   portfolioGetAPI,
 } from "../../Services/PortfolioService";
 import { toast } from "react-toastify";
-import { Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { handleError } from "../../Helpers/ErrorHandler";
+import ConstructionIcon from "@mui/icons-material/Construction";
 
 const SearchPage = () => {
   const [search, setSearch] = useState<string>("");
@@ -95,6 +96,26 @@ const SearchPage = () => {
         alignItems: "center",
       }}
     >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: { xs: "center", md: "flex-start" },
+        }}
+      >
+        <ConstructionIcon
+          sx={{ color: "warning.main", fontSize: "1rem", mr: 0.3 }}
+        />
+        <Typography
+          variant="caption"
+          sx={{
+            color: "warning.main",
+            fontWeight: "bold",
+          }}
+        >
+          Work In Progress
+        </Typography>
+      </Box>
       <Search
         loading={loading}
         onSearchSubmit={onSearchSubmit}
