@@ -118,7 +118,7 @@ const CompanyProfile = () => {
   }, [ticker]);
 
   return (
-    <div className="w-full px-4 py-6">
+    <div className="w-full  py-6">
       {companyData ? (
         <div className="space-y-6">
           {/* Ratio List */}

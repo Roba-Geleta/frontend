@@ -119,7 +119,7 @@ const BalanceSheet = () => {
   }, [ticker]);
 
   return (
-    <div className="w-full px-4 py-6">
+    <div className="w-full py-6">
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <BarLoader />

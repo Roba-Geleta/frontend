@@ -52,7 +52,7 @@ const StockComment = ({ stockSymbol }: Props) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mx-4 my-6">
+    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6  my-6">
       <div className="max-w-[30rem] mx-auto">
         <ConnectionStatusFeedBack />
       </div>

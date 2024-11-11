@@ -52,7 +52,7 @@ const RatioList = ({ config, data }: Props) => {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 sm:p-8 mx-4">
+    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 sm:p-8">
       <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
         Key Metrics
       </h2>
