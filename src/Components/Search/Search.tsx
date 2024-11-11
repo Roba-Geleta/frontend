@@ -39,8 +39,8 @@ const Search: React.FC<Props> = ({
       <StyledPaper elevation={3} className="relative">
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search companies"
-          inputProps={{ "aria-label": "search companies" }}
+          placeholder="Search company tickers"
+          inputProps={{ "aria-label": "Search company tickers" }}
           value={search}
           onChange={handleSearchChange}
         />
