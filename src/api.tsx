@@ -8,6 +8,7 @@ import {
   CompanySearch,
   CompanyTenK,
 } from "./company";
+import { LocationGet } from "./Models/Location";
 
 interface SearchResponse {
   data: CompanySearch[];
@@ -141,6 +142,25 @@ export const getTenK = async (query: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error("Error fetching Ten-K filings:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw error;
+  }
+};
+
+export const getIPInfo = async (ip: string) => {
+  try {
+    const { data } = await axios.get<LocationGet>(
+      `${FUNCTION_BASE_URL}/getIPInfo`,
+      {
+        params: { ip },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error fetching IP info:", error.message);
     } else {
       console.error("Unexpected error:", error);
     }
