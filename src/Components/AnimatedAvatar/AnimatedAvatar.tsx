@@ -33,7 +33,7 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
   const { mode } = useContext(ThemeContext);
   const avatarRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(0);
-  const [borderWidth, setBorderWidth] = useState("0px");
+  const [borderWidth, setBorderWidth] = useState("");
   const [drawing, setDrawing] = useState(true);
 
   useLayoutEffect(() => {
@@ -61,8 +61,13 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
         {...props}
         key={borderWidth}
         style={{
-          borderWidth: borderWidth,
-          borderColor: mode === "dark" ? "#5a796a" : "#4c6865",
+          borderWidth: "7px",
+          borderColor:
+            borderWidth !== ""
+              ? mode === "dark"
+                ? "#5a796a"
+                : "#4c6865"
+              : "#5a796a3f",
           borderStyle: "solid",
         }}
         className={` ${
@@ -79,6 +84,7 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
             width: size,
             height: size,
             pointerEvents: "none",
+            zIndex: 10,
           }}
         >
           {circleSegments.map((segment, index) => (
@@ -86,7 +92,7 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
               key={index}
               cx="50%"
               cy="50%"
-              r="48%"
+              r="48.37%"
               fill="none"
               stroke={mode === "dark" ? "#5a796a" : "#4c6865"}
               strokeWidth={segment.strokeWidth}
