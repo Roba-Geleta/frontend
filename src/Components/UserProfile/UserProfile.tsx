@@ -13,7 +13,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
-import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
+// import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
 import AutoScrollEmblaCarousel from "../EmblaCarousel/AutoScrollEmblaCarousel/AutoScrollEmblaCarousel";
 import AutoplayEmblaCarousel from "../EmblaCarousel/AutoPlayEmblaCarousel/AutoPlayEmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
@@ -28,7 +28,6 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import Settings from "@mui/icons-material/Settings";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import { ThemeContext } from "../../Context/ThemeContext";
-import Roba from "../../assets/Roba.webp";
 // Experience Images
 import PPSLogo from "../../assets/PPSLogo.svg";
 import PPSBackground from "../../assets/PPSBackground.webp";
@@ -52,6 +51,7 @@ import StocksImage2 from "../../assets/Projects/Stocks/Stocks.png";
 import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
 import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
+import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
@@ -497,12 +497,15 @@ export default function UserProfile() {
           alignItems: "center",
         }}
       >
+        <div className="w-full flex justify-center">
+          <AvatarWithIcons mode={mode} />
+        </div>
         {/* Avatar */}
-        <AnimatedAvatar
+        {/* <AnimatedAvatar
           alt="Roba Geleta"
           src={Roba}
           sx={{ width: 270, height: 270, mb: 2 }}
-        />
+        /> */}
         {/* Name */}
         <Typography
           variant="h4"
