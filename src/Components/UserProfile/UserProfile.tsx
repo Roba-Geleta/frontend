@@ -315,6 +315,7 @@ export default function UserProfile() {
         color={color}
         variant="outlined"
         sx={{ m: 0.5 }}
+        className="min-w-fit sm:!mx-[20px]"
       />
     ));
 

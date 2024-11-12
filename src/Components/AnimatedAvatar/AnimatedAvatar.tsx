@@ -33,7 +33,8 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
   const { mode } = useContext(ThemeContext);
   const avatarRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(0);
-  const [drawingDone, setDrawingDone] = useState(false);
+  const [borderWidth, setBorderWidth] = useState("0px");
+  const [drawing, setDrawing] = useState(true);
 
   useLayoutEffect(() => {
     if (avatarRef.current) {
@@ -41,7 +42,8 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
       setSize(avatarSize);
 
       setTimeout(() => {
-        setDrawingDone(true);
+        setDrawing(false);
+        setBorderWidth("6px");
       }, 3500);
     }
   }, []);
@@ -57,11 +59,18 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
     <AvatarWrapper ref={avatarRef}>
       <StyledAvatar
         {...props}
-        className={` hover:border-[6px] ${
+        key={borderWidth}
+        style={{
+          borderWidth: borderWidth,
+          borderColor: mode === "dark" ? "#5a796a" : "#4c6865",
+          borderStyle: "solid",
+        }}
+        className={` ${
           mode === "dark" ? "hover:border-[#5a796a]" : "hover:border-[#4c6865]"
         }`}
       />
-      {!drawingDone && (
+
+      {drawing && (
         <svg
           style={{
             position: "absolute",

@@ -237,7 +237,7 @@ const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({ mode }) => {
                 alignItems: "center",
                 opacity: 0.5,
                 transform: "translate(-50%, -50%)",
-                animation: isAvatarHovered ? `${pulse} 1s infinite` : "none",
+                animation: isAvatarHovered ? `${pulse} 2s infinite` : "none",
               }}
             >
               <iconData.IconComponent />

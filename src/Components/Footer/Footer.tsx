@@ -20,12 +20,12 @@ const Footer: React.FC = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: "background.paper",
+        // backgroundColor: "background.paper",
         py: 4,
         mt: "auto",
         borderTop: (theme) => `1px solid ${theme.palette.divider}`,
       }}
-      className="dark:bg-gray-800"
+      className="dark:bg-gray-800 bg-[#f8f4e1] dark:bg-opacity-90"
     >
       <Container maxWidth="lg">
         <Stack

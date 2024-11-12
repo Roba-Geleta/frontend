@@ -35,9 +35,6 @@ const AutoScrollEmblaCarousel: React.FC<PropType> = ({
 
   useEffect(() => {
     if (!emblaApi) return;
-
-    // No additional logic needed as AutoScroll handles autoplay and resumption
-    // Ensure that autoplay resumes after interaction if stopOnInteraction is true
   }, [emblaApi]);
 
   return (
@@ -45,13 +42,12 @@ const AutoScrollEmblaCarousel: React.FC<PropType> = ({
       <div className="embla__viewport__scroll" ref={emblaRef}>
         <div className="embla__container__scroll">
           {slides.map((slide, index) => (
-            <div className="embla__slide__scroll" key={index}>
+            <div className="embla__slide__scroll " key={index}>
               {slide}
             </div>
           ))}
         </div>
       </div>
-      {/* Removed controls and autoplay buttons */}
     </div>
   );
 };

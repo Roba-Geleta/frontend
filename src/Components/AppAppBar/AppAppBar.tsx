@@ -1,7 +1,7 @@
 import React, { useState, MouseEvent, useContext, useMemo } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { scroller } from "react-scroll";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import {
   AppBar,
   Toolbar,
@@ -69,7 +69,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   backdropFilter: "blur(24px)",
   border: "1px solid",
   borderColor: theme.palette.divider,
-  backgroundColor: alpha(theme.palette.background.default, 0.4),
+  // backgroundColor: alpha("#fa1233", 0.8),
   boxShadow: theme.shadows[1],
   padding: "8px 12px",
 }));
@@ -292,7 +292,7 @@ const AppAppBar: React.FC = () => {
         <StyledToolbar
           variant="dense"
           disableGutters
-          className="dark:bg-gray-800"
+          className="dark:bg-gray-800 bg-[#f5f1e0be] dark:bg-opacity-90"
         >
           {/* Left Section: Logo and Navigation Links */}
           <Box
