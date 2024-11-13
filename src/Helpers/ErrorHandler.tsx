@@ -114,7 +114,7 @@ const handleUnauthorizedError = (err: any) => {
   const currentPath = window.location.pathname;
   if (err.data && typeof err.data === "string") {
     // Display the error message from the server
-    toast.warning(err.data);
+    toast.error(err.data);
   } else {
     if (!PUBLIC_ROUTES.includes(currentPath)) {
       toast.warning("Please login", {

@@ -1,10 +1,22 @@
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Container,
+  Typography,
+  IconButton,
+  Tooltip,
+  CircularProgress,
+  InputAdornment,
+  OutlinedInput,
+  FormControl,
+} from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // Import Link for navigation
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"; // Import Info Icon
-import Tooltip from "@mui/material/Tooltip"; // Import Tooltip from MUI
 
 type LoginFormsInputs = {
   userName: string;
@@ -24,12 +36,24 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormsInputs>({
     resolver: yupResolver(validation),
   });
 
-  // Check both location state and URL parameters for redirect
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
+  // Determine redirect path
   const params = new URLSearchParams(location.search);
   const redirectPath = params.get("redirect");
   const stateRedirect = (location.state as { from?: string })?.from;
@@ -38,104 +62,135 @@ const LoginPage = () => {
   const handleLogin = async (form: LoginFormsInputs) => {
     const success = await loginUser(form.userName, form.password);
     if (success) {
-      // If it's a URL parameter redirect, use window.location
       if (redirectPath) {
         window.location.href = redirectPath;
       } else {
-        // Otherwise use navigate for smoother transitions
         navigate(from, { replace: true });
       }
     }
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 rounded-xl bg-opacity-50 border-[1px]  min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-6">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Sign in to your account
-          </h1>
-          {/* Info Icon with Tooltip */}
-          <Tooltip
-            title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
-            arrow
-            placement="right"
-          >
-            <InfoOutlinedIcon className="text-gray-500 dark:text-gray-400 ml-1 cursor-pointer" />
-          </Tooltip>
+    <section className="bg-gray-50 dark:bg-gray-900 rounded-xl bg-opacity-50 border-[1px] min-h-screen flex items-center justify-center">
+      <Container maxWidth="sm">
+        <div className="w-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-6">
+          <div className="text-center">
+            <Typography
+              variant="h4"
+              className="text-gray-900 dark:text-white font-bold"
+            >
+              Sign in to your account
+            </Typography>
+            <Tooltip
+              title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+              arrow
+              placement="right"
+            >
+              <InfoOutlinedIcon className="text-gray-500 dark:text-gray-400 ml-1 cursor-pointer" />
+            </Tooltip>
+          </div>
+          <form className="space-y-4" onSubmit={handleSubmit(handleLogin)}>
+            <div>
+              <Typography
+                component="label"
+                htmlFor="username"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Username
+              </Typography>
+              <OutlinedInput
+                id="username"
+                placeholder="Username"
+                fullWidth
+                {...register("userName")}
+                disabled={isSubmitting}
+                error={!!errors.userName}
+                autoComplete="username"
+                className={`bg-gray-50 dark:bg-gray-700 dark:text-white text-gray-900  ${
+                  errors.userName
+                    ? "border-red-500 dark:border-red-400"
+                    : "border-gray-300 dark:border-gray-600"
+                }`}
+              />
+              {errors.userName && (
+                <Typography variant="body2" color="error" className="mt-1">
+                  {errors.userName.message}
+                </Typography>
+              )}
+            </div>
+            <div>
+              <Typography
+                component="label"
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Password
+              </Typography>
+              <FormControl variant="outlined" fullWidth>
+                <OutlinedInput
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  {...register("password")}
+                  disabled={isSubmitting}
+                  error={!!errors.password}
+                  autoComplete="current-password"
+                  className={`bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white ${
+                    errors.password
+                      ? "border-red-500 dark:border-red-400"
+                      : "border-gray-300 dark:border-gray-600"
+                  }`}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                {errors.password && (
+                  <Typography variant="body2" color="error" className="mt-1">
+                    {errors.password.message}
+                  </Typography>
+                )}
+              </FormControl>
+            </div>
+            <button
+              type="submit"
+              className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition duration-200 flex items-center justify-center"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <CircularProgress size={20} className="mr-2" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign in"
+              )}
+            </button>
+            <Typography
+              variant="body2"
+              className="text-sm font-light text-gray-500 dark:text-gray-400 text-center"
+            >
+              Don’t have an account yet?{" "}
+              <Link
+                to="/register"
+                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+              >
+                Sign up
+              </Link>
+            </Typography>
+          </form>
         </div>
-        <form className="space-y-4" onSubmit={handleSubmit(handleLogin)}>
-          {/* Username Field */}
-          <div>
-            <label
-              htmlFor="username"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className={`bg-gray-50 border ${
-                errors.userName
-                  ? "border-red-500 dark:border-red-400"
-                  : "border-gray-300 dark:border-gray-600"
-              } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
-              placeholder="Username"
-              {...register("userName")}
-              autoComplete="username"
-            />
-            {errors.userName && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.userName.message}
-              </p>
-            )}
-          </div>
-          {/* Password Field */}
-          <div>
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••"
-              className={`bg-gray-50 border ${
-                errors.password
-                  ? "border-red-500 dark:border-red-400"
-                  : "border-gray-300 dark:border-gray-600"
-              } text-gray-900 dark:text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700`}
-              {...register("password")}
-              autoComplete="current-password"
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-          {/* Action Buttons */}
-          <button
-            type="submit"
-            className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition duration-200"
-          >
-            Sign in
-          </button>
-          {/* Sign Up Link */}
-          <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-            Don’t have an account yet?{" "}
-            <Link
-              to="/register"
-              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-            >
-              Sign up
-            </Link>
-          </p>
-        </form>
-      </div>
+      </Container>
     </section>
   );
 };
