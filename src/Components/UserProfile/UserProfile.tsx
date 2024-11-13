@@ -1,26 +1,13 @@
 import { useContext, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import {
-  Typography,
-  Button,
-  Stack,
-  Tooltip,
-  Chip,
-  Grid2 as Grid,
-} from "@mui/material";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import EmailIcon from "@mui/icons-material/Email";
+import { Typography, Button, Chip, Grid2 as Grid } from "@mui/material";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
-// import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
 import AutoScrollEmblaCarousel from "../EmblaCarousel/AutoScrollEmblaCarousel/AutoScrollEmblaCarousel";
 import AutoplayEmblaCarousel from "../EmblaCarousel/AutoPlayEmblaCarousel/AutoPlayEmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
 import ExperienceDialog from "../ExperienceDialog/ExperienceDialog";
 import ProjectDialog from "../ProjectDialog/ProjectDialog";
-// import "../../css/base.css";
-// import "../../css/sandbox.css";
 import "../../css/embla.css";
 import CodeIcon from "@mui/icons-material/Code";
 import BuildIcon from "@mui/icons-material/Build";
@@ -52,6 +39,7 @@ import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
 import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
 import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
+import ContactForm from "../ContactForm/ContactForm";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
@@ -544,42 +532,6 @@ export default function UserProfile() {
         </Typography>
 
         {/* Social Media Links */}
-        <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
-          <Tooltip title="LinkedIn">
-            <Button
-              color="info"
-              variant="text"
-              href="https://www.linkedin.com/in/roba-geleta/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <LinkedInIcon fontSize="large" />
-            </Button>
-          </Tooltip>
-          <Tooltip title="GitHub">
-            <Button
-              color="info"
-              variant="text"
-              href="https://github.com/Roba-Geleta"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-            >
-              <GitHubIcon fontSize="large" />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Email">
-            <Button
-              color="info"
-              variant="text"
-              href="mailto:geletaroba@yahoo.ca"
-              aria-label="Email"
-            >
-              <EmailIcon fontSize="large" />
-            </Button>
-          </Tooltip>
-        </Stack>
 
         {/* Experiences Section */}
         <Box sx={{ mt: 6, width: "100%", maxWidth: 1000 }}>
@@ -926,6 +878,10 @@ export default function UserProfile() {
               />
             </Box>
           </Box>
+        </Box>
+
+        <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
+          <ContactForm />
         </Box>
       </Container>
 

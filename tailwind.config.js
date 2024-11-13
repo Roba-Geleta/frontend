@@ -23,7 +23,7 @@ export default {
       },
       screens: {
         'xs': '475px',
-        'smv': '550px'
+        'smv': '560px'
       }
     },
   },

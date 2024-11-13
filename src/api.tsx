@@ -13,6 +13,13 @@ import { LocationGet } from "./Models/Location";
 interface SearchResponse {
   data: CompanySearch[];
 }
+
+export interface ContactFormValues {
+  name: string;
+  email: string;
+  message: string;
+}
+
 const FUNCTION_BASE_URL = import.meta.env.VITE_APP_FUNCTION_BASE_URL;
 
 export const searchCompanies = async (query: string) => {
@@ -161,6 +168,32 @@ export const getIPInfo = async (ip: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error("Error fetching IP info:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw error;
+  }
+};
+
+// Function to send contact form data
+export const sendContactForm = async (
+  values: ContactFormValues
+): Promise<{ message: string }> => {
+  try {
+    const { data } = await axios.post<{ message: string }>(
+      `${FUNCTION_BASE_URL}/contact`,
+      values,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error sending contact form:", error.message);
+      // You can customize the error handling as needed
     } else {
       console.error("Unexpected error:", error);
     }

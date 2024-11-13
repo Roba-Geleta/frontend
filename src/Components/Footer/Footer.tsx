@@ -20,7 +20,6 @@ const Footer: React.FC = () => {
     <Box
       component="footer"
       sx={{
-        // backgroundColor: "background.paper",
         py: 4,
         mt: "auto",
         borderTop: (theme) => `1px solid ${theme.palette.divider}`,
@@ -36,28 +35,30 @@ const Footer: React.FC = () => {
           textAlign={{ xs: "center", sm: "left" }}
         >
           <Box>
-            <Box
-              mb={2}
-              display="flex"
-              alignItems="center"
-              justifyContent={{ xs: "center", sm: "flex-start" }}
-            >
-              <Link to="/" className="flex flex-row items-center">
-                <RobaLogo sx={{ fontSize: "50px" }} />
-              </Link>
-              <Typography
-                variant="h6"
-                className="text-gray-700 dark:text-gray-300 !font-bold ml-2"
+            <Link to="/" className="">
+              <Box
+                mb={0}
+                display="flex"
+                alignItems="center"
+                justifyContent={{ xs: "center", sm: "flex-start" }}
+                className="border-2 rounded-xl p-2 dark:border-gray-500"
               >
-                Roba Geleta
-              </Typography>
-            </Box>
+                <RobaLogo sx={{ fontSize: "70px" }} />
 
+                <Typography
+                  variant="h6"
+                  className="text-gray-700 dark:text-gray-300 !font-bold ml-2"
+                >
+                  Roba Geleta
+                </Typography>
+              </Box>
+            </Link>
             <Stack
               direction="row"
               spacing={1}
-              mb={2}
+              mb={0}
               justifyContent={{ xs: "center", sm: "flex-start" }}
+              alignItems="center"
             >
               <Tooltip title="LinkedIn">
                 <IconButton
@@ -84,23 +85,32 @@ const Footer: React.FC = () => {
                   <GitHubIcon />
                 </IconButton>
               </Tooltip>
+
               <Tooltip title="Email">
                 <IconButton
                   color="info"
                   component="a"
-                  href="mailto:geletaroba@yahoo.ca"
+                  href="mailto:contact@geleta.ca"
                   aria-label="Email"
                 >
                   <EmailIcon />
                 </IconButton>
               </Tooltip>
+
+              {/* Added Email Address in Plain Text */}
+              <Typography
+                variant="body2"
+                className="text-gray-700 dark:text-gray-300 !text-xs ml-1"
+              >
+                contact@geleta.ca
+              </Typography>
             </Stack>
           </Box>
 
           <Box textAlign={{ xs: "center", sm: "right" }} className="space-y-2">
             <Typography
               variant="body2"
-              className="text-gray-700 dark:text-gray-300 !font-bold"
+              className="text-gray-700 dark:text-gray-300 !font-bold !mt-1"
             >
               Made with ASP.NET & React
             </Typography>

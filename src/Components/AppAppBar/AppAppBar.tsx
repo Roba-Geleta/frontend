@@ -340,6 +340,15 @@ const AppAppBar: React.FC = () => {
               >
                 Skills
               </Button>
+              <Button
+                onClick={() => handleProjectsClick("Contact")}
+                variant="text"
+                color="info"
+                size="small"
+                className="dark:text-gray-300"
+              >
+                Contact
+              </Button>
             </Box>
           </Box>
 
@@ -512,6 +521,18 @@ const AppAppBar: React.FC = () => {
                   >
                     <Typography className="dark:text-gray-300">
                       Skills
+                    </Typography>
+                  </MenuItem>
+
+                  {/* Contact */}
+                  <MenuItem
+                    onClick={() => {
+                      handleProjectsClick("Contact");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <Typography className="dark:text-gray-300">
+                      Contact
                     </Typography>
                   </MenuItem>
 
