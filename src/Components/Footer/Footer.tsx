@@ -14,6 +14,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationDisplay from "../LocationDisplay/LocationDisplay";
 import RobaLogo from "../RobaLogo/RobaLogo";
+import FinancialInsightsLogo from "../../assets/FIPLogoIconDark.svg";
 
 const Footer: React.FC = () => {
   return (
@@ -97,7 +98,6 @@ const Footer: React.FC = () => {
                 </IconButton>
               </Tooltip>
 
-              {/* Added Email Address in Plain Text */}
               <Typography
                 variant="body2"
                 className="text-gray-700 dark:text-gray-300 !text-xs ml-1"
@@ -114,10 +114,33 @@ const Footer: React.FC = () => {
             >
               Made with ASP.NET & React
             </Typography>
+
+            <Box className="flex flex-row items-center justify-center">
+              <img
+                src={FinancialInsightsLogo}
+                alt="Financial Insights Platform"
+                style={{ height: "30px", marginRight: "5px" }}
+              />
+              <Typography
+                variant="body2"
+                color="inherit"
+                className="!text-blue-700 dark:!text-blue-300"
+              >
+                <Link
+                  to="/stocks"
+                  className="hover:underline"
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Financial Insights Platform
+                </Link>
+              </Typography>
+            </Box>
+
+            {/* Existing Credits Link */}
             <Typography
               variant="body2"
-              color="text.secondary"
-              className="!text-gray-700 dark:!text-gray-300"
+              color="inherit"
+              className="!text-blue-700 dark:!text-blue-300"
             >
               <Link to="/credits" className="hover:underline">
                 Credits
