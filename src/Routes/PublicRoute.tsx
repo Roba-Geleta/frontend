@@ -23,8 +23,8 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   }
 
   if (user) {
-    // User is authenticated, redirect to home or another page
-    return <Navigate to="/" replace />;
+    // User is authenticated, redirect to home
+    return <Navigate to="/stocks" replace />;
   }
 
   // User is not authenticated

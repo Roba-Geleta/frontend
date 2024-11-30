@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }: Props) => {
     // User is not authenticated
     return (
       <Navigate
-        to={`/login?redirect=${encodeURIComponent(
+        to={`/stocks/login?redirect=${encodeURIComponent(
           location.pathname + location.search
         )}`}
         replace
