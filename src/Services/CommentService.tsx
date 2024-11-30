@@ -32,3 +32,12 @@ export const commentGetAPI = async (symbol: string) => {
     handleError(error);
   }
 };
+
+export const commentDeleteAPI = async (commentId: number) => {
+  try {
+    const response = await axiosInstance.delete(`${api}${commentId}`);
+    return response;
+  } catch (error) {
+    handleError(error);
+  }
+};
