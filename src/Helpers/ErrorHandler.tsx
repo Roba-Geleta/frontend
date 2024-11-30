@@ -2,7 +2,13 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const PUBLIC_ROUTES = ["/", "/credits", "/login", "/register"];
+const PUBLIC_ROUTES = [
+  "/",
+  "/stocks",
+  "/credits",
+  "/stocks/login",
+  "/stocks/register",
+];
 
 export const handleError = (error: unknown) => {
   const currentPath = window.location.pathname;
