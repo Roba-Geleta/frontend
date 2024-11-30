@@ -1,6 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import StockCommentForm from "./StockCommentForm/StockCommentForm";
-import { commentGetAPI, commentPostAPI } from "../../Services/CommentService";
+import {
+  commentDeleteAPI,
+  commentGetAPI,
+  commentPostAPI,
+} from "../../Services/CommentService";
 import { toast } from "react-toastify";
 import { CommentGet } from "../../Models/Comment";
 import StockCommentList from "../StockCommentList/StockCommentList";
@@ -51,6 +55,20 @@ const StockComment = ({ stockSymbol }: Props) => {
     }
   };
 
+  const handleDelete = async (commentId: number) => {
+    try {
+      const res = await commentDeleteAPI(commentId);
+      if (res) {
+        toast.success("Comment deleted successfully");
+        // Refresh comments
+        getComments();
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      toast.error("Failed to delete comment. Please try again.");
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6  my-6">
       <div className="max-w-[30rem] mx-auto">
@@ -64,7 +82,7 @@ const StockComment = ({ stockSymbol }: Props) => {
           <BarLoader />
         </div>
       ) : (
-        <StockCommentList comments={comments!} />
+        <StockCommentList comments={comments!} handleDelete={handleDelete} />
       )}
       <StockCommentForm handleComment={handleComment} />
     </div>
