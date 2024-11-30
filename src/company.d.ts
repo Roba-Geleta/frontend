@@ -1,9 +1,12 @@
 export interface CompanySearch {
-  currency: string;
-  exchangeShortName: string;
-  name: string;
-  stockExchange: string;
   symbol: string;
+  companyName: string;
+  price: number;
+  exchange: string;
+  exchangeShortName: string;
+  type: string;
+  id: number;
+  commentCount: number;
 }
 
 export interface CompanyProfile {
@@ -26,7 +29,7 @@ export interface CompanyProfile {
   description: string;
   ceo: string;
   sector: string;
-  counter: string;
+  country: string;
   fullTimeEmployees: string;
   phone: string;
   address: string;
