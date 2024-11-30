@@ -1,0 +1,70 @@
+/* credit to https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css */
+/* Light Mode Background */
+.backgroundLight {
+  background: linear-gradient(
+      -90deg,
+      rgba(255, 0, 0, 0.01) 1px,
+      transparent 1px
+    ),
+    /* Vertical lines */
+      linear-gradient(rgba(62, 158, 75, 0.01) 1px, transparent 1px),
+    /* Horizontal lines */
+      linear-gradient(-90deg, rgba(50, 221, 207, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(185, 11, 162, 0.03) 1px, transparent 1px),
+    linear-gradient(
+      transparent 3px,
+      #f2f2f2 3px,
+      #f2f2f2 78px,
+      transparent 78px
+    ),
+    linear-gradient(-90deg, #aaa 1px, transparent 1px),
+    linear-gradient(
+      -90deg,
+      transparent 3px,
+      #f2f2f2 3px,
+      #f2f2f2 78px,
+      transparent 78px
+    ),
+    linear-gradient(#aaa 1px, transparent 1px), #f2f2f2;
+  background-size: 4px 4px, 4px 4px, 80px 80px, 80px 80px, 80px 80px, 80px 80px,
+    80px 80px, 80px 80px;
+}
+
+/* Dark Mode Background */
+.backgroundDark {
+  background: linear-gradient(
+      -90deg,
+      rgba(255, 255, 255, 0.01) 1px,
+      transparent 1px
+    ),
+    /* Vertical lines */
+      linear-gradient(rgba(62, 158, 75, 0.01) 1px, transparent 1px),
+    /* Horizontal lines */
+      linear-gradient(-90deg, rgba(50, 221, 207, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(185, 11, 162, 0.03) 1px, transparent 1px),
+    linear-gradient(
+      transparent 3px,
+      #1a1a1a 3px,
+      #1a1a1a 78px,
+      transparent 78px
+    ),
+    linear-gradient(-90deg, #555 1px, transparent 1px),
+    linear-gradient(
+      -90deg,
+      transparent 3px,
+      #1a1a1a 3px,
+      #1a1a1a 78px,
+      transparent 78px
+    ),
+    linear-gradient(#555 1px, transparent 1px), #1a1a1a;
+  background-size: 4px 4px, 4px 4px, 80px 80px, 80px 80px, 80px 80px, 80px 80px,
+    80px 80px, 80px 80px;
+}
+
+.backgroundTemp {
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px), #f2f2f2;
+  background-size: 4px 4px, 4px 4px, 80px 80px, 80px 80px, 80px 80px, 80px 80px,
+    80px 80px, 80px 80px;
+  background-color: #f2f2f2;
+}
