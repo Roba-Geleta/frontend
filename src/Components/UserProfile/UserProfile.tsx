@@ -1,9 +1,15 @@
 import { useContext, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import { Typography, Button, Chip, Grid2 as Grid } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Chip,
+  Grid2 as Grid,
+  Tooltip,
+  Divider,
+} from "@mui/material";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
-import AutoScrollEmblaCarousel from "../EmblaCarousel/AutoScrollEmblaCarousel/AutoScrollEmblaCarousel";
 import AutoplayEmblaCarousel from "../EmblaCarousel/AutoPlayEmblaCarousel/AutoPlayEmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
 import ExperienceDialog from "../ExperienceDialog/ExperienceDialog";
@@ -234,51 +240,51 @@ export default function UserProfile() {
     return technologies.join(", ");
   };
 
-  // Technical Skills
+  // Updated Technical Skills
   const technicalSkills = {
     languages: [
       "JavaScript",
       "TypeScript",
       "Python",
       "Java",
-      "SQL",
       "Go",
       "C",
       "C++",
+      "C#",
+      "SQL",
       "HTML5",
       "CSS",
+      "JSON",
     ],
     frameworks: [
       "React",
       "Svelte",
-      "Material UI",
+      "Material-UI",
       "Bootstrap",
       "Tailwind CSS",
       "Flowbite",
       "Android SDK",
+      "ASP.NET Core",
     ],
     tools: [
-      "Git",
       "GitHub",
-      "GitLab",
-      "VSCode",
       "JUnit",
       "JupyterLab",
       "Android Studio",
-      "Eclipse",
-      "WebStorm",
-      "IntelliJ",
-      "PyCharm",
       "Google Cloud Functions",
       "Stripe",
       "Twilio",
       "OpenAI API",
       "OAuth",
       "Selenium",
-      "ASP.NET Core",
       "SQL Server",
-      "Gradle",
-      "Adobe Premiere Pro",
+      "Chrome Extension",
+      "Google Cloud Services",
+      "AWS (Amplify, Elastic Beanstalk, RDS)",
+      "Cloudflare",
+      "Financial Modeling Prep API",
+      "Google Secret Manager",
+      "Harness",
     ],
     practices: [
       "Agile Methodologies",
@@ -288,6 +294,10 @@ export default function UserProfile() {
       "API Integration",
       "Chrome Extension Development",
       "Discord Bot Development",
+      "User-Centered Design",
+      "Architecture Design",
+      "Database Management",
+      "Code Reviews",
     ],
   };
 
@@ -297,14 +307,19 @@ export default function UserProfile() {
     color: "primary" | "secondary" | "success" | "warning"
   ) =>
     skills.map((skill, index) => (
-      <Chip
+      <Tooltip
         key={index}
-        label={skill}
-        color={color}
-        variant="outlined"
-        sx={{ m: 0.5 }}
-        className="min-w-fit sm:!mx-[20px]"
-      />
+        title={skill} // Add a tooltip for best practices
+      >
+        <Chip
+          key={index}
+          label={skill}
+          color={color}
+          variant="outlined"
+          sx={{ m: 0.5 }}
+          className="min-w-fit sm:!mx-[20px]"
+        />
+      </Tooltip>
     ));
 
   const experienceSlides = experiences.map((exp, index) => (
@@ -333,7 +348,7 @@ export default function UserProfile() {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           filter: mode === "dark" ? "invert(1)" : "invert(0)",
-          opacity: 0.1,
+          opacity: 0.17,
           zIndex: -1,
         },
       }}
@@ -485,17 +500,11 @@ export default function UserProfile() {
           flexDirection: "column",
           alignItems: "center",
         }}
+        maxWidth="xl"
       >
-        <div className="w-full flex justify-center">
+        <div id="Home" className="w-full flex justify-center">
           <AvatarWithIcons mode={mode} />
         </div>
-        {/* Avatar */}
-        {/* <AnimatedAvatar
-          alt="Roba Geleta"
-          src={Roba}
-          sx={{ width: 270, height: 270, mb: 2 }}
-        /> */}
-        {/* Name */}
         <Typography
           variant="h4"
           component="h1"
@@ -531,10 +540,122 @@ export default function UserProfile() {
           efficient, user-friendly digital solutions.
         </Typography>
 
-        {/* Social Media Links */}
+        {/* Technical Skills Section */}
+        <Box sx={{ mt: 6, width: "100%" }} className="">
+          {/* Main Technical Skills Header */}
+
+          <Typography
+            id="Skills"
+            variant="h4"
+            component="h2"
+            align="center"
+            gutterBottom
+            className="text-gray-900 dark:text-white"
+            sx={{
+              fontWeight: "bold",
+              mb: 3,
+              fontSize: { xs: "2rem", sm: "2.5rem" },
+            }}
+          >
+            Technical Skills
+          </Typography>
+          <Divider className="!mb-4 dark:bg-gray-700" />
+
+          {/* Languages & Web Technologies */}
+          <Box sx={{ mb: 4 }}>
+            <Typography
+              variant="h6"
+              component="h3"
+              align="center"
+              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+            >
+              <CodeIcon className="mr-1 text-blue-500" />
+              Languages & Web Technologies
+            </Typography>
+            <div className="flex flex-wrap justify-center">
+              {technicalSkills.languages.map((skill, index) => (
+                <Chip
+                  key={index}
+                  label={skill}
+                  variant="outlined"
+                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                />
+              ))}
+            </div>
+          </Box>
+
+          {/* Frameworks & Libraries */}
+          <Box sx={{ mb: 4 }}>
+            <Typography
+              variant="h6"
+              component="h3"
+              align="center"
+              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+            >
+              <Settings className="mr-1 text-green-500" />
+              Frameworks & Libraries
+            </Typography>
+            <div className="flex flex-wrap justify-center">
+              {technicalSkills.frameworks.map((skill, index) => (
+                <Chip
+                  key={index}
+                  label={skill}
+                  variant="outlined"
+                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                />
+              ))}
+            </div>
+          </Box>
+
+          {/* Tools & Platforms */}
+          <Box sx={{ mb: 4 }}>
+            <Typography
+              variant="h6"
+              component="h3"
+              align="center"
+              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+            >
+              <BuildIcon className="mr-1 text-yellow-500" />
+              Tools & Platforms
+            </Typography>
+            <div className="flex flex-wrap justify-center">
+              {technicalSkills.tools.map((skill, index) => (
+                <Chip
+                  key={index}
+                  label={skill}
+                  variant="outlined"
+                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                />
+              ))}
+            </div>
+          </Box>
+
+          {/* Development Practices */}
+          <Box sx={{ mb: 4 }}>
+            <Typography
+              variant="h6"
+              component="h3"
+              align="center"
+              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+            >
+              <SpeedIcon className="mr-1 text-red-500" />
+              Development Practices
+            </Typography>
+            <div className="flex flex-wrap justify-center">
+              {technicalSkills.practices.map((skill, index) => (
+                <Chip
+                  key={index}
+                  label={skill}
+                  variant="outlined"
+                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                />
+              ))}
+            </div>
+          </Box>
+        </Box>
 
         {/* Experiences Section */}
-        <Box sx={{ mt: 6, width: "100%", maxWidth: 1000 }}>
+        <Box sx={{ mt: 6, width: "100%" }}>
           <Typography
             id="Experience"
             variant="h4"
@@ -550,6 +671,7 @@ export default function UserProfile() {
           >
             Experience
           </Typography>
+          <Divider className="!mb-4 dark:bg-gray-700" />
           <Box sx={{ width: "100%", mt: 4, height: "500px" }}>
             <AutoplayEmblaCarousel
               slides={experienceSlides}
@@ -563,7 +685,7 @@ export default function UserProfile() {
         </Box>
 
         {/* Projects Section */}
-        <Box sx={{ mt: 6, width: "100%", maxWidth: 1200 }}>
+        <Box sx={{ mt: 6, width: "100%" }}>
           <Typography
             id="Projects"
             variant="h4"
@@ -579,8 +701,8 @@ export default function UserProfile() {
           >
             Projects
           </Typography>
+          <Divider className="!mb-4 dark:bg-gray-700" />
 
-          {/* Latest Project Section */}
           <Box
             sx={{
               position: "relative",
@@ -588,32 +710,31 @@ export default function UserProfile() {
               flexDirection: { xs: "column-reverse", md: "row" },
               width: "100%",
               maxWidth: 1200,
-              borderRadius: 2,
+              borderRadius: "0.62rem",
               overflow: "hidden",
               boxShadow:
                 mode === "dark"
-                  ? "0 0 15px rgba(255, 215, 0, 0.7)" // Enhanced shadow for dark mode
-                  : "0 0 15px rgba(255, 165, 0, 0.7)", // Enhanced shadow for light mode
-              border: `2px solid ${mode === "dark" ? "#FFD700" : "#FFA500"}`, // Gold for dark mode, orange for light mode
+                  ? "0 0 15px rgba(255, 215, 0, 0.7)"
+                  : "0 0 15px rgba(255, 165, 0, 0.7)",
+              border: `2px solid ${mode === "dark" ? "#FFD700" : "#FFA500"}`,
               mb: 4,
-              backgroundColor: mode === "dark" ? "#2c2c2c" : "#fff8e1", // Slightly highlighted background
-              padding: { xs: 2, md: 0 }, // Padding on small screens
+              backgroundColor: mode === "dark" ? "#2c2c2c" : "#fff8e1",
+              padding: { xs: 2, md: 0 },
             }}
           >
-            {/* "Latest Project" Label */}
             <Box
               sx={{
                 position: "absolute",
                 top: 0,
-                left: 0,
+                left: -1,
                 display: "flex",
                 alignItems: "center",
                 backgroundColor: "rgba(255, 255, 255, 0.9)",
-                padding: "4px 8px",
+                padding: "3px 6px",
                 zIndex: 2,
                 boxShadow: 1,
               }}
-              className="rounded-tl-lg rounded-br-lg"
+              className="rounded-br-lg z-10"
             >
               <NewReleasesIcon sx={{ color: "warning.main", mr: 0.5 }} />
               <Typography
@@ -627,7 +748,6 @@ export default function UserProfile() {
               </Typography>
             </Box>
 
-            {/* Content Section */}
             <Box
               sx={{
                 display: "flex",
@@ -647,7 +767,6 @@ export default function UserProfile() {
                 }}
               >
                 {latestProject.title}
-                {/* "In Progress" Indicator */}
                 <Box
                   sx={{
                     display: "flex",
@@ -743,141 +862,6 @@ export default function UserProfile() {
           </Box>
 
           <Box sx={{ mt: 2 }}>{projectsSlides}</Box>
-        </Box>
-        {/* Technical Skills Carousel at the Bottom */}
-        <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
-          {/* Main Technical Skills Header */}
-          <Typography
-            id="Skills"
-            variant="h4"
-            component="h2"
-            align="center"
-            gutterBottom
-            className="text-gray-900 dark:text-white"
-            sx={{
-              fontWeight: "bold",
-              mb: 3,
-              fontSize: { xs: "2rem", sm: "2.5rem" },
-            }}
-          >
-            Technical Skills
-          </Typography>
-
-          {/* Languages & Web Technologies Carousel */}
-          <Box sx={{ mb: 3, width: "100%" }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="text-gray-800 dark:text-gray-200"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "medium",
-              }}
-            >
-              <CodeIcon sx={{ mr: 1, color: "primary.main" }} />
-              Languages & Web Technologies
-            </Typography>
-            <Box sx={{ overflow: "hidden", width: "100%", mt: 1 }}>
-              <AutoScrollEmblaCarousel
-                slides={renderChips(technicalSkills.languages, "primary")}
-                options={carouselOptions}
-                autoplayOptions={{
-                  playOnInit: true,
-                  speed: 1.2,
-                }}
-              />
-            </Box>
-          </Box>
-
-          {/* Frameworks & Libraries Carousel */}
-          <Box sx={{ mb: 3, width: "100%" }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="text-gray-800 dark:text-gray-200"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "medium",
-              }}
-            >
-              <Settings sx={{ mr: 1, color: "secondary.main" }} />
-              Frameworks & Libraries
-            </Typography>
-            <Box sx={{ overflow: "hidden", width: "100%", mt: 1 }}>
-              <AutoScrollEmblaCarousel
-                slides={renderChips(technicalSkills.frameworks, "secondary")}
-                options={carouselOptions}
-                autoplayOptions={{
-                  playOnInit: true,
-                  speed: 1,
-                }}
-              />
-            </Box>
-          </Box>
-
-          {/* Tools & Platforms Carousel */}
-          <Box sx={{ mb: 3, width: "100%" }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="text-gray-800 dark:text-gray-200"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "medium",
-              }}
-            >
-              <BuildIcon sx={{ mr: 1, color: "success.main" }} />
-              Tools & Platforms
-            </Typography>
-            <Box sx={{ overflow: "hidden", width: "100%", mt: 1 }}>
-              <AutoScrollEmblaCarousel
-                slides={renderChips(technicalSkills.tools, "success")}
-                options={carouselOptions}
-                autoplayOptions={{
-                  playOnInit: true,
-                  speed: 1,
-                }}
-              />
-            </Box>
-          </Box>
-
-          {/* Development Practices Carousel */}
-          <Box sx={{ mb: 3, width: "100%" }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="text-gray-800 dark:text-gray-200"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "medium",
-              }}
-            >
-              <SpeedIcon sx={{ mr: 1, color: "warning.main" }} />
-              Development Practices
-            </Typography>
-            <Box sx={{ overflow: "hidden", width: "100%", mt: 1 }}>
-              <AutoScrollEmblaCarousel
-                slides={renderChips(technicalSkills.practices, "warning")}
-                options={carouselOptions}
-                autoplayOptions={{
-                  playOnInit: true,
-                  speed: 1,
-                }}
-              />
-            </Box>
-          </Box>
         </Box>
 
         <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
