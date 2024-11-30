@@ -1,7 +1,6 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import App from "../App";
+import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../Pages/HomePage/HomePage";
-import SearchPage from "../Pages/SearchPage/SearchPage";
+import PortfolioPage from "../Pages/PortfolioPage/PortfolioPage";
 import CompanyPage from "../Pages/CompanyPage/CompanyPage";
 import CompanyProfile from "../Components/CompanyProfile/CompanyProfile";
 import IncomeStatement from "../Components/IncomeStatement/IncomeStatement";
@@ -12,13 +11,68 @@ import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Credits from "../Pages/Credits/Credits";
 import PublicRoute from "./PublicRoute";
+import StocksHomePage from "../Pages/StocksHomePage/StocksHomePage";
+import StocksLayout from "../Layout/StocksLayout/StocksLayout";
+import MainLayout from "../Layout/MainLayout/MainLayout";
+import { UserProvider } from "../Context/userAuth";
+import RouteError from "../Components/RouteError.tsx/RouteError";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <MainLayout />,
     children: [
-      { path: "", element: <HomePage /> },
+      {
+        path: "",
+        element: <HomePage />,
+      },
+      {
+        path: "credits",
+        element: <Credits />,
+      },
+      // {
+      //   path: "*",
+      //   element: <Navigate to="/" replace />,
+      // },
+    ],
+  },
+  {
+    path: "/stocks",
+    element: (
+      <UserProvider>
+        <StocksLayout />
+      </UserProvider>
+    ),
+    errorElement: <RouteError />,
+    children: [
+      {
+        index: true,
+        element: <StocksHomePage />,
+      },
+      {
+        path: "portfolio",
+        element: (
+          <ProtectedRoute>
+            <PortfolioPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "company/:ticker",
+        element: (
+          <ProtectedRoute>
+            <CompanyPage />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteError />,
+
+        children: [
+          { path: "company-profile", element: <CompanyProfile /> },
+          { path: "income-statement", element: <IncomeStatement /> },
+          { path: "balance-sheet", element: <BalanceSheet /> },
+          { path: "cashflow-statement", element: <CashflowStatement /> },
+        ],
+      },
       {
         path: "login",
         element: (
@@ -35,33 +89,10 @@ export const router = createBrowserRouter([
           </PublicRoute>
         ),
       },
-      { path: "credits", element: <Credits /> },
-      {
-        path: "stocks",
-        element: (
-          <ProtectedRoute>
-            <SearchPage />{" "}
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "company/:ticker",
-        element: (
-          <ProtectedRoute>
-            <CompanyPage />
-          </ProtectedRoute>
-        ),
-        children: [
-          { path: "company-profile", element: <CompanyProfile /> },
-          { path: "income-statement", element: <IncomeStatement /> },
-          { path: "balance-sheet", element: <BalanceSheet /> },
-          { path: "cashflow-statement", element: <CashflowStatement /> },
-        ],
-      },
-      {
-        path: "*",
-        element: <Navigate to="/" replace />,
-      },
     ],
+  },
+  {
+    path: "*",
+    element: <RouteError />,
   },
 ]);
