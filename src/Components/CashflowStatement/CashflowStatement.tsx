@@ -103,7 +103,7 @@ const CashflowStatement = () => {
   }, [ticker]);
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full">
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <BarLoader />
