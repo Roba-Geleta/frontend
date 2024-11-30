@@ -7,7 +7,6 @@ import {
   formatLargeNonMonetaryNumber,
   formatRatio,
 } from "../../Helpers/NumberFormating";
-import StockComment from "../StockComment/StockComment";
 
 const tableConfig: ConfigItem[] = [
   {
@@ -118,14 +117,10 @@ const CompanyProfile = () => {
   }, [ticker]);
 
   return (
-    <div className="w-full  py-6">
+    <div className="w-full">
       {companyData ? (
         <div className="space-y-6">
-          {/* Ratio List */}
           <RatioList data={companyData} config={tableConfig} />
-
-          {/* Stock Comments */}
-          <StockComment stockSymbol={ticker} />
         </div>
       ) : (
         <div className="flex justify-center items-center h-64">
