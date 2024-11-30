@@ -104,7 +104,11 @@ export const UserProvider = ({ children }: Props) => {
     }
   };
 
-  const isLoggedIn = !!user;
+  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
+
+  useEffect(() => {
+    setIsLoggedIn(!!user);
+  }, [user]);
 
   return (
     <UserContext.Provider
