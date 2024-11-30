@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, useContext, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { scroller } from "react-scroll";
 import { styled } from "@mui/material/styles";
@@ -8,99 +8,65 @@ import {
   Box,
   Button,
   IconButton,
-  Container,
   Divider,
   MenuItem,
   Drawer,
-  Avatar,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  Tooltip,
   Typography,
+  ToolbarProps,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import RobaLogo from "../RobaLogo/RobaLogo";
 import ToggleColorMode from "../ToggleColorMode/ToggleColorMode";
-import { useAuth } from "../../Context/userAuth";
-import { ThemeContext } from "../../Context/ThemeContext";
-import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
-import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
-import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
-
-// Helper Functions
-const stringToColor = (string: string): string => {
-  let hash = 0;
-  for (let i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = "#";
-  for (let i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-
-  return color;
-};
-
-const stringAvatar = (name: string) => ({
-  sx: {
-    bgcolor: stringToColor(name),
-  },
-  children: `${name[0].toUpperCase()}`,
-});
 
 // Styled Components
-const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+interface StyledToolbarProps extends ToolbarProps {
+  scrolled: boolean;
+}
+
+const StyledToolbar = styled(Toolbar, {
+  shouldForwardProp: (prop) => prop !== "scrolled",
+})<StyledToolbarProps>(({ theme, scrolled }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   flexShrink: 0,
-  borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
+  borderRadius: scrolled ? 0 : `calc(${theme.shape.borderRadius}px + 8px)`,
   backdropFilter: "blur(24px)",
   border: "1px solid",
   borderColor: theme.palette.divider,
-  // backgroundColor: alpha("#fa1233", 0.8),
   boxShadow: theme.shadows[1],
-  padding: "8px 12px",
+  padding: "8px 16px",
+  marginLeft: scrolled ? 0 : "20px",
+  marginRight: scrolled ? 0 : "20px",
+  transition:
+    "padding 0.6s ease-in-out, margin 0.5s ease-in-out, border-radius 0.3s ease-in-out",
 }));
 
 const AppAppBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { authLoading, user, isLoggedIn, logoutUser } = useAuth();
-  const { mode } = useContext(ThemeContext);
-  const { isBackendReachable, hasNetworkErrorRetriesExceeded } =
-    useContext(NetworkStatusContext);
-  const { isDatabaseResuming, hasDatabaseRetriesExceeded } = useContext(
-    DatabaseStatusContext
-  );
-
-  const valid = useMemo(
-    () =>
-      isDatabaseResuming ||
-      hasDatabaseRetriesExceeded ||
-      hasNetworkErrorRetriesExceeded ||
-      !isBackendReachable,
-    [
-      isDatabaseResuming,
-      hasDatabaseRetriesExceeded,
-      hasNetworkErrorRetriesExceeded,
-      isBackendReachable,
-    ]
-  );
+  const [scrolled, setScrolled] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleProjectsClick = (place: string) => {
     if (location.pathname !== "/") {
@@ -121,632 +87,192 @@ const AppAppBar: React.FC = () => {
     }
   };
 
-  const isMenuOpen = Boolean(anchorEl);
-
   // Handlers
   const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
 
-  const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  // Menu Items for Authenticated Users
-  const authenticatedMenu: React.ReactElement[] = [
-    <Box
-      key="username"
-      display="flex"
-      alignItems="center"
-      px={2}
-      py={1}
-      maxWidth={250}
-      width="100%"
-      overflow="hidden"
-    >
-      <ListItemIcon>
-        <AccountCircleIcon
-          fontSize="small"
-          sx={{ color: mode === "dark" ? "grey.300" : "text.primary" }}
-        />
-      </ListItemIcon>
-      <Tooltip title={user?.userName || "User Name"} placement="right">
-        <Typography
-          variant="body2"
-          noWrap
-          sx={{
-            color: mode === "dark" ? "grey.300" : "text.primary",
-            fontSize: "0.9rem",
-          }}
-        >
-          {user?.userName || "User Name"}
-        </Typography>
-      </Tooltip>
-    </Box>,
-    <Box
-      key="email"
-      display="flex"
-      alignItems="center"
-      px={2}
-      py={1}
-      maxWidth={250}
-      width="100%"
-      overflow="hidden"
-    >
-      <ListItemIcon>
-        <AlternateEmailIcon
-          fontSize="small"
-          sx={{ color: mode === "dark" ? "grey.400" : "text.secondary" }}
-        />
-      </ListItemIcon>
-      <Tooltip title={user?.email || "Email"} placement="right">
-        <Typography
-          variant="body2"
-          noWrap
-          sx={{
-            color: mode === "dark" ? "grey.400" : "text.secondary",
-            fontSize: "0.8rem",
-          }}
-        >
-          {user?.email || "Email"}
-        </Typography>
-      </Tooltip>
-    </Box>,
-    <Divider key="divider" />,
-    <MenuItem
-      key="sign-out"
-      onClick={() => {
-        logoutUser();
-        handleMenuClose();
-      }}
-      disabled={valid}
-      sx={{
-        "&:hover": {
-          backgroundColor: mode === "dark" ? "grey.800" : "grey.100",
-        },
-      }}
-    >
-      <ListItemIcon>
-        <LogoutIcon
-          fontSize="small"
-          sx={{ color: mode === "dark" ? "error.light" : "error.main" }}
-        />
-      </ListItemIcon>
-      <ListItemText
-        primary="Sign out"
-        primaryTypographyProps={{
-          color: mode === "dark" ? "error.light" : "error.main",
-          fontWeight: "medium",
-        }}
-      />
-    </MenuItem>,
-  ];
-
-  // Menu Items for Unauthenticated Users
-  const unauthenticatedMenu: React.ReactElement[] = [
-    <MenuItem key="login" disabled={valid} onClick={handleMenuClose}>
-      <Link to="/login" className="w-full flex flex-row items-center">
-        <ListItemIcon>
-          <LoginIcon fontSize="small" color="primary" />
-        </ListItemIcon>
-        <ListItemText
-          primary="Sign In"
-          primaryTypographyProps={{
-            color: mode === "dark" ? "primary" : "primary",
-            fontWeight: "medium",
-          }}
-        />
-      </Link>
-    </MenuItem>,
-    <MenuItem key="register" disabled={valid} onClick={handleMenuClose}>
-      <Link to="/register" className="w-full flex flex-row items-center">
-        <ListItemIcon>
-          <PersonAddIcon fontSize="small" color="secondary" />
-        </ListItemIcon>
-        <ListItemText
-          primary="Sign Up "
-          primaryTypographyProps={{
-            color: mode === "dark" ? "secondary" : "secondary",
-            fontWeight: "medium",
-          }}
-        />
-      </Link>
-    </MenuItem>,
-  ];
-
-  // Handle authLoading state
-  const renderAccountIcon = () => {
-    if (authLoading) {
-      // While authentication is loading, you can show a placeholder or nothing
-      return (
-        <Avatar
-          sx={{ bgcolor: "grey.500", width: 32, height: 32 }}
-          variant="circular"
-        />
-      );
-    } else if (isLoggedIn && user) {
-      // User is authenticated
-      return <Avatar {...stringAvatar(user.userName || "User Name")} />;
-    } else {
-      // User is not authenticated
-      return <Avatar sx={{ bgcolor: "grey.500", width: 32, height: 32 }} />;
-    }
-  };
-
   return (
     <AppBar
       position="fixed"
-      className="bg-transparent "
       sx={{
         boxShadow: 0,
-        bgcolor: "transparent",
+        bgcolor: scrolled ? "transparent" : "transparent",
         backgroundImage: "none",
-        mt: 2,
+        mt: scrolled ? 0 : 2,
+        // px: scrolled ? 0 : 10,
+        width: "100%",
+        transition: "margin-top 0.6s ease-in-out",
       }}
     >
-      <Container maxWidth="lg">
-        <StyledToolbar
-          variant="dense"
-          disableGutters
-          className="dark:bg-gray-800 bg-[#f5f1e0be] dark:bg-opacity-90"
+      <StyledToolbar
+        variant="dense"
+        disableGutters
+        scrolled={scrolled}
+        className={`bg-transparent transition-all duration-300 ${
+          scrolled
+            ? " bg-[#f5f1e0be] dark:bg-[#192335be]"
+            : " bg-[#f5f1e0be] dark:bg-[#192335be]"
+        }`}
+      >
+        {/* Left Section: Logo and Navigation Links */}
+        <Box
+          className="flex items-center"
+          sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
         >
-          {/* Left Section: Logo and Navigation Links */}
-          <Box
-            className="flex items-center"
-            sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
-          >
+          <Link to="/" className="flex flex-row items-center">
+            <RobaLogo
+              sx={{
+                fontSize: "50px",
+                transition: "font-size 0.3s ease-in-out",
+              }}
+            />
+          </Link>
+          <Box className="hidden smv:flex">
             <Link to="/" className="flex flex-row items-center">
-              <RobaLogo sx={{ fontSize: "50px" }} />
+              <Button
+                variant="text"
+                color="primary"
+                size="small"
+                className="dark:text-white"
+                onClick={() => handleProjectsClick("Home")}
+              >
+                Home
+              </Button>
             </Link>
-            <Box className="hidden smv:flex">
-              <Link to="/" className="flex flex-row items-center">
-                <Button
-                  variant="text"
-                  color="primary"
-                  size="small"
+            <Button
+              onClick={() => handleProjectsClick("Skills")}
+              variant="text"
+              color="info"
+              size="small"
+              className="dark:text-gray-300"
+            >
+              Skills
+            </Button>
+            <Button
+              onClick={() => handleProjectsClick("Experience")}
+              variant="text"
+              color="info"
+              size="small"
+              className="dark:text-gray-300"
+            >
+              Experience
+            </Button>
+            <Button
+              onClick={() => handleProjectsClick("Projects")}
+              variant="text"
+              color="info"
+              size="small"
+              className="dark:text-gray-300"
+            >
+              Projects
+            </Button>
+
+            <Button
+              onClick={() => handleProjectsClick("Contact")}
+              variant="text"
+              color="info"
+              size="small"
+              className="dark:text-gray-300"
+            >
+              Contact
+            </Button>
+          </Box>
+        </Box>
+        {/* Right Section: Account and Theme Toggle */}
+        <Box className="hidden smv:flex items-center">
+          <ToggleColorMode />
+        </Box>
+        {/* Mobile Section: Drawer */}
+        <Box className="flex smv:hidden">
+          <IconButton
+            aria-label="Menu button"
+            onClick={toggleDrawer(true)}
+            className="dark:text-white"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Drawer anchor="top" open={drawerOpen} onClose={toggleDrawer(false)}>
+            <Box
+              className="p-2 bg-white dark:bg-gray-800"
+              sx={{ height: "100%" }}
+            >
+              {/* Drawer Header */}
+              <Box className="flex items-center justify-between">
+                <IconButton
+                  onClick={toggleDrawer(false)}
                   className="dark:text-white"
                 >
-                  Home
-                </Button>
-              </Link>
-              <Button
-                onClick={() => handleProjectsClick("Experience")}
-                variant="text"
-                color="info"
-                size="small"
-                className="dark:text-gray-300"
-              >
-                Experience
-              </Button>
-              <Button
-                onClick={() => handleProjectsClick("Projects")}
-                variant="text"
-                color="info"
-                size="small"
-                className="dark:text-gray-300"
-              >
-                Projects
-              </Button>
-              <Button
-                onClick={() => handleProjectsClick("Skills")}
-                variant="text"
-                color="info"
-                size="small"
-                className="dark:text-gray-300"
-              >
-                Skills
-              </Button>
-              <Button
-                onClick={() => handleProjectsClick("Contact")}
-                variant="text"
-                color="info"
-                size="small"
-                className="dark:text-gray-300"
-              >
-                Contact
-              </Button>
-            </Box>
-          </Box>
+                  <CloseRoundedIcon />
+                </IconButton>
+                <ToggleColorMode />
+              </Box>
+              <Divider className="my-3 dark:bg-gray-700" />
 
-          {/* Right Section: Account and Theme Toggle */}
-          <Box className="hidden smv:flex items-center">
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleMenuOpen}
-                size="small"
-                sx={{}}
-                aria-controls={isMenuOpen ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={isMenuOpen ? "true" : undefined}
-              >
-                {renderAccountIcon()}
-              </IconButton>
-            </Tooltip>
-            <ToggleColorMode />
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={isMenuOpen}
-              onClose={handleMenuClose}
-              onClick={handleMenuClose}
-              PaperProps={{
-                elevation: 4,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  minWidth: 250, // Set a minimum width
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&::before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                  backgroundColor:
-                    mode === "dark" ? "#1f2937" : "background.paper", // Adjust based on mode
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              {/* Info Tooltip */}
-              <Box
-                key="account-info"
-                display="flex"
-                alignItems="center"
-                px={2}
-                py={1}
-                maxWidth={250}
-                width="100%"
-                overflow="hidden"
-              >
-                <Tooltip
-                  title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
-                  arrow
-                  placement="right"
-                >
-                  <InfoOutlinedIcon
-                    fontSize="small"
-                    sx={{
-                      color: mode === "dark" ? "grey.400" : "grey.600",
-                      mr: 1,
-                    }}
-                  />
-                </Tooltip>
-                <ListItemText
-                  primary="Account Information"
-                  primaryTypographyProps={{
-                    color: mode === "dark" ? "grey.300" : "grey.700",
-                    fontSize: "0.8rem",
+              {/* Drawer Menu Items */}
+              <Box className="flex flex-col space-y-2">
+                {/* Home */}
+                <MenuItem
+                  onClick={() => {
+                    navigate("/");
+                    setDrawerOpen(false);
                   }}
-                />
+                >
+                  <Typography className="dark:text-white">Home</Typography>
+                </MenuItem>
+
+                {/* Skills */}
+                <MenuItem
+                  onClick={() => {
+                    handleProjectsClick("Skills");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <Typography className="dark:text-gray-300">Skills</Typography>
+                </MenuItem>
+
+                {/* Experience */}
+                <MenuItem
+                  onClick={() => {
+                    handleProjectsClick("Experience");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <Typography className="dark:text-gray-300">
+                    Experience
+                  </Typography>
+                </MenuItem>
+
+                {/* Projects */}
+                <MenuItem
+                  onClick={() => {
+                    handleProjectsClick("Projects");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <Typography className="dark:text-gray-300">
+                    Projects
+                  </Typography>
+                </MenuItem>
+
+                {/* Contact */}
+                <MenuItem
+                  onClick={() => {
+                    handleProjectsClick("Contact");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <Typography className="dark:text-gray-300">
+                    Contact
+                  </Typography>
+                </MenuItem>
+
+                <Divider className="my-2 dark:bg-gray-700" />
               </Box>
-              <Divider />
-              <div className="w-[250px] text-sm p-2">
-                <ConnectionStatusFeedBack />
-              </div>
-
-              {user ? authenticatedMenu : unauthenticatedMenu}
-            </Menu>
-          </Box>
-
-          {/* Mobile Section: Drawer */}
-          <Box className="flex smv:hidden">
-            <IconButton
-              aria-label="Menu button"
-              onClick={toggleDrawer(true)}
-              className="dark:text-white"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Drawer
-              anchor="top"
-              open={drawerOpen}
-              onClose={toggleDrawer(false)}
-            >
-              <Box
-                className="p-2 bg-white dark:bg-gray-800"
-                sx={{ height: "100%" }}
-              >
-                {/* Drawer Header */}
-                <Box className="flex items-center justify-between">
-                  <IconButton
-                    onClick={toggleDrawer(false)}
-                    className="dark:text-white"
-                  >
-                    <CloseRoundedIcon />
-                  </IconButton>
-                  <ToggleColorMode />
-                </Box>
-                <Divider className="my-3 dark:bg-gray-700" />
-
-                {/* Drawer Menu Items */}
-                <Box className="flex flex-col space-y-2">
-                  {/* Home */}
-                  <MenuItem
-                    onClick={() => {
-                      navigate("/");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <Typography className="dark:text-white">Home</Typography>
-                  </MenuItem>
-
-                  {/* Experience */}
-                  <MenuItem
-                    onClick={() => {
-                      handleProjectsClick("Experience");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <Typography className="dark:text-gray-300">
-                      Experience
-                    </Typography>
-                  </MenuItem>
-
-                  {/* Projects */}
-                  <MenuItem
-                    onClick={() => {
-                      handleProjectsClick("Projects");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <Typography className="dark:text-gray-300">
-                      Projects
-                    </Typography>
-                  </MenuItem>
-
-                  {/* Skills */}
-                  <MenuItem
-                    onClick={() => {
-                      handleProjectsClick("Skills");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <Typography className="dark:text-gray-300">
-                      Skills
-                    </Typography>
-                  </MenuItem>
-
-                  {/* Contact */}
-                  <MenuItem
-                    onClick={() => {
-                      handleProjectsClick("Contact");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <Typography className="dark:text-gray-300">
-                      Contact
-                    </Typography>
-                  </MenuItem>
-
-                  {/* Divider
-                  <Divider className="my-3 dark:bg-gray-700" />
-
-                  
-                  <MenuItem
-                    onClick={() => {
-                      navigate("/stocks");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <Typography className="dark:text-white">Stocks</Typography>
-                  </MenuItem> */}
-                  <Divider className="my-2 dark:bg-gray-700" />
-
-                  {/* Account Options */}
-                  {isLoggedIn ? (
-                    <>
-                      {/* Account Information */}
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        px={2}
-                        py={1}
-                        maxWidth={250}
-                        width="100%"
-                        overflow="hidden"
-                      >
-                        <Tooltip
-                          title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
-                          arrow
-                          placement="bottom"
-                        >
-                          <InfoOutlinedIcon
-                            fontSize="small"
-                            sx={{
-                              color: mode === "dark" ? "grey.400" : "grey.600",
-                              mr: 1,
-                            }}
-                          />
-                        </Tooltip>
-                        <ListItemText
-                          primary="Account Information"
-                          primaryTypographyProps={{
-                            color: mode === "dark" ? "grey.300" : "grey.700",
-                            fontSize: "0.8rem",
-                          }}
-                        />
-                      </Box>
-                      <Divider className="my-2 dark:bg-gray-700" />
-
-                      {/* User Name */}
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        px={2}
-                        py={1}
-                        maxWidth={250}
-                        width="100%"
-                        overflow="hidden"
-                      >
-                        <ListItemIcon>
-                          <AccountCircleIcon
-                            fontSize="small"
-                            sx={{
-                              color:
-                                mode === "dark" ? "grey.300" : "text.primary",
-                            }}
-                          />
-                        </ListItemIcon>
-                        <Tooltip
-                          title={user?.userName || "User Name"}
-                          placement="bottom"
-                        >
-                          <Typography
-                            variant="body2"
-                            noWrap
-                            sx={{
-                              color:
-                                mode === "dark" ? "grey.300" : "text.primary",
-                              fontSize: "0.9rem",
-                            }}
-                          >
-                            {user?.userName || "User Name"}
-                          </Typography>
-                        </Tooltip>
-                      </Box>
-
-                      {/* Email */}
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        px={2}
-                        py={1}
-                        maxWidth={250}
-                        width="100%"
-                        overflow="hidden"
-                      >
-                        <ListItemIcon>
-                          <AlternateEmailIcon
-                            fontSize="small"
-                            sx={{
-                              color:
-                                mode === "dark" ? "grey.400" : "text.secondary",
-                            }}
-                          />
-                        </ListItemIcon>
-                        <Tooltip
-                          title={user?.email || "Email"}
-                          placement="bottom"
-                        >
-                          <Typography
-                            variant="body2"
-                            noWrap
-                            sx={{
-                              color:
-                                mode === "dark" ? "grey.400" : "text.secondary",
-                              fontSize: "0.8rem",
-                            }}
-                          >
-                            {user?.email || "Email"}
-                          </Typography>
-                        </Tooltip>
-                      </Box>
-                      <Divider className="my-2 dark:bg-gray-700" />
-
-                      {/* Sign Out */}
-                      <MenuItem
-                        onClick={() => {
-                          logoutUser();
-                          setDrawerOpen(false);
-                        }}
-                        sx={{
-                          "&:hover": {
-                            backgroundColor:
-                              mode === "dark" ? "grey.800" : "grey.100",
-                          },
-                        }}
-                      >
-                        <ListItemIcon>
-                          <LogoutIcon
-                            fontSize="small"
-                            sx={{
-                              color:
-                                mode === "dark" ? "error.light" : "error.main",
-                            }}
-                          />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Sign out"
-                          primaryTypographyProps={{
-                            color:
-                              mode === "dark" ? "error.light" : "error.main",
-                            fontWeight: "medium",
-                          }}
-                        />
-                      </MenuItem>
-                    </>
-                  ) : (
-                    <>
-                      <div className="w-full items-center justify-center text-sm p-2">
-                        <ConnectionStatusFeedBack />
-                      </div>
-                      <MenuItem
-                        onClick={() => setDrawerOpen(false)}
-                        disabled={valid}
-                      >
-                        <Link
-                          to="/login"
-                          className="w-full flex flex-row items-center"
-                        >
-                          <ListItemIcon>
-                            <LoginIcon fontSize="small" color="primary" />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="Sign In"
-                            primaryTypographyProps={{
-                              color: mode === "dark" ? "primary" : "primary",
-                              fontWeight: "medium",
-                            }}
-                          />
-                        </Link>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => setDrawerOpen(false)}
-                        disabled={valid}
-                      >
-                        <Link
-                          to="/register"
-                          className="w-full flex flex-row items-center"
-                        >
-                          <ListItemIcon>
-                            <PersonAddIcon fontSize="small" color="secondary" />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary="Sign Up"
-                            primaryTypographyProps={{
-                              color:
-                                mode === "dark" ? "secondary" : "secondary",
-                              fontWeight: "medium",
-                            }}
-                          />
-                        </Link>
-                      </MenuItem>
-                    </>
-                  )}
-                </Box>
-              </Box>
-            </Drawer>
-          </Box>
-        </StyledToolbar>
-      </Container>
+            </Box>
+          </Drawer>
+        </Box>
+      </StyledToolbar>
     </AppBar>
   );
 };
