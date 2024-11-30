@@ -32,13 +32,13 @@ const RatioList = ({ config, data }: Props) => {
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
-            <p className="text-sm sm:text-base font-medium text-gray-800 dark:text-gray-100">
+            <div className="text-sm sm:text-base font-medium text-gray-800 dark:text-gray-100">
               {row.label}
-            </p>
+            </div>
             {row.subTitle && (
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">
                 {row.subTitle}
-              </p>
+              </div>
             )}
           </div>
           <div className="mt-2 md:mt-0">
@@ -52,7 +52,7 @@ const RatioList = ({ config, data }: Props) => {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 sm:p-8">
+    <div className="bg-white dark:bg-gray-800 p-6 sm:p-8">
       <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
         Key Metrics
       </h2>
