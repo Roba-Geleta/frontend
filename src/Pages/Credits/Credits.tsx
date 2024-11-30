@@ -26,6 +26,9 @@ import {
 import BusinessIcon from "@mui/icons-material/Business";
 import ComputerIcon from "@mui/icons-material/Computer";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { SiCanva } from "react-icons/si";
+import { FaStackOverflow } from "react-icons/fa";
+import BrushIcon from "@mui/icons-material/Brush"; // Icon for Background Styling
 
 import { ThemeContext } from "../../Context/ThemeContext";
 import { lime } from "@mui/material/colors";
@@ -161,6 +164,7 @@ const Credits: React.FC = () => {
             />
           </ListItem>
 
+          {/* Priceline Partner Solutions Logo */}
           <ListItem>
             <ListItemIcon>
               <TravelExploreIcon
@@ -186,8 +190,100 @@ const Credits: React.FC = () => {
               }}
             />
           </ListItem>
+
+          {/* Financial Insights Platform Logo - Canva */}
+          <ListItem>
+            <ListItemIcon>
+              <SiCanva
+                size={30}
+                className={`${
+                  mode === "dark" ? "text-blue-500" : "text-blue-700"
+                }`}
+              />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <MuiLink
+                  href="https://www.canva.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Canva
+                </MuiLink>
+              }
+              secondary="For designing the Financial Insights Platform logo."
+              secondaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "grey",
+              }}
+            />
+          </ListItem>
         </List>
 
+        {/* Background Styling Credit */}
+        <Typography
+          variant="h6"
+          className={`${mode === "dark" ? "text-gray-200" : "text-gray-800"}`}
+          gutterBottom
+          sx={{ mt: 4 }}
+        >
+          Background Styling
+        </Typography>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <BrushIcon
+                sx={{
+                  color: mode === "dark" ? "secondary.light" : "secondary.main",
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <MuiLink
+                  href="https://heropatterns.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Hero Patterns
+                </MuiLink>
+              }
+              secondary="Used for creating custom background patterns for Financial Insights Platform."
+              secondaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "grey",
+              }}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <FaStackOverflow
+                size={30}
+                className={`${
+                  mode === "dark" ? "text-orange-400" : "text-orange-400"
+                }`}
+              />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <MuiLink
+                  href="https://stackoverflow.com/a/25709375"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  StackOverflow
+                </MuiLink>
+              }
+              secondary="Used for creating custom background patterns for Portfolio Page."
+              secondaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "grey",
+              }}
+            />
+          </ListItem>
+        </List>
+
+        {/* Libraries & Tools */}
         <Typography
           variant="h6"
           className={`${mode === "dark" ? "text-gray-200" : "text-gray-800"}`}
@@ -329,6 +425,7 @@ const Credits: React.FC = () => {
           </ListItem>
         </List>
 
+        {/* Cloud & Hosting Services */}
         <Typography
           variant="h6"
           className={`${mode === "dark" ? "text-gray-200" : "text-gray-800"}`}
