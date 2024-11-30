@@ -5,6 +5,14 @@ import { getBalanceSheet } from "../../api";
 import RatioList, { ConfigItem, RenderData } from "../RatioList/RatioList";
 import { formatLargeMonetaryNumber } from "../../Helpers/NumberFormating";
 import { BarLoader } from "react-spinners";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const configs: ConfigItem[] = [
   {
@@ -95,21 +103,25 @@ const configs: ConfigItem[] = [
 
 const BalanceSheet = () => {
   const ticker = useOutletContext<string>();
-  const [balanceSheet, setBalanceSheet] =
-    useState<CompanyBalanceSheet | null>();
+  const [balanceSheets, setBalanceSheets] = useState<CompanyBalanceSheet[]>([]);
+  const [selectedSheet, setSelectedSheet] =
+    useState<CompanyBalanceSheet | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchBalanceSheet = async () => {
+      setLoading(true);
       try {
         const result = await getBalanceSheet(ticker!);
-        setBalanceSheet(result[0]);
+        setBalanceSheets(result);
+        setSelectedSheet(result[0] || null); // Select the first sheet by default
         setError(null);
       } catch (err) {
         console.error("Error fetching balance sheet:", err);
         setError("Failed to load balance sheet data.");
-        setBalanceSheet(null);
+        setBalanceSheets([]);
+        setSelectedSheet(null);
       } finally {
         setLoading(false);
       }
@@ -118,8 +130,15 @@ const BalanceSheet = () => {
     fetchBalanceSheet();
   }, [ticker]);
 
+  const handleYearChange = (event: SelectChangeEvent<string>) => {
+    const selectedYear = event.target.value;
+    const sheet =
+      balanceSheets.find((bs) => bs.calendarYear === selectedYear) || null;
+    setSelectedSheet(sheet);
+  };
+
   return (
-    <div className="w-full py-6">
+    <div className="w-full bg-white dark:bg-gray-800">
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <BarLoader />
@@ -128,14 +147,49 @@ const BalanceSheet = () => {
         <div className="flex justify-center items-center h-64">
           <p className="text-red-500">{error}</p>
         </div>
-      ) : balanceSheet ? (
-        <div className="space-y-6">
-          <div className="text-center">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-              Calendar Year: {balanceSheet.calendarYear}
-            </h2>
+      ) : balanceSheets.length > 0 && selectedSheet ? (
+        <div className="space-y-0">
+          <div className="flex justify-start items-center px-6 pt-4">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Calendar Year:
+              </p>
+            </div>
+            <FormControl
+              variant="outlined"
+              size="small"
+              className="!min-w-[100px]"
+            >
+              <InputLabel
+                id="year-select-label"
+                className="text-gray-700 dark:text-gray-200"
+              >
+                Select Year
+              </InputLabel>
+              <Select
+                labelId="year-select-label"
+                id="year-select"
+                value={selectedSheet.calendarYear}
+                onChange={handleYearChange}
+                label="Select Year"
+                IconComponent={ArrowDropDownIcon}
+                className="bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                MenuProps={{
+                  PaperProps: {
+                    className:
+                      "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200",
+                  },
+                }}
+              >
+                {balanceSheets.map((sheet) => (
+                  <MenuItem key={sheet.calendarYear} value={sheet.calendarYear}>
+                    {sheet.calendarYear}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
-          <RatioList data={balanceSheet} config={configs} />
+          <RatioList data={selectedSheet} config={configs} />
         </div>
       ) : (
         <div className="flex justify-center items-center h-64">
