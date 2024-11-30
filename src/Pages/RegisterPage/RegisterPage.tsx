@@ -24,6 +24,8 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
+import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
+import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 
 type RegisterFormsInputs = {
   email: string;
@@ -40,7 +42,7 @@ const validation = Yup.object().shape({
   userName: Yup.string().required("Username is required"),
   password: Yup.string()
     .required("Password is required")
-    .min(12, "Password must be at least 12 characters long")
+    .min(8, "Password must be at least 8 characters long")
     .matches(/[a-z]/, "Password must contain at least one lowercase letter")
     .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
     .matches(/\d/, "Password must contain at least one digit")
@@ -48,6 +50,10 @@ const validation = Yup.object().shape({
 });
 
 const RegisterPage = () => {
+  usePageMeta({
+    title: "FIP - Register",
+    favicon: FIPLogoIconDark,
+  });
   const { registerUser } = useAuth();
   const navigate = useNavigate();
 
@@ -82,7 +88,7 @@ const RegisterPage = () => {
   // Function to check password requirements
   const checkPasswordRequirements = (password: string) => {
     return {
-      length: password.length >= 12,
+      length: password.length >= 8,
       lowercase: /[a-z]/.test(password),
       uppercase: /[A-Z]/.test(password),
       digit: /\d/.test(password),
@@ -115,7 +121,7 @@ const RegisterPage = () => {
               Create Your Account
             </Typography>
             <Tooltip
-              title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+              title="Currently, the Account system is used to interact with the Financial Modeling Prep API and to store/manage stock portfolios and comments."
               arrow
               placement="right"
             >
@@ -244,7 +250,7 @@ const RegisterPage = () => {
                           <CancelIcon className="text-red-500" />
                         )}
                       </ListItemIcon>
-                      <ListItemText primary="At least 12 characters" />
+                      <ListItemText primary="At least 8 characters" />
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
@@ -298,10 +304,10 @@ const RegisterPage = () => {
               {isSubmitting ? (
                 <>
                   <CircularProgress size={20} className="mr-2" />
-                  Signing up...
+                  Registering...
                 </>
               ) : (
-                "Sign Up"
+                "Register"
               )}
             </button>
             <Typography
@@ -310,10 +316,10 @@ const RegisterPage = () => {
             >
               Already have an account?{" "}
               <Link
-                to="/login"
+                to="/stocks/login"
                 className="font-medium text-blue-600 hover:underline dark:text-blue-500"
               >
-                Sign in
+                Login
               </Link>
             </Typography>
           </form>

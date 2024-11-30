@@ -17,6 +17,8 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
+import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
+import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 
 type LoginFormsInputs = {
   userName: string;
@@ -29,6 +31,10 @@ const validation = Yup.object().shape({
 });
 
 const LoginPage = () => {
+  usePageMeta({
+    title: "FIP - Login",
+    favicon: FIPLogoIconDark,
+  });
   const { loginUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -57,7 +63,7 @@ const LoginPage = () => {
   const params = new URLSearchParams(location.search);
   const redirectPath = params.get("redirect");
   const stateRedirect = (location.state as { from?: string })?.from;
-  const from = redirectPath || stateRedirect || "/";
+  const from = redirectPath || stateRedirect || "/stocks";
 
   const handleLogin = async (form: LoginFormsInputs) => {
     const success = await loginUser(form.userName, form.password);
@@ -79,10 +85,10 @@ const LoginPage = () => {
               variant="h4"
               className="text-gray-900 dark:text-white font-bold"
             >
-              Sign in to your account
+              Login to your account
             </Typography>
             <Tooltip
-              title="Currently, the Account system is used to interact with the Financial Modeling Prep (FMP) API and to store/manage stock portfolios and comments."
+              title="Currently, the Account system is used to interact with the Financial Modeling Prep API and to store/manage stock portfolios and comments."
               arrow
               placement="right"
             >
@@ -170,10 +176,10 @@ const LoginPage = () => {
               {isSubmitting ? (
                 <>
                   <CircularProgress size={20} className="mr-2" />
-                  Signing in...
+                  Logging in...
                 </>
               ) : (
-                "Sign in"
+                "Login"
               )}
             </button>
             <Typography
@@ -182,10 +188,10 @@ const LoginPage = () => {
             >
               Don’t have an account yet?{" "}
               <Link
-                to="/register"
+                to="/stocks/register"
                 className="font-medium text-blue-600 hover:underline dark:text-blue-500"
               >
-                Sign up
+                Register
               </Link>
             </Typography>
           </form>
