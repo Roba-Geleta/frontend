@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Container, Box } from "@mui/material";
-import { useAuth, UserProvider } from "../../Context/userAuth";
+import { useAuth } from "../../Context/userAuth";
 import StocksAppBar from "../../Components/StocksAppBar/StocksAppBar";
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 import { handleError } from "../../Helpers/ErrorHandler";
@@ -52,15 +52,12 @@ const StocksLayout: React.FC = () => {
   };
 
   useEffect(() => {
-    // console.log("Getting portfolio");
     if (isLoggedIn) {
-      console.log("Getting portfolio");
       getPortfolio();
+    } else {
+      setPortfolioValues([]);
+      setPortfolioSymbols(new Set());
     }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    console.log("Is logged in", isLoggedIn);
   }, [isLoggedIn]);
 
   const onPortfolioCreate = (symbol: string) => {
@@ -118,16 +115,8 @@ const StocksLayout: React.FC = () => {
     });
   };
 
-  //   save for later
-  //   const location = useLocation();
-  //   const [atHome, setAtHome] = useState(true);
-
-  //   useEffect(() => {
-  //     setAtHome(location.pathname === "/stocks");
-  //   }, [location]);
-
   return (
-    <UserProvider>
+    <>
       <StocksAppBar
         portfolioSymbols={portfolioSymbols}
         onPortfolioCreate={onPortfolioCreate}
@@ -181,7 +170,7 @@ const StocksLayout: React.FC = () => {
         </Container>
       </Box>
       <Footer />
-    </UserProvider>
+    </>
   );
 };
 
