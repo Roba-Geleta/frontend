@@ -2,9 +2,15 @@ import React from "react";
 import PortfolioManagement from "../../assets/StocksHome/PortfolioManagement.png";
 import FinancialReports from "../../assets/StocksHome/FinancialReports.png";
 import CommentingSystem from "../../assets/StocksHome/CommentingSystem.png";
-
+import QuickSearch from "../../assets/StocksHome/QuickSearch.png";
 const FeaturesSection: React.FC = () => {
   const features = [
+    {
+      title: "Quick Stock Search and Information",
+      description:
+        "Quickly search for tradable stocks across all major stock exchanges, add them to your portfolio, and view comprehensive company information.",
+      image: QuickSearch,
+    },
     {
       title: "Comprehensive Portfolio Management",
       description:
@@ -19,8 +25,7 @@ const FeaturesSection: React.FC = () => {
     },
     {
       title: "Interactive Commenting System",
-      description:
-        "Share your opinions about stocks with the community. (In-progress: Editing and deleting comments coming soon.)",
+      description: "Share your opinions about stocks with the community.",
       image: CommentingSystem,
     },
   ];
@@ -42,15 +47,15 @@ const FeaturesSection: React.FC = () => {
                 index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
-              <div className="md:w-1/2">
+              <div className="md:w-1/2 mb-3 md:mb-0">
                 <img
-                  className="w-full h-full object-contain object-center shadow-lg rounded-xl"
+                  className="w-full h-full object-contain object-center shadow-2xl rounded-xl outline-none outline-gray-400 dark:outline-blue-100 outline-offset-0"
                   src={feature.image}
                   alt={feature.title}
                 />
               </div>
               <div className="md:w-1/2 md:p-8">
-                <h3 className="title-font text-2xl font-medium text-gray-900 dark:text-white mb-3">
+                <h3 className="title-font text-2xl font-medium text-gray-900 dark:text-white mb-3 text-center md:text-start">
                   {feature.title}
                 </h3>
                 <p className="leading-relaxed mb-3 text-gray-700 dark:text-gray-300">
