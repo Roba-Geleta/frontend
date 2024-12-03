@@ -39,8 +39,7 @@ import SuccinctLogo from "../../assets/Projects/Succinct/SuccinctLogo.png";
 import Wikipedia from "../../assets/Projects/Wikipedia/Wikipedia.png";
 import WikipediaLogo from "../../assets/Projects/Wikipedia/Logo.png";
 import ScrapeRobot from "../../assets/Projects/ScrapeRobot/ScrapeRobot.png";
-import StocksImage1 from "../../assets/Projects/Stocks/Company.png";
-import StocksImage2 from "../../assets/Projects/Stocks/Stocks.png";
+import Hero from "../../assets/StocksHome/Hero.svg";
 import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
 import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
@@ -223,15 +222,13 @@ export default function UserProfile() {
       "C#",
       "TypeScript",
       "React",
-      "ESLint",
-      "AWS Amplify",
-      "AWS Elastic Beanstalk",
-      "AWS RDS",
+      "AWS (Amplify, Elastic Beanstalk, RDS, Lambda)",
       "Cloudflare",
       "Financial Modeling Prep API",
       "Google Cloud Functions",
+      "Github Actions",
     ],
-    images: [StocksImage1, StocksImage2],
+    images: [Hero],
     link: "/stocks",
   };
 
@@ -707,9 +704,9 @@ export default function UserProfile() {
             sx={{
               position: "relative",
               display: "flex",
-              flexDirection: { xs: "column-reverse", md: "row" },
+              flexDirection: { xs: "column-reverse", lg: "row" },
               width: "100%",
-              maxWidth: 1200,
+
               borderRadius: "0.62rem",
               overflow: "hidden",
               boxShadow:
@@ -753,9 +750,9 @@ export default function UserProfile() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                width: { xs: "100%", md: "60%" },
-                padding: { xs: 2, md: 4 },
-                textAlign: { xs: "center", md: "left" },
+                width: { xs: "100%", lg: "60%" },
+                padding: { xs: 2, lg: 4 },
+                textAlign: { xs: "center", lg: "left" },
               }}
             >
               <Typography
@@ -838,12 +835,12 @@ export default function UserProfile() {
             {/* Image Section */}
             <Box
               sx={{
-                width: { xs: "100%", md: "40%" },
+                width: { xs: "100%", lg: "40%" },
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                padding: { xs: 2, md: 1 },
-                order: { xs: 1, md: 2 },
+                padding: { xs: 2, lg: 1 },
+                order: { xs: 1, lg: 2 },
               }}
             >
               <Box
@@ -854,8 +851,6 @@ export default function UserProfile() {
                   width: { xs: "100%", md: "100%" },
                   height: "auto",
                   objectFit: "cover",
-                  borderRadius: 1,
-                  boxShadow: 2,
                 }}
               />
             </Box>

@@ -14,6 +14,7 @@ import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import {
   SiMui,
   SiTypescript,
+  SiAwslambda,
   SiReact,
   SiDotnet,
   SiPostgresql,
@@ -21,6 +22,7 @@ import {
   SiCloudflare,
   SiAmazonwebservices,
   SiAmazonrds,
+  SiGooglecloud,
 } from "react-icons/si";
 
 import BusinessIcon from "@mui/icons-material/Business";
@@ -425,7 +427,6 @@ const Credits: React.FC = () => {
           </ListItem>
         </List>
 
-        {/* Cloud & Hosting Services */}
         <Typography
           variant="h6"
           className={`${mode === "dark" ? "text-gray-200" : "text-gray-800"}`}
@@ -435,7 +436,6 @@ const Credits: React.FC = () => {
           Cloud & Hosting Services
         </Typography>
         <List>
-          {/* NameSilo */}
           <ListItem>
             <ListItemIcon>
               <BusinessIcon
@@ -563,9 +563,40 @@ const Credits: React.FC = () => {
               }}
             />
           </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <SiAwslambda size={24} color="#FF9900" />
+            </ListItemIcon>
+            <ListItemText
+              primary="AWS Lambda"
+              primaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "black",
+              }}
+              secondary="Used for scheduled updates to stock data."
+              secondaryTypographyProps={{
+                color: mode === "dark" ? "grey.700" : "grey",
+              }}
+            />
+          </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <SiGooglecloud size={24} color="#4285F4" />
+            </ListItemIcon>
+            <ListItemText
+              primary="Google Cloud Functions"
+              primaryTypographyProps={{
+                color: mode === "dark" ? "grey.500" : "black",
+              }}
+              secondary="Used to make simple API requests to Financial Modeling Prep (FMP)."
+              secondaryTypographyProps={{
+                color: mode === "dark" ? "grey.700" : "grey",
+              }}
+            />
+          </ListItem>
         </List>
 
-        {/* Closing Statement */}
         <Typography
           variant="body2"
           className={`${mode === "dark" ? "text-gray-400" : "text-gray-500"}`}

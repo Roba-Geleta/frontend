@@ -119,7 +119,7 @@ const ListPortfolio: React.FC<Props> = ({
               <div className="flex flex-col relative">
                 <Link
                   href={`/stocks/company/${params.value}/company-profile`}
-                  className="text-blue-600 dark:text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
+                  className="text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Go to ${params.value} company profile`}
@@ -135,7 +135,7 @@ const ListPortfolio: React.FC<Props> = ({
                   {params.value}
                 </Link>
 
-                <span className=" text-xs text-gray-500 dark:text-gray-400 truncate max-w-[180px]">
+                <span className=" text-xs text-gray-300 truncate max-w-[180px]">
                   {params.row.companyName}
                 </span>
               </div>
@@ -148,7 +148,7 @@ const ListPortfolio: React.FC<Props> = ({
           headerClassName: "super-app-theme--header",
           renderCell: (params: GridRenderCellParams) => (
             <Tooltip title={params.value} arrow placement="bottom">
-              <span className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-[180px]">
+              <span className="text-xs text-gray-400  truncate max-w-[180px]">
                 {params.value}
               </span>
             </Tooltip>
@@ -250,24 +250,14 @@ const ListPortfolio: React.FC<Props> = ({
             const currentPrice = params.row.currentPrice as number;
             const percentageChange = params.row.percentageChange as number;
 
-            let colorClass = "text-gray-600";
+            let colorClass = "text-gray-400";
             if (percentageChange > 0) {
-              colorClass = "text-green-600";
+              colorClass = "text-green-400";
             } else if (percentageChange < 0) {
-              colorClass = "text-red-600";
-            }
-            if (mode === "dark") {
-              if (percentageChange > 0) {
-                colorClass = "text-green-400";
-              } else if (percentageChange < 0) {
-                colorClass = "text-red-400";
-              } else {
-                colorClass = "text-gray-400";
-              }
+              colorClass = "text-red-400";
             }
 
-            const normalTextClass =
-              mode === "dark" ? "text-gray-200" : "text-gray-600";
+            const normalTextClass = "text-gray-200";
 
             return (
               <div className="flex flex-col max-h-full items-end py-1 gap-y-2 ">
@@ -307,7 +297,7 @@ const ListPortfolio: React.FC<Props> = ({
               <div className="flex flex-col relative">
                 <Link
                   href={`/stocks/company/${params.value}/company-profile`}
-                  className="text-blue-600 dark:text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
+                  className="text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -321,7 +311,7 @@ const ListPortfolio: React.FC<Props> = ({
                   {params.value}
                 </Link>
 
-                <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[180px]">
+                <span className="text-xs text-gray-300 truncate max-w-[180px]">
                   {params.row.companyName}
                 </span>
               </div>
@@ -335,7 +325,7 @@ const ListPortfolio: React.FC<Props> = ({
           headerClassName: "super-app-theme--header",
           renderCell: (params: GridRenderCellParams) => (
             <Tooltip title={params.value} arrow placement="bottom">
-              <span className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-[180px]">
+              <span className="text-xs text-gray-400  truncate max-w-[180px]">
                 {params.value}
               </span>
             </Tooltip>
@@ -353,7 +343,7 @@ const ListPortfolio: React.FC<Props> = ({
             const value = params.value as number;
             return (
               <span
-                className={mode === "dark" ? "text-gray-200" : "text-gray-600"}
+                className={mode === "dark" ? "text-gray-200" : "text-gray-200"}
               >
                 {value.toFixed(2)}
               </span>
@@ -387,7 +377,7 @@ const ListPortfolio: React.FC<Props> = ({
             const value = params.value as number;
             return (
               <span
-                className={mode === "dark" ? "text-gray-200" : "text-gray-600"}
+                className={mode === "dark" ? "text-gray-200" : "text-gray-200"}
               >
                 {value.toFixed(2)}{" "}
                 <Tooltip
@@ -412,21 +402,13 @@ const ListPortfolio: React.FC<Props> = ({
           headerAlign: "center",
           renderCell: (params) => {
             const value = params.value as number;
-            let colorClass = "text-gray-600";
+            let colorClass = "text-gray-400";
             if (value > 0) {
-              colorClass = "text-green-600";
+              colorClass = "text-green-400";
             } else if (value < 0) {
-              colorClass = "text-red-600";
+              colorClass = "text-red-400";
             }
-            if (mode === "dark") {
-              if (value > 0) {
-                colorClass = "text-green-400";
-              } else if (value < 0) {
-                colorClass = "text-red-400";
-              } else {
-                colorClass = "text-gray-400";
-              }
-            }
+
             return (
               <span className={colorClass}>
                 {value > 0 && "+"}
@@ -536,7 +518,7 @@ const ListPortfolio: React.FC<Props> = ({
 
   function CustomToolbar() {
     return (
-      <GridToolbarContainer>
+      <GridToolbarContainer className="bg-slate-300 dark:bg-slate-700 bg-opacity-80 p-3 !rounded-none">
         <div className="flex-grow">
           <GridToolbarQuickFilter
             placeholder="Search portfolio..."
@@ -643,17 +625,16 @@ const ListPortfolio: React.FC<Props> = ({
 
   return (
     <section id="portfolio" className="w-full h-[80vh]">
-      <div className="flex flex-col sm:flex-row items-center justify-between bg-slate-500 dark:bg-slate-100 bg-opacity-10 dark:bg-opacity-10 p-3 rounded-t-xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between bg-slate-500 dark:bg-slate-300 bg-opacity-80 p-3 rounded-t-xl">
         <div className="flex items-center">
           <FaBriefcase className="text-md text-blue-600 dark:text-blue-400 mr-2" />{" "}
-          {/* Reduced icon size to 3xl */}
-          <h2 className="text-md font-semibold text-gray-800 dark:text-gray-100 flex items-center">
-            My Portfolio {/* Changed font size to 3xl */}
+          <h2 className="text-md font-semibold text-gray-300 dark:text-gray-800 flex items-center">
+            My Portfolio
             <Tooltip
               title={`${portfolioValues.length} stocks in portfolio`}
               arrow
             >
-              <span className="ml-2 text-md text-gray-600 dark:text-gray-300">
+              <span className="ml-2 text-md text-gray-600 dark:text-gray-500">
                 ({portfolioValues.length})
               </span>
             </Tooltip>
@@ -709,6 +690,10 @@ const ListPortfolio: React.FC<Props> = ({
                   mode === "dark"
                     ? "rgba(55, 65, 81, 1)"
                     : "rgba(229, 231, 235, 1)",
+                "& .MuiDataGrid-main": {
+                  backgroundColor: "rgba(0, 0, 0, 0.8)",
+                  // mode === "dark" ? "rgba(0, 0, 0, 0.6)" : "#f9fafb",
+                },
                 "& .super-app-theme--header": {
                   backgroundColor:
                     mode === "dark"
@@ -722,7 +707,7 @@ const ListPortfolio: React.FC<Props> = ({
                   boxShadow:
                     mode === "dark"
                       ? "rgba(255,255,0,0.3) 0px 10px 20px -62px inset, rgba(255,255,0,0.3) 0px 18px 36px -18px inset"
-                      : "rgba(255,255,0,0.5) 0px 10px 20px -62px inset, rgba(255,255,0,0.5) 0px 18px 36px -18px inset",
+                      : "rgba(255,255,0,0.3) 0px 10px 20px -62px inset, rgba(255,255,0,0.3) 0px 18px 36px -18px inset",
                 },
                 "& .super-app-theme--positive": {
                   backgroundColor:
