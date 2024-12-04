@@ -741,7 +741,7 @@ const ListPortfolio: React.FC<Props> = ({
                   color: mode === "dark" ? "#ffffff" : "#000000",
                 },
                 "& .MuiCheckbox-root": {
-                  color: mode === "dark" ? "#ffffff" : "#000000",
+                  color: mode === "dark" ? "#ffffff" : "#ffffff",
                 },
                 // Checkbox Styles
                 ...customCheckboxStyles,
