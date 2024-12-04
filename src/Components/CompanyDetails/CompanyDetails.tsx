@@ -58,11 +58,11 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({
   const changeSign = isPositive ? "+" : "";
 
   return (
-    <div className="w-full mx-auto p-2 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col">
+    <div className="w-full mx-auto p-2 bg-white dark:bg-gray-800 rounded-t-lg shadow flex flex-col">
       {/* Top Section: Image and Main Info */}
       <div className="flex flex-col sm:flex-row items-center sm:items-start">
         {/* Company Image with PortfolioMenu */}
-        <div className="relative mb-4 sm:mb-0 sm:mr-4">
+        <div className="relative mb-4 sm:mb-0 sm:mr-4 outline outline-2 bg-slate-100 rounded-md">
           <img
             src={companyImage}
             alt={`${company.companyName} Logo`}
@@ -84,7 +84,6 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({
             />
           </div>
         </div>
-
         {/* Exchange Shortname • Symbol and Price Info */}
         <div className="flex flex-col items-center sm:items-start">
           {/* Exchange Shortname • Symbol */}

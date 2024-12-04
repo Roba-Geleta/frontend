@@ -151,7 +151,7 @@ const AppAppBar: React.FC<Props> = ({
         scroller.scrollTo(place, {
           smooth: true,
           duration: 500,
-          offset: -100,
+          offset: -220,
         });
       }, 100);
     } else {

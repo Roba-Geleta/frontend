@@ -20,19 +20,31 @@ const TenKFinder = ({ ticker }: Props) => {
   }, [ticker]);
 
   return (
-    <div className="flex flex-wrap m-4">
-      {companyData ? (
-        companyData
-          .slice(0, 5)
-          .map((tenK) => (
+    <div
+      className={`w-full p-2 bg-white dark:bg-gray-800 shadow ${
+        companyData?.length == 0 ? "hidden" : "hi"
+      }`}
+    >
+      <div className="flex flex-row pl-6 text-xl font-semibold text-medium text-gray-900 dark:text-gray-100">
+        SEC 10-k Filings
+      </div>
+
+      <div
+        className={`flex flex-wrap items-center justify-center w-full p-2 ${
+          companyData?.length == 0 ? "hidden" : "hi"
+        }`}
+      >
+        {companyData ? (
+          companyData.map((tenK) => (
             <TenKFinderItem
               tenk={tenK}
               key={`${tenK.symbol}-${tenK.fillingDate}`}
             />
           ))
-      ) : (
-        <BarLoader />
-      )}
+        ) : (
+          <BarLoader />
+        )}
+      </div>
     </div>
   );
 };

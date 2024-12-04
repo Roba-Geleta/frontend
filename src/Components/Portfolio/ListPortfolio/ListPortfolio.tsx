@@ -119,7 +119,7 @@ const ListPortfolio: React.FC<Props> = ({
               <div className="flex flex-col relative">
                 <Link
                   href={`/stocks/company/${params.value}/company-profile`}
-                  className="text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
+                  className="!text-blue-600 dark:!text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Go to ${params.value} company profile`}
@@ -135,7 +135,7 @@ const ListPortfolio: React.FC<Props> = ({
                   {params.value}
                 </Link>
 
-                <span className=" text-xs text-gray-300 truncate max-w-[180px]">
+                <span className=" text-xs text-black dark:text-gray-300 truncate max-w-[180px]">
                   {params.row.companyName}
                 </span>
               </div>
@@ -250,14 +250,24 @@ const ListPortfolio: React.FC<Props> = ({
             const currentPrice = params.row.currentPrice as number;
             const percentageChange = params.row.percentageChange as number;
 
-            let colorClass = "text-gray-400";
+            let colorClass = "text-gray-700";
             if (percentageChange > 0) {
-              colorClass = "text-green-400";
+              colorClass = "text-green-800";
             } else if (percentageChange < 0) {
-              colorClass = "text-red-400";
+              colorClass = "text-red-800";
+            }
+            if (mode === "dark") {
+              if (percentageChange > 0) {
+                colorClass = "text-green-400";
+              } else if (percentageChange < 0) {
+                colorClass = "text-red-400";
+              } else {
+                colorClass = "text-gray-400";
+              }
             }
 
-            const normalTextClass = "text-gray-200";
+            const normalTextClass =
+              mode === "dark" ? "text-gray-200" : "text-gray-800";
 
             return (
               <div className="flex flex-col max-h-full items-end py-1 gap-y-2 ">
@@ -297,7 +307,7 @@ const ListPortfolio: React.FC<Props> = ({
               <div className="flex flex-col relative">
                 <Link
                   href={`/stocks/company/${params.value}/company-profile`}
-                  className="text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
+                  className="!text-blue-600 dark:!text-blue-400 hover:underline flex flex-row items-center h-8 truncate ... !text-xs md:!text-lg"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -311,7 +321,7 @@ const ListPortfolio: React.FC<Props> = ({
                   {params.value}
                 </Link>
 
-                <span className="text-xs text-gray-300 truncate max-w-[180px]">
+                <span className="text-xs text-black dark:text-gray-300 truncate max-w-[180px]">
                   {params.row.companyName}
                 </span>
               </div>
@@ -343,7 +353,7 @@ const ListPortfolio: React.FC<Props> = ({
             const value = params.value as number;
             return (
               <span
-                className={mode === "dark" ? "text-gray-200" : "text-gray-200"}
+                className={mode === "dark" ? "text-gray-200" : "text-gray-800"}
               >
                 {value.toFixed(2)}
               </span>
@@ -377,7 +387,7 @@ const ListPortfolio: React.FC<Props> = ({
             const value = params.value as number;
             return (
               <span
-                className={mode === "dark" ? "text-gray-200" : "text-gray-200"}
+                className={mode === "dark" ? "text-gray-200" : "text-gray-800"}
               >
                 {value.toFixed(2)}{" "}
                 <Tooltip
@@ -386,7 +396,10 @@ const ListPortfolio: React.FC<Props> = ({
                   placement="bottom"
                   className=""
                 >
-                  <InfoIcon fontSize="inherit" className="text-gray-400" />
+                  <InfoIcon
+                    fontSize="inherit"
+                    className="text-gray-700 dark:text-gray-400"
+                  />
                 </Tooltip>
               </span>
             );
@@ -402,11 +415,20 @@ const ListPortfolio: React.FC<Props> = ({
           headerAlign: "center",
           renderCell: (params) => {
             const value = params.value as number;
-            let colorClass = "text-gray-400";
+            let colorClass = "text-gray-800";
             if (value > 0) {
-              colorClass = "text-green-400";
+              colorClass = "text-green-800";
             } else if (value < 0) {
-              colorClass = "text-red-400";
+              colorClass = "text-red-800";
+            }
+            if (mode === "dark") {
+              if (value > 0) {
+                colorClass = "text-green-400";
+              } else if (value < 0) {
+                colorClass = "text-red-400";
+              } else {
+                colorClass = "text-gray-400";
+              }
             }
 
             return (
@@ -433,7 +455,10 @@ const ListPortfolio: React.FC<Props> = ({
       colorClass += "super-app-theme--positive";
     } else if (params.row.percentageChange < 0) {
       colorClass += "super-app-theme--negative";
+    } else if (params.row.percentageChange === 0) {
+      colorClass += "super-app-theme--neutral";
     }
+
     return colorClass;
   };
 
@@ -472,9 +497,11 @@ const ListPortfolio: React.FC<Props> = ({
       backgroundColor: "transparent",
       border: "1px solid #9e9e9e",
       borderRadius: 0,
-      ...(mode === "dark" && {
-        borderColor: "rgb(255, 255, 255)",
-      }),
+      ...(mode === "dark"
+        ? {
+            borderColor: "rgb(255, 255, 255)",
+          }
+        : { borderColor: "rgb(90, 90, 90)" }),
     },
     "& .MuiCheckbox-root svg path": {
       display: "none",
@@ -691,7 +718,10 @@ const ListPortfolio: React.FC<Props> = ({
                     ? "rgba(55, 65, 81, 1)"
                     : "rgba(229, 231, 235, 1)",
                 "& .MuiDataGrid-main": {
-                  backgroundColor: "rgba(0, 0, 0, 0.8)",
+                  backgroundColor:
+                    mode === "dark"
+                      ? "rgba(0, 0, 0, 0.8)"
+                      : "rgba(0, 0, 0, 0.1)",
                   // mode === "dark" ? "rgba(0, 0, 0, 0.6)" : "#f9fafb",
                 },
                 "& .super-app-theme--header": {
@@ -733,6 +763,18 @@ const ListPortfolio: React.FC<Props> = ({
                       ? "rgba(239, 68, 68, 0.4)"
                       : "rgba(239, 68, 68, 0.4)",
                 },
+                "& .super-app-theme--neutral": {
+                  backgroundColor:
+                    mode === "dark"
+                      ? "rgba(20, 21, 21, 0.1)"
+                      : "rgba(20, 21, 21, 0.1)",
+                },
+                "& .super-app-theme--neutral:hover": {
+                  backgroundColor:
+                    mode === "dark"
+                      ? "rgba(20, 21, 21, 1)"
+                      : "rgba(20, 21, 21, 0.4)",
+                },
                 "& .MuiDataGrid-footerContainer": {
                   backgroundColor:
                     mode === "dark"
@@ -740,8 +782,12 @@ const ListPortfolio: React.FC<Props> = ({
                       : "rgba(229, 231, 235, 1) ",
                   color: mode === "dark" ? "#ffffff" : "#000000",
                 },
-                "& .MuiCheckbox-root": {
-                  color: mode === "dark" ? "#ffffff" : "#000000",
+
+                "& .Mui-selected": {
+                  backgroundColor:
+                    mode === "dark"
+                      ? "rgba(173, 216, 230, 0.3) !important" // Light blue for dark mode
+                      : "rgba(173, 216, 230, 0.5) !important", // Light blue for light mode
                 },
                 // Checkbox Styles
                 ...customCheckboxStyles,
