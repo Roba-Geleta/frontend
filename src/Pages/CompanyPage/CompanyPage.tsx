@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useOutletContext } from "react-router-dom";
 import { CompanyProfile } from "../../company";
 import { getCompanyProfile } from "../../api";
-import Header from "../../Components/Header/Header";
 import CompanyDashboard from "../../Components/CompanyDashboard/CompanyDashboard";
 import TenKFinder from "../../Components/TenKFinder/TenKFinder";
 import ReadMore from "../../Components/ReadMore/ReadMore";
@@ -13,7 +12,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
 } from "@mui/material";
 import ConnectionStatusFeedBack from "../../Components/ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 import { BarLoader } from "react-spinners";
@@ -75,8 +73,8 @@ const CompanyPage = () => {
 
   useEffect(() => {
     console.log("isFavourite", isFavourite);
-    console.log("isInPortfolio", isInPortfolio);
   }, [isFavourite, isInPortfolio]);
+  console.log("isInPortfolio", isInPortfolio);
 
   const handleDelete = () => {
     setDeleteDialogOpen(true);
@@ -123,17 +121,12 @@ const CompanyPage = () => {
               handleDelete={handleDelete}
               ticker={company.symbol}
             />
-
-            <TenKFinder ticker={company.symbol} />
-            <div className="bg-white dark:bg-gray-800 shadow rounded-t text-medium text-gray-900 dark:text-gray-100 p-6 mt-4">
+            <div className="bg-white dark:bg-gray-800 shadow text-medium text-gray-900 dark:text-gray-100 p-6">
               <h3 className="text-xl font-semibold">Company Description</h3>
               <ReadMore text={company.description} maxCharacters={300} />
             </div>
-            <div className="w-full">
-              <Divider className="border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800" />
-              <Header />
-              <Divider className="border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800" />
-            </div>
+
+            <TenKFinder ticker={company.symbol} />
           </CompanyDashboard>
         </div>
       ) : (
