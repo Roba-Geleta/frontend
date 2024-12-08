@@ -13,10 +13,10 @@ import {
 } from "./networkStatusManager";
 import { handleError } from "../Helpers/ErrorHandler";
 
-const APP_AZURE_BASE_URL = import.meta.env.VITE_APP_AZURE_BASE_URL;
+const APP_BACKEND_BASE_URL = import.meta.env.VITE_APP_BACKEND_BASE_URL;
 
 const axiosInstance = axios.create({
-  baseURL: APP_AZURE_BASE_URL,
+  baseURL: APP_BACKEND_BASE_URL,
   withCredentials: true, // Enables sending cookies with requests
 });
 
