@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 import "./StocksLayout.css";
 import { ThemeContext } from "../../Context/ThemeContext";
+import CookieConsentBanner from "../../Components/CookieConsentBanner/CookieConsentBanner";
 
 const StocksLayout: React.FC = () => {
   usePageMeta({
@@ -170,6 +171,9 @@ const StocksLayout: React.FC = () => {
         </Container>
       </Box>
       <Footer />
+      <div className="fixed top-0 w-[100vw] h-[100vh]">
+        <CookieConsentBanner />
+      </div>
     </>
   );
 };
