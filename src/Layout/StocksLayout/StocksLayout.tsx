@@ -171,7 +171,7 @@ const StocksLayout: React.FC = () => {
         </Container>
       </Box>
       <Footer />
-      <div className="fixed top-0 w-[100vw] h-[100vh]">
+      <div className="fixed top-0 w-[100vw] h-[100vh] pointer-events-none">
         <CookieConsentBanner />
       </div>
     </>
