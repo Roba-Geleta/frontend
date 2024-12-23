@@ -6,7 +6,6 @@ import {
   Button,
   Chip,
   Grid2 as Grid,
-  Tooltip,
   Divider,
 } from "@mui/material";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
@@ -30,6 +29,8 @@ import OutlierAIBackground from "../../assets/OutlierAIBackground.webp";
 // Projects Images
 import AppBookingWithMe from "../../assets/Projects/AppBookingWithMe/AppBookingWithMe.png";
 import AppBookingWithMeLogo from "../../assets/Projects/AppBookingWithMe/AppBookingWithMeLogo.png";
+import Sentiment from "../../assets/Projects/Sentiment/Sentiment.png";
+import SentimentLogo from "../../assets/Projects/Sentiment/Logo.png";
 import BookWorm from "../../assets/Projects/BookWorm/BookWorm.png";
 import BookWormLogo from "../../assets/Projects/BookWorm/bookWormLogo.webp";
 import Gratitude from "../../assets/Projects/Gratitude/Gratitude.png";
@@ -45,6 +46,8 @@ import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStat
 import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
 import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
 import ContactForm from "../ContactForm/ContactForm";
+import SentimentDemo from "../SentimentDemo/SentimentDemo";
+import PDFViewer from "../PDFViewer/PDFViewer";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
@@ -132,9 +135,34 @@ export default function UserProfile() {
       ],
     },
     {
+      title: "Binary Sentiment Feedback System",
+      technologies:
+        "Python, NLTK, scikit-learn, Google Cloud Functions, React, Joblib",
+      date: "Dec. 2023",
+      summary:
+        "A research project developed as part of a data mining course, focusing on binary sentiment classification of Amazon reviews via n-grams for context understanding.",
+      link: "/projects/sentiment-analysis", // or wherever you want to route
+      image: Sentiment, // or any placeholder
+      logo: SentimentLogo, // or any placeholder
+      githubLink: "",
+      websiteLink: "", // If you have a live URL
+      children: (
+        <div className="space-y-4">
+          <SentimentDemo /> <PDFViewer />
+        </div>
+      ),
+      details: [
+        "Utilized n-grams (bigram and trigram) to capture context in Amazon reviews, enhancing classification accuracy.",
+        "Implemented data preprocessing (HTML tag removal, tokenization, lemmatization, and stopword removal) to ensure higher quality input.",
+        "Fine-tuned SVM hyperparameters via GridSearch, achieving 86.4% accuracy on binary-class (positive/negative) Amazon reviews.",
+        "Integrated the trained model into an application using Google Cloud Functions, allowing users to submit reviews on the fly.",
+        "Highlighted the importance of balanced datasets and resource considerations for large-scale text classification.",
+      ],
+    },
+    {
       title: "BookWorm Mobile Application",
       technologies: "Java, Android SDK, Gradle, Adobe Premiere Pro, GitLab",
-      date: "Sept. 2024",
+      date: "Sept. 2023",
       summary:
         "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
       link: "/projects/bookworm",
@@ -299,25 +327,25 @@ export default function UserProfile() {
   };
 
   // Convert skills arrays to arrays of <Chip> components
-  const renderChips = (
-    skills: string[],
-    color: "primary" | "secondary" | "success" | "warning"
-  ) =>
-    skills.map((skill, index) => (
-      <Tooltip
-        key={index}
-        title={skill} // Add a tooltip for best practices
-      >
-        <Chip
-          key={index}
-          label={skill}
-          color={color}
-          variant="outlined"
-          sx={{ m: 0.5 }}
-          className="min-w-fit sm:!mx-[20px]"
-        />
-      </Tooltip>
-    ));
+  // const renderChips = (
+  //   skills: string[],
+  //   color: "primary" | "secondary" | "success" | "warning"
+  // ) =>
+  //   skills.map((skill, index) => (
+  //     <Tooltip
+  //       key={index}
+  //       title={skill} // Add a tooltip for best practices
+  //     >
+  //       <Chip
+  //         key={index}
+  //         label={skill}
+  //         color={color}
+  //         variant="outlined"
+  //         sx={{ m: 0.5 }}
+  //         className="min-w-fit sm:!mx-[20px]"
+  //       />
+  //     </Tooltip>
+  //   ));
 
   const experienceSlides = experiences.map((exp, index) => (
     <Box

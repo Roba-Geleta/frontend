@@ -25,6 +25,7 @@ interface ProjectDialogProps {
     githubLink: string;
     websiteLink?: string;
     logo: string;
+    children?: React.ReactNode;
   };
   mode: "light" | "dark";
 }
@@ -80,6 +81,9 @@ const ProjectDialog: React.FC<ProjectDialogProps> = ({
         <Typography variant="subtitle1" color="grey">
           {project.date}
         </Typography>
+        {project.children && (
+          <div style={{ marginTop: "1.5rem" }}>{project.children}</div>
+        )}
         <Box sx={{ mt: 2 }}>
           <Typography
             variant="body1"

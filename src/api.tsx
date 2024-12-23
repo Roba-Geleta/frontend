@@ -10,6 +10,11 @@ import {
 } from "./company";
 import { LocationGet } from "./Models/Location";
 
+interface SentimentResult {
+  score: number;
+  confidence: number;
+}
+
 interface SearchResponse {
   data: CompanySearch[];
 }
@@ -21,6 +26,39 @@ export interface ContactFormValues {
 }
 
 const FUNCTION_BASE_URL = import.meta.env.VITE_APP_FUNCTION_BASE_URL;
+const SENTIMENTDEMO_FUNCTION_BASE_URL = import.meta.env
+  .VITE_APP_SENTIMENTDEMO_FUNCTION_BASE_URL;
+
+export const checkSentiment = async (
+  text: string
+): Promise<SentimentResult> => {
+  if (!text.trim()) throw new Error("Text cannot be empty");
+
+  try {
+    const { data } = await axios.post<SentimentResult>(
+      `${SENTIMENTDEMO_FUNCTION_BASE_URL}`,
+      { review: text },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 403) {
+        throw new Error(
+          "Access denied. Please ensure you're calling from an allowed domain."
+        );
+      }
+      console.error("Error fetching sentiment:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw error;
+  }
+};
 
 export const searchCompanies = async (query: string) => {
   try {
