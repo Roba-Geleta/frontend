@@ -7,7 +7,7 @@ export const PrevButton: React.FC<ButtonProps> = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--prev"
+      className="embla__button embla__button--prev disabled:opacity-20"
       type="button"
       {...restProps}
     >
@@ -27,7 +27,7 @@ export const NextButton: React.FC<ButtonProps> = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--next"
+      className="embla__button embla__button--next disabled:opacity-20"
       type="button"
       {...restProps}
     >

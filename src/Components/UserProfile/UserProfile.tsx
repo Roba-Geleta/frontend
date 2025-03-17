@@ -756,7 +756,7 @@ export default function UserProfile() {
               options={carouselOptions}
               autoplayOptions={{
                 playOnInit: true,
-                startDelay: 4000, // 4 seconds
+                startDelay: 8000, // 4 seconds
               }}
             />
           </Box>

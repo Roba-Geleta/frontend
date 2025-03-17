@@ -25,7 +25,7 @@ const AutoplayEmblaCarousel: React.FC<AutoplayPropType> = ({
   autoplayOptions = {
     playOnInit: true,
     stopOnInteraction: false,
-    startDelay: 4000,
+    startDelay: 8000,
   },
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
