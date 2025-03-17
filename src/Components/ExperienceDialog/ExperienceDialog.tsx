@@ -43,7 +43,7 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
           color: mode === "dark" ? "grey.100" : "common",
         }}
       >
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-row">
           {/* Logo (Optional) */}
           {experience.image && (
             <Box
@@ -51,14 +51,15 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
               src={experience.image}
               alt={`${experience.company} Logo`}
               sx={{
-                width: { xs: "80px", md: "120px" },
+                maxWidth: "40px",
                 height: "auto",
-                marginRight: { md: 4 },
+                maxHeight: "40px",
+                marginRight: { xs: 2, md: 4 },
                 marginBottom: { xs: 2, md: 0 },
               }}
             />
           )}
-          <div>
+          <div className="text-lg flex flex-row items-center">
             {experience.title} at {experience.company}
           </div>
         </div>

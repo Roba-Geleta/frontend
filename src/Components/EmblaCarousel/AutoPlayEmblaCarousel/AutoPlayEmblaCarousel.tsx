@@ -57,7 +57,7 @@ const AutoplayEmblaCarousel: React.FC<AutoplayPropType> = ({
 
   return (
     <div className="embla w-full h-full">
-      <div className="embla__viewport " ref={emblaRef}>
+      <div className="embla__viewport h-full" ref={emblaRef}>
         <div className="embla__container w-full h-full">
           {slides.map((slide, index) => (
             <div className="embla__slide w-full h-full hover:z-10" key={index}>

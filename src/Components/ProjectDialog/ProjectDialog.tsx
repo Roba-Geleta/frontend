@@ -81,9 +81,7 @@ const ProjectDialog: React.FC<ProjectDialogProps> = ({
         <Typography variant="subtitle1" color="grey">
           {project.date}
         </Typography>
-        {project.children && (
-          <div style={{ marginTop: "1.5rem" }}>{project.children}</div>
-        )}
+
         <Box sx={{ mt: 2 }}>
           <Typography
             variant="body1"
@@ -125,6 +123,9 @@ const ProjectDialog: React.FC<ProjectDialogProps> = ({
             </li>
           ))}
         </Box>
+        {project.children && (
+          <div style={{ marginTop: "1.5rem" }}>{project.children}</div>
+        )}
       </DialogContent>
       <DialogActions
         sx={{

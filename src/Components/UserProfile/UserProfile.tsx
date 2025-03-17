@@ -25,9 +25,11 @@ import PPSLogo from "../../assets/PPSLogo.svg";
 import PPSBackground from "../../assets/PPSBackground.webp";
 import OutlierAILogo from "../../assets/OutlierAILogo.svg";
 import OutlierAIBackground from "../../assets/OutlierAIBackground.webp";
+import CorranaLogo from "../../assets/CorranaLogo.webp";
+import CorranaBackground from "../../assets/CorranaBackground.webp";
+import AppBookingWithMeBackground from "../../assets/AppBookingWithMeBackground.webp";
 
 // Projects Images
-import AppBookingWithMe from "../../assets/Projects/AppBookingWithMe/AppBookingWithMe.png";
 import AppBookingWithMeLogo from "../../assets/Projects/AppBookingWithMe/AppBookingWithMeLogo.png";
 import Sentiment from "../../assets/Projects/Sentiment/Sentiment.png";
 import SentimentLogo from "../../assets/Projects/Sentiment/Logo.png";
@@ -47,7 +49,7 @@ import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
 import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
 import ContactForm from "../ContactForm/ContactForm";
 import SentimentDemo from "../SentimentDemo/SentimentDemo";
-import PDFViewer from "../PDFViewer/PDFViewer";
+import { MdOpenInNew } from "react-icons/md";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
@@ -78,12 +80,63 @@ export default function UserProfile() {
   // Experience Data
   const experiences = [
     {
+      title: "Junior Software Developer",
+      company: "Corrana (Avo Solutions Inc.)",
+      date: "Aug 2024 – Present",
+      location: "Winnipeg, MB",
+      summary:
+        "Conduct research on cost-effective APIs for external data collection (weather, economic trends, local events); develop and deploy robust data pipelines using TypeScript, Prisma, PostgreSQL, AWS CDK, and Lambda.",
+      link: "/experience/corrana",
+      image: CorranaLogo,
+      background: CorranaBackground,
+      technologies: "AWS CDK, Lambda, TypeScript, Prisma, PostgreSQL",
+      responsibilities: [
+        "Research and evaluate cost-effective APIs for accurate data collection on external factors (weather, economic trends, local events), enabling insightful analytics and business optimization.",
+        "Develop, rigorously test, and deploy TypeScript scripts and Prisma models, integrating PostgreSQL databases and automating data pipelines with AWS CDK and Lambda.",
+      ],
+    },
+    {
+      title: "Freelance Coding Expert | AI Model Trainer",
+      company: "Outlier AI",
+      date: "Sept 2024 – Oct 2024",
+      location: "Winnipeg, MB",
+      summary:
+        "Conducted detailed code reviews and provided quality assessments on AI-generated solutions across multiple programming languages, ensuring accuracy and adherence to best practices.",
+      link: "/experience/outlier-ai",
+      image: OutlierAILogo,
+      background: OutlierAIBackground, // Default background path
+      technologies: "Python, Java, JavaScript, C++",
+      responsibilities: [
+        "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines.",
+      ],
+    },
+    {
+      title: "Freelance Software Developer",
+      company: "App.Bookingwith.me",
+      date: "Jun 2024 – Aug 2024",
+      location: "Winnipeg, MB",
+      summary:
+        "Built a responsive booking platform with secure OAuth, automated notifications, and intuitive UI/UX using Svelte, Tailwind CSS, Twilio, and Stripe, boosting business efficiency and engagement.",
+      link: "/experience/app-bookingwithme",
+      image: AppBookingWithMeLogo, // Replace with actual image path
+      background: AppBookingWithMeBackground, // Replace with actual background path
+      technologies:
+        "Svelte, JavaScript, Tailwind CSS, Flowbite, OpenAI API, OAuth, Twilio, Stripe",
+      responsibilities: [
+        "Co-developed a real-time online booking platform enabling businesses to efficiently manage appointments and schedules, improving operational efficiency and user engagement.",
+        "Designed and built a responsive interface featuring interactive calendars and drag-and-drop functionality using Svelte, Tailwind CSS, and Flowbite.",
+        "Implemented secure OAuth authentication, automated SMS notifications, and integrated Google review requests via Twilio, enhancing customer interaction for 3 active businesses.",
+        "Delivered rapid feature updates under tight deadlines, demonstrating adaptability and effective project management.",
+      ],
+    },
+
+    {
       title: "Software Developer Co-op - Partner Services",
       company: "Priceline Partner Solution",
       date: "Jan 2023 – Apr 2023",
       location: "Winnipeg, MB",
       summary:
-        "Collaborated in a team to develop a user-friendly product activation page for Priceline’s partners across 200+ countries. Utilized React for UI components, Go for server-side logic, and SQL for database queries and analysis.",
+        "Built and improved Priceline's global partner product activation platform, managing diverse inventory and secure integrations using React, Go, SQL, and Google Secret Manager.",
       link: "/experience/priceline",
       image: PPSLogo, // Default image path
       background: PPSBackground, // Default background path
@@ -95,45 +148,10 @@ export default function UserProfile() {
         "Implemented Google Secret Manager for Partner Services Division projects, replacing the outgoing Harness Secret Manager, thereby improving security and streamlining secret management processes.",
       ],
     },
-    {
-      title: "Freelance Coding Expert | AI Model Trainer",
-      company: "Outlier AI",
-      date: "Sept 2024 – Oct 2024",
-      location: "Winnipeg, MB",
-      summary:
-        "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines. Crafted, solved, and reviewed technical coding problems, developing test cases to refine AI model capabilities and improve code efficiency.",
-      link: "/experience/outlier-ai",
-      image: OutlierAILogo,
-      background: OutlierAIBackground, // Default background path
-      technologies: "Python, Java, JavaScript, C++",
-      responsibilities: [
-        "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines.",
-        "Crafted, solved, and reviewed technical coding problems, developing test cases to refine AI model capabilities and improve code efficiency.",
-      ],
-    },
   ];
 
   // Projects Data
   const projects = [
-    {
-      title: "App.Bookingwith.me",
-      technologies:
-        "Svelte, JavaScript, Tailwind CSS, Flowbite, OpenAI API, OAuth, Twilio, Stripe",
-      date: "Jun. 2024",
-      summary:
-        "Co-developed an advanced online booking platform that enables businesses to manage appointments and schedules in real-time, enhancing operational efficiency and user engagement.",
-      link: "/projects/bookingwithme",
-      image: AppBookingWithMe,
-      logo: AppBookingWithMeLogo,
-      githubLink: "https://github.com/ngDuyAnh/bookingwith.me-svelte",
-      websiteLink: "https://app.bookingwith.me",
-      details: [
-        "Co-developed an advanced online booking platform that enables businesses to manage appointments and schedules in real-time, enhancing operational efficiency and user engagement.",
-        "Designed and implemented a responsive, user-friendly interface using open-source libraries, featuring interactive calendars and drag-and-drop functionality to improve usability across various devices.",
-        "Spearheaded OAuth integration for secure authentication and deployed automated SMS notifications and Google review requests via Twilio. This feature is now used by 3 businesses, enhancing their customer interactions and business ratings.",
-        "Contributed to rapid feature deployment to meet tight deadlines, demonstrating adaptability and a commitment to timely, effective updates.",
-      ],
-    },
     {
       title: "Binary Sentiment Feedback System",
       technologies:
@@ -148,7 +166,35 @@ export default function UserProfile() {
       websiteLink: "", // If you have a live URL
       children: (
         <div className="space-y-4">
-          <SentimentDemo /> <PDFViewer />
+          <Typography
+            variant="body2"
+            sx={{ fontSize: "0.875rem" }}
+            color={mode === "dark" ? "grey.300" : "grey.700"}
+          >
+            To read the research paper, click{" "}
+            <a
+              href="https://link.springer.com/chapter/10.1007/978-3-031-78554-2_14"
+              target="_blank"
+              style={{
+                color: mode === "dark" ? "lightblue" : "blue",
+                textDecoration: "none",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
+              HERE
+              <MdOpenInNew
+                style={{
+                  position: "absolute",
+                  right: "-15px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "small",
+                }}
+              />
+            </a>
+          </Typography>
+          <SentimentDemo />
         </div>
       ),
       details: [
@@ -512,7 +558,7 @@ export default function UserProfile() {
   ));
 
   const carouselOptions: EmblaOptionsType = {
-    loop: true,
+    loop: false,
     containScroll: "trimSnaps",
     slidesToScroll: 1,
   };
@@ -697,7 +743,14 @@ export default function UserProfile() {
             Experience
           </Typography>
           <Divider className="!mb-4 dark:bg-gray-700" />
-          <Box sx={{ width: "100%", mt: 4, height: "500px" }}>
+          <Box
+            sx={{
+              width: "100%",
+              mt: 4,
+              // minHeight: "100%",
+            }}
+            className="sm:h-[400px] h-[500px] overflow-auto"
+          >
             <AutoplayEmblaCarousel
               slides={experienceSlides}
               options={carouselOptions}

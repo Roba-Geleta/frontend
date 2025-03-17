@@ -67,14 +67,26 @@ const SentimentDemo: React.FC = () => {
           rows={2}
           disabled={loading}
         />
-        <div
-          className={`text-xs mt-1 text-right ${
-            text.length > MAX_CHARS
-              ? "text-red-500 dark:text-red-400"
-              : "text-gray-500 dark:text-gray-400"
-          }`}
-        >
-          {text.length}/{MAX_CHARS} characters
+        <div className="flex justify-between text-xs mt-1">
+          <div className="text-left">Min {MIN_CHARS} characters</div>
+          <div
+            className={`text-right ${
+              text.length > MAX_CHARS
+                ? "text-red-500 dark:text-red-400"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            <span
+              className={`${
+                text.length < MIN_CHARS
+                  ? "text-yellow-500 dark:text-yellow-400"
+                  : ""
+              }`}
+            >
+              {text.length}
+            </span>
+            /{MAX_CHARS} characters
+          </div>
         </div>
       </div>
 
