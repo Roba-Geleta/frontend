@@ -606,9 +606,8 @@ export default function UserProfile() {
           className="text-gray-700 dark:text-gray-300"
         >
           I'm a passionate Computer Science graduate with hands-on experience in
-          software development, AI model training, and full-stack development. I
-          thrive in collaborative environments and am committed to building
-          efficient, user-friendly digital solutions.
+          full-stack development. I thrive in collaborative environments and am
+          committed to building efficient, user-friendly digital solutions.
         </Typography>
 
         {/* Technical Skills Section */}
