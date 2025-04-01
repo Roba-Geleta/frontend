@@ -21,7 +21,7 @@ const glow = keyframes`
 `;
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(() => ({
-  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+  transition: "transform 1s ease-in-out, box-shadow 1s ease-in-out",
   borderRadius: "50%",
   "&:hover": {
     animation: `${glow} 1.5s infinite`,
@@ -59,62 +59,65 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
     <AvatarWrapper ref={avatarRef}>
       <StyledAvatar
         {...props}
-        key={borderWidth}
+        // key={borderWidth}
         style={{
-          borderWidth: "7px",
+          borderWidth: "6px",
           borderColor:
             borderWidth !== ""
               ? mode === "dark"
-                ? "#5a796a"
-                : "#4c6865"
-              : "#5a796a3f",
+                ? "#8295a7"
+                : "#8295a7"
+              : "#8295a721",
           borderStyle: "solid",
         }}
         className={` ${
-          mode === "dark" ? "hover:border-[#5a796a]" : "hover:border-[#4c6865]"
+          mode === "dark"
+            ? "hover:border-[#8295a721]"
+            : "hover:border-[#ff3939]"
         }`}
       />
 
-      {drawing && (
-        <svg
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: size,
-            height: size,
-            pointerEvents: "none",
-            zIndex: 10,
-          }}
-        >
-          {circleSegments.map((segment, index) => (
-            <circle
-              key={index}
-              cx="50%"
-              cy="50%"
-              r="48.37%"
-              fill="none"
-              stroke={mode === "dark" ? "#5a796a" : "#4c6865"}
-              strokeWidth={segment.strokeWidth}
-              strokeDasharray={Math.PI * size}
-              strokeDashoffset={Math.PI * size}
-              style={{
-                animation: `drawCircle 2s ease forwards`,
-                animationDelay: `${segment.delay}s`,
-              }}
-            />
-          ))}
-          <style>
-            {`
+      {/* {drawing && ( */}
+      <svg
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: size,
+          height: size,
+          pointerEvents: "none",
+          zIndex: 10,
+          visibility: drawing ? "visible" : "hidden",
+        }}
+      >
+        {circleSegments.map((segment, index) => (
+          <circle
+            key={index}
+            cx="50%"
+            cy="50%"
+            r="48.37%"
+            fill="none"
+            stroke={mode === "dark" ? "#8295a7" : "#8295a7"}
+            strokeWidth={segment.strokeWidth}
+            strokeDasharray={Math.PI * size}
+            strokeDashoffset={Math.PI * size}
+            style={{
+              animation: `drawCircle 2s ease forwards`,
+              animationDelay: `${segment.delay}s`,
+            }}
+          />
+        ))}
+        <style>
+          {`
             @keyframes drawCircle {
               to {
                 stroke-dashoffset: 0;
               }
             }
           `}
-          </style>
-        </svg>
-      )}
+        </style>
+      </svg>
+      {/* )} */}
     </AvatarWrapper>
   );
 };
