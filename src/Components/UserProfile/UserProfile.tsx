@@ -1,6 +1,8 @@
 import { useContext, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import { scroller } from "react-scroll";
+
 import {
   Typography,
   Button,
@@ -50,9 +52,14 @@ import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
 import ContactForm from "../ContactForm/ContactForm";
 import SentimentDemo from "../SentimentDemo/SentimentDemo";
 import { MdOpenInNew } from "react-icons/md";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
+import Roba from "../../assets/Roba.webp";
 
 export default function UserProfile() {
   const { mode } = useContext(ThemeContext);
+  const [isHovered, setIsHovered] = useState(false);
+
   const { isDatabaseResuming, hasDatabaseRetriesExceeded } = useContext(
     DatabaseStatusContext
   );
@@ -563,6 +570,9 @@ export default function UserProfile() {
     slidesToScroll: 1,
   };
 
+  const screwClassName =
+    "text-gray-500 dark:text-gray-300 animate-spin-rotate shadow-inner rounded-full opacity-50";
+
   return (
     <>
       <Container
@@ -572,46 +582,138 @@ export default function UserProfile() {
           alignItems: "center",
         }}
         maxWidth="xl"
+        className="grid grid-rows-5 gap-4 sm:gap-8"
       >
-        <div id="Home" className="w-full flex justify-center">
-          <AvatarWithIcons mode={mode} />
-        </div>
-        <Typography
-          variant="h4"
-          component="h1"
-          align="center"
-          gutterBottom
-          className="text-gray-900 dark:text-white"
-        >
-          Roba Geleta
-        </Typography>
-        {/* Education */}
-        <Typography
-          variant="h6"
-          component="p"
-          align="center"
-          color="textSecondary"
-          sx={{ mb: 4 }}
-          className="text-gray-700 dark:text-gray-300"
-        >
-          Bachelor of Computer Science, Specializing in Human-Computer
-          Interaction and Computer Graphics
-        </Typography>
-        {/* About */}
-        <Typography
-          variant="body1"
-          align="center"
-          color="textSecondary"
-          sx={{ mb: 4, maxWidth: 800 }}
-          className="text-gray-700 dark:text-gray-300"
-        >
-          I'm a passionate Computer Science graduate with hands-on experience in
-          full-stack development. I thrive in collaborative environments and am
-          committed to building efficient, user-friendly digital solutions.
-        </Typography>
+        <div className="row-span-1  w-full h-[80vh] justify-center items-center mb-4">
+          <div
+            id="Home"
+            className="h-full w-full justify-center"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <AvatarWithIcons mode={mode} isHovered={isHovered}>
+              <div className="flex flex-col md:flex-row w-full h-full justify-between md:justify-center items-center bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8">
+                <div className="relative w-full md:h-full md:w-fit h-auto flex items-center justify-center">
+                  <div
+                    className={`absolute w-1 border-4 border-gray-700 dark:border-white border-dotted opacity-10 rounded-full h-full z-[-2] `}
+                  />
+                  <div
+                    className={`absolute h-1 border-4 border-gray-700 dark:border-white border-dotted opacity-10  rounded-full w-full z-[-2] `}
+                  />
 
+                  <div className="w-full md:max-h-1/2 h-auto flex flex-col items-center justify-center bg-slate-50 dark:bg-gray-800 !bg-opacity-45 rounded-lg md:rounded-lg shadow-lg p-3 md:m-2">
+                    {/* <AddCircleIcon
+                    className={`absolute top-1 right-1 ${screwClassName}`}
+                    color="action"
+                  />
+                  <AddCircleIcon
+                    className={`absolute top-1 left-1 ${screwClassName}`}
+                    color="action"
+                  />
+                  <AddCircleIcon
+                    className={`absolute bottom-1 left-1 ${screwClassName}`}
+                    color="action"
+                  />
+                  <AddCircleIcon
+                    className={`absolute bottom-1 right-1 ${screwClassName}`}
+                    color="action"
+                  /> */}
+
+                    <AnimatedAvatar
+                      alt="Roba Geleta"
+                      src={Roba}
+                      sx={{
+                        width: { md: "200px", xs: "150px" },
+                        height: { md: "200px", xs: "150px" },
+                        zIndex: 0,
+                      }}
+                    />
+                    <Typography
+                      variant="h4"
+                      component="h1"
+                      align="center"
+                      gutterBottom
+                      className="text-gray-900 dark:text-white pt-2 !font-mono !font-semibold"
+                    >
+                      Roba Geleta
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      align="center"
+                      gutterBottom
+                      // color="textSecondary"
+                      className="text-gray-700 dark:text-gray-300 text-wrap"
+                    >
+                      <Box
+                        component="img"
+                        src="https://umanitoba.ca/sites/default/files/2022-10/UM-logo-horizontal-black.png"
+                        alt="University of Manitoba Logo"
+                        sx={{
+                          width: "80px",
+                          height: "auto",
+                          borderRadius: "8px",
+                          mb: 1,
+                          display: "inline",
+                        }}
+                        className="dark:invert"
+                      />{" "}
+                      Bachelor of Computer Science
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      align="center"
+                      gutterBottom
+                      // color="textSecondary"
+                      className="text-gray-700 dark:text-gray-300 text-wrap"
+                    >
+                      Specializing in Human-Computer Interaction and Computer
+                      Graphics
+                    </Typography>
+                  </div>
+                </div>
+
+                <div className="flex-1 w-full md:w-1/2 md:h-full flex flex-col justify-center items-center px-4 space-y-1 md:space-y-4 ">
+                  <Typography
+                    align="center"
+                    color="info"
+                    className="text-gray-700 dark:text-gray-300 !text-3xl md:!text-6xl  "
+                  >
+                    Full Stack Developer
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    color="textSecondary"
+                    className="text-gray-700 dark:text-gray-300  "
+                  >
+                    I'm a passionate Computer Science graduate with hands-on
+                    experience in full-stack development. I thrive in
+                    collaborative environments and am committed to building
+                    efficient, user-friendly digital solutions.
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={() =>
+                      scroller.scrollTo("Experience", {
+                        smooth: true,
+                        duration: 500,
+                        offset: -100,
+                      })
+                    }
+                    className="text-gray-800 dark:text-gray-100 border-gray-400 dark:border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-blue-500 dark:hover:border-blue-400 transition duration-300 px-6 py-2 rounded-md shadow-sm"
+                  >
+                    My Work Experience
+                  </Button>
+                </div>
+              </div>
+            </AvatarWithIcons>
+          </div>
+
+          {/* About */}
+        </div>
         {/* Technical Skills Section */}
-        <Box sx={{ mt: 6, width: "100%" }} className="">
+        <Box sx={{ mt: 6, width: "100%" }} className="row-span-1">
           {/* Main Technical Skills Header */}
 
           <Typography
@@ -725,7 +827,7 @@ export default function UserProfile() {
         </Box>
 
         {/* Experiences Section */}
-        <Box sx={{ mt: 6, width: "100%" }}>
+        <Box sx={{ mt: 6, width: "100%" }} className="row-span-1">
           <Typography
             id="Experience"
             variant="h4"
@@ -762,7 +864,7 @@ export default function UserProfile() {
         </Box>
 
         {/* Projects Section */}
-        <Box sx={{ mt: 6, width: "100%" }}>
+        <Box sx={{ mt: 6, width: "100%" }} className="row-span-1">
           <Typography
             id="Projects"
             variant="h4"
@@ -939,7 +1041,10 @@ export default function UserProfile() {
           <Box sx={{ mt: 2 }}>{projectsSlides}</Box>
         </Box>
 
-        <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
+        <Box
+          sx={{ mt: 6, width: "100%", maxWidth: 800 }}
+          className="row-span-1"
+        >
           <ContactForm />
         </Box>
       </Container>
