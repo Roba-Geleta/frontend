@@ -2,8 +2,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Box, keyframes } from "@mui/material";
 import { IconContext } from "react-icons";
-import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
-import Roba from "../../assets/Roba.webp";
+
 // import Roba from "../../assets/Roba-Notion-Avatar.svg";
 
 // Import technology icons
@@ -90,6 +89,8 @@ interface IconData {
 
 interface AvatarWithIconsProps {
   mode: "light" | "dark";
+  isHovered?: boolean;
+  children?: React.ReactNode;
 }
 
 const pulse = keyframes`
@@ -104,14 +105,17 @@ const pulse = keyframes`
   }
 `;
 
-const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({ mode }) => {
-  const [isAvatarHovered, setIsAvatarHovered] = useState(false);
+const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({
+  mode,
+  children,
+  isHovered = false,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Initialize container size with default values
   const [containerSize, setContainerSize] = useState({
     width: 500,
-    height: 500,
+    height: 1000,
   });
 
   useEffect(() => {
@@ -205,7 +209,8 @@ const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({ mode }) => {
       sx={{
         position: "relative",
         width: "100%",
-        height: "auto", // Adjust as needed or make responsive
+        height: "100%",
+        maxHeight: "100vh",
         margin: "0 auto",
       }}
       className="flex justify-center items-center"
@@ -237,7 +242,7 @@ const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({ mode }) => {
                 alignItems: "center",
                 opacity: 0.5,
                 transform: "translate(-50%, -50%)",
-                animation: isAvatarHovered ? `${pulse} 2s infinite` : "none",
+                animation: isHovered ? `${pulse} 2s infinite` : "none",
               }}
             >
               <iconData.IconComponent />
@@ -246,18 +251,18 @@ const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({ mode }) => {
         );
       })}
 
-      {/* Avatar */}
-      <AnimatedAvatar
-        alt="Roba Geleta"
-        src={Roba}
-        sx={{
-          width: "170px",
-          height: "170px",
-          zIndex: 0,
-        }}
-        onMouseEnter={() => setIsAvatarHovered(true)}
-        onMouseLeave={() => setIsAvatarHovered(false)}
-      />
+      {children && (
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 1,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          {children}
+        </Box>
+      )}
     </Box>
   );
 };
