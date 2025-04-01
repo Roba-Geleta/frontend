@@ -48,7 +48,7 @@ import Hero from "../../assets/StocksHome/Hero.svg";
 import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
 import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
 import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
-import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
+import BackgroundWithIcons from "../BackgroundWithIcons/BackgroundWithIcons";
 import ContactForm from "../ContactForm/ContactForm";
 import SentimentDemo from "../SentimentDemo/SentimentDemo";
 import { MdOpenInNew } from "react-icons/md";
@@ -591,14 +591,14 @@ export default function UserProfile() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <AvatarWithIcons mode={mode} isHovered={isHovered}>
+            <BackgroundWithIcons mode={mode} isHovered={isHovered}>
               <div className="flex flex-col md:flex-row w-full h-full justify-between md:justify-center items-center bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8">
                 <div className="relative w-full md:h-full md:w-fit h-auto flex items-center justify-center">
                   <div
-                    className={`absolute w-1 border-4 border-gray-700 dark:border-white border-dotted opacity-10 rounded-full h-full z-[-2] `}
+                    className={`absolute w-1 border-2 border-gray-700 dark:border-white border-dotted opacity-10 rounded-full h-full z-[-2] `}
                   />
                   <div
-                    className={`absolute h-1 border-4 border-gray-700 dark:border-white border-dotted opacity-10  rounded-full w-full z-[-2] `}
+                    className={`absolute h-1 border-2 border-gray-700 dark:border-white border-dotted opacity-10  rounded-full w-full z-[-2] `}
                   />
 
                   <div className="w-full md:max-h-1/2 h-auto flex flex-col items-center justify-center bg-slate-50 dark:bg-gray-800 !bg-opacity-45 rounded-lg md:rounded-lg shadow-lg p-3 md:m-2">
@@ -707,7 +707,7 @@ export default function UserProfile() {
                   </Button>
                 </div>
               </div>
-            </AvatarWithIcons>
+            </BackgroundWithIcons>
           </div>
 
           {/* About */}
