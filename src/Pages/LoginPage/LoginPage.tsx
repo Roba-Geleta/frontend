@@ -18,7 +18,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/userAuth";
 import { useForm } from "react-hook-form";
 import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
-import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 
 type LoginFormsInputs = {
   userName: string;
@@ -31,6 +30,8 @@ const validation = Yup.object().shape({
 });
 
 const LoginPage = () => {
+  const FIPLogoIconDark =
+    "https://my-r2-proxy.geletaroba.workers.dev/assets/FIPLogoIconDark.svg";
   usePageMeta({
     title: "FIP - Login",
     favicon: FIPLogoIconDark,
