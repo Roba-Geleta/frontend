@@ -35,136 +35,118 @@ const ProjectDialog: React.FC<ProjectDialogProps> = ({
   onClose,
   project,
   mode,
-}) => {
-  return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: mode === "dark" ? "grey.800" : "primary",
-          color: mode === "dark" ? "grey.100" : "common",
-        }}
+}) => (
+  <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <DialogTitle
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: mode === "dark" ? "grey.800" : "primary",
+        color: mode === "dark" ? "grey.100" : "common",
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+          component="img"
+          src={project.logo}
+          alt={`${project.title} Logo`}
+          sx={{ width: { xs: "40px", md: "60px" }, mr: 4 }}
+        />
+        {project.title}
+      </Box>
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={{ ml: "auto", color: mode === "dark" ? "grey.100" : "common" }}
       >
-        <div className="flex flex-col md:flex-row justify-center">
-          {/* Logo */}
-          <Box
-            component="img"
-            src={project.logo}
-            alt={`${project.title} Logo`}
-            sx={{
-              width: { xs: "40px", md: "60px" },
-              height: "auto",
-              marginRight: 4,
-            }}
-          />
-          <div className="my-auto">{project.title}</div>
-        </div>
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            marginLeft: "auto",
-            color: mode === "dark" ? "grey.100" : "common",
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent
-        dividers
-        className={mode === "dark" ? "dark" : ""}
-        sx={{
-          backgroundColor: mode === "dark" ? "grey.900" : "background.paper",
-        }}
-      >
-        <Typography variant="subtitle1" color="grey">
-          {project.date}
-        </Typography>
-
-        <Box sx={{ mt: 2 }}>
-          <Typography
-            variant="body1"
-            gutterBottom
-            color={mode === "dark" ? "grey.100" : "common"}
-          >
-            <strong>Technologies:</strong>
-          </Typography>
-          <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
-            {project.technologies.split(", ").map((tech, index) => (
-              <Chip
-                key={index}
-                label={tech}
-                variant="outlined"
-                color="primary"
-                sx={{ m: 0.5 }}
-              />
-            ))}
-          </Box>
-        </Box>
+        <CloseIcon />
+      </IconButton>
+    </DialogTitle>
+    <DialogContent
+      dividers
+      sx={{
+        backgroundColor: mode === "dark" ? "grey.900" : "background.paper",
+      }}
+    >
+      <Typography variant="subtitle1" color="grey">
+        {project.date}
+      </Typography>
+      {project.children && <Box>{project.children}</Box>}
+      <Box sx={{ mt: 2 }}>
         <Typography
           variant="body1"
           gutterBottom
-          color={mode === "dark" ? "grey.100" : "common"}
+          sx={{ color: mode === "dark" ? "grey.100" : "common" }}
         >
-          <strong>Details:</strong>
+          <strong>Technologies:</strong>
         </Typography>
-        <Box component="ul" sx={{ pl: 2 }}>
-          {project.details.map((item, index) => (
-            <li key={index} className="flex items-center relative">
-              <div className="w-2 h-2 top-1.5 bg-gray-500 dark:bg-gray-600 rounded-full absolute"></div>
-              <Typography
-                variant="body2"
-                color={mode === "dark" ? "grey.100" : "common"}
-                className="pl-4"
-              >
-                {item}
-              </Typography>
-            </li>
+        <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
+          {project.technologies.split(", ").map((tech, i) => (
+            <Chip
+              key={i}
+              label={tech}
+              variant="outlined"
+              color="primary"
+              sx={{ m: 0.5 }}
+            />
           ))}
         </Box>
-        {project.children && (
-          <div style={{ marginTop: "1.5rem" }}>{project.children}</div>
-        )}
-      </DialogContent>
-      <DialogActions
-        sx={{
-          backgroundColor: mode === "dark" ? "grey.800" : "grey.100",
-        }}
+      </Box>
+      <Typography
+        variant="body1"
+        gutterBottom
+        sx={{ color: mode === "dark" ? "grey.100" : "common" }}
       >
-        {/* GitHub and Website Icons */}
-        <Box sx={{ flexGrow: 1 }}>
-          {project.githubLink && (
-            <IconButton
-              component="a"
-              href={project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              sx={{ color: mode === "dark" ? "grey.300" : "text.primary" }}
+        <strong>Details:</strong>
+      </Typography>
+      <Box component="ul" sx={{ pl: 2 }}>
+        {project.details.map((item, i) => (
+          <li key={i} className="flex items-center relative">
+            <div className="w-2 h-2 top-1.5 bg-gray-500 dark:bg-gray-600 rounded-full absolute"></div>
+            <Typography
+              variant="body2"
+              sx={{ pl: 4, color: mode === "dark" ? "grey.100" : "common" }}
             >
-              <GitHubIcon />
-            </IconButton>
-          )}
-          {project.websiteLink && (
-            <IconButton
-              component="a"
-              href={project.websiteLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Website"
-              sx={{ color: mode === "dark" ? "grey.300" : "text.primary" }}
-            >
-              <LanguageIcon />
-            </IconButton>
-          )}
-        </Box>
-        <Button onClick={onClose} color="primary">
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
+              {item}
+            </Typography>
+          </li>
+        ))}
+      </Box>
+    </DialogContent>
+    <DialogActions
+      sx={{ backgroundColor: mode === "dark" ? "grey.800" : "grey.100" }}
+    >
+      <Box sx={{ flexGrow: 1 }}>
+        {project.githubLink && (
+          <IconButton
+            component="a"
+            href={project.githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            sx={{ color: mode === "dark" ? "grey.300" : "text.primary" }}
+          >
+            <GitHubIcon />
+          </IconButton>
+        )}
+        {project.websiteLink && (
+          <IconButton
+            component="a"
+            href={project.websiteLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Website"
+            sx={{ color: mode === "dark" ? "grey.300" : "text.primary" }}
+          >
+            <LanguageIcon />
+          </IconButton>
+        )}
+      </Box>
+      <Button onClick={onClose} color="primary">
+        Close
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
 
 export default ProjectDialog;
