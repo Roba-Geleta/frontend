@@ -180,7 +180,7 @@ const AppAppBar: React.FC = () => {
           </Box>
         </Box>
         {/* Right Section: Account and Theme Toggle */}
-        <Box className="hidden smv:flex items-center">
+        <Box className="flex items-center">
           <ToggleColorMode />
         </Box>
         {/* Mobile Section: Drawer */}

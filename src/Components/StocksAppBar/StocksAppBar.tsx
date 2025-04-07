@@ -497,6 +497,7 @@ const AppAppBar: React.FC<Props> = ({
 
         {/* Mobile Section: Drawer */}
         <Box className="flex smv:hidden">
+          <ToggleColorMode />
           <IconButton
             aria-label="Menu button"
             onClick={toggleDrawer(true)}
