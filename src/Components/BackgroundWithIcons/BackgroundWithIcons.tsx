@@ -221,7 +221,7 @@ const AvatarWithIcons: React.FC<AvatarWithIconsProps> = ({
                 fontSize: `${iconData.size * 0.6}px`,
                 color:
                   mode === "dark"
-                    ? "rgba(255, 255, 255, 0.3)"
+                    ? "rgba(255, 255, 255, 0.1)"
                     : "rgba(0, 0, 0, 0.3)",
               },
             }}
