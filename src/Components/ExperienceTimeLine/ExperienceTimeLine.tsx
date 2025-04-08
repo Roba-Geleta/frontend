@@ -146,7 +146,10 @@ const ExperienceTimeLine: React.FC = () => {
   ];
 
   return (
-    <Box sx={{ my: 4, px: 2, position: "relative", zIndex: 1 }}>
+    <Box
+      sx={{ my: 4, px: 2, position: "relative", zIndex: 1 }}
+      className="min-h-[65vh] flex flex-col  justify-center"
+    >
       {experiences.map((exp, index) => {
         const isExpanded = expandedIndex === index;
 

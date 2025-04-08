@@ -119,6 +119,7 @@ export default function UserProfile() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          mt: 6,
         }}
         maxWidth="xl"
         className=""
@@ -126,7 +127,7 @@ export default function UserProfile() {
         <div className=" w-full h-full justify-center items-center mb-4">
           <div id="Home" className="h-full w-full justify-center">
             <BackgroundWithIcons mode={mode} isHovered={true}>
-              <div className="space-y-1 md:space-y-0 flex flex-col md:flex-row w-full min-h-[80vh] justify-between md:justify-center items-center bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8">
+              <div className="space-y-1 md:space-y-0 flex flex-col md:flex-row w-full min-h-[85vh] justify-between md:justify-center items-center bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8">
                 <div className="relative w-full md:h-full md:w-fit h-auto flex items-center justify-center">
                   <div
                     className={`absolute w-1 border-2 border-gray-700 dark:border-white border-dotted opacity-10 rounded-full h-full z-[-2] `}
@@ -275,6 +276,7 @@ export default function UserProfile() {
                     sx={{
                       width: "100%",
                       height: "auto",
+                      opacity: mode === "dark" ? 0.01 : 0.03,
                     }}
                     className="absolute dark:invert z-0 opacity-[3%]"
                   />
@@ -385,7 +387,7 @@ export default function UserProfile() {
         {/* Technical Skills Section */}
         <Box
           sx={{ mt: 6, width: "100%" }}
-          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
+          className=" flex flex-col bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 min-h-[85vh] shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
         >
           {/* Main Technical Skills Header */}
 
@@ -405,98 +407,99 @@ export default function UserProfile() {
             Technical Skills
           </Typography>
           <Divider className="!mb-4 dark:bg-gray-700" />
+          <div className="flex-grow flex flex-col items-center justify-between">
+            {/* Languages & Web Technologies */}
+            <Box sx={{ mb: 4 }}>
+              <Typography
+                variant="h6"
+                component="h3"
+                align="center"
+                className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+              >
+                <CodeIcon className="mr-1 text-blue-500" />
+                Languages & Web Technologies
+              </Typography>
+              <div className="flex flex-wrap justify-center">
+                {technicalSkills.languages.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    label={skill}
+                    variant="outlined"
+                    className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                  />
+                ))}
+              </div>
+            </Box>
 
-          {/* Languages & Web Technologies */}
-          <Box sx={{ mb: 4 }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
-            >
-              <CodeIcon className="mr-1 text-blue-500" />
-              Languages & Web Technologies
-            </Typography>
-            <div className="flex flex-wrap justify-center">
-              {technicalSkills.languages.map((skill, index) => (
-                <Chip
-                  key={index}
-                  label={skill}
-                  variant="outlined"
-                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-                />
-              ))}
-            </div>
-          </Box>
+            {/* Frameworks & Libraries */}
+            <Box sx={{ mb: 4 }}>
+              <Typography
+                variant="h6"
+                component="h3"
+                align="center"
+                className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+              >
+                <Settings className="mr-1 text-green-500" />
+                Frameworks & Libraries
+              </Typography>
+              <div className="flex flex-wrap justify-center">
+                {technicalSkills.frameworks.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    label={skill}
+                    variant="outlined"
+                    className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                  />
+                ))}
+              </div>
+            </Box>
 
-          {/* Frameworks & Libraries */}
-          <Box sx={{ mb: 4 }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
-            >
-              <Settings className="mr-1 text-green-500" />
-              Frameworks & Libraries
-            </Typography>
-            <div className="flex flex-wrap justify-center">
-              {technicalSkills.frameworks.map((skill, index) => (
-                <Chip
-                  key={index}
-                  label={skill}
-                  variant="outlined"
-                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-                />
-              ))}
-            </div>
-          </Box>
+            {/* Tools & Platforms */}
+            <Box sx={{ mb: 4 }}>
+              <Typography
+                variant="h6"
+                component="h3"
+                align="center"
+                className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+              >
+                <BuildIcon className="mr-1 text-yellow-500" />
+                Tools & Platforms
+              </Typography>
+              <div className="flex flex-wrap justify-center">
+                {technicalSkills.tools.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    label={skill}
+                    variant="outlined"
+                    className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                  />
+                ))}
+              </div>
+            </Box>
 
-          {/* Tools & Platforms */}
-          <Box sx={{ mb: 4 }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
-            >
-              <BuildIcon className="mr-1 text-yellow-500" />
-              Tools & Platforms
-            </Typography>
-            <div className="flex flex-wrap justify-center">
-              {technicalSkills.tools.map((skill, index) => (
-                <Chip
-                  key={index}
-                  label={skill}
-                  variant="outlined"
-                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-                />
-              ))}
-            </div>
-          </Box>
-
-          {/* Development Practices */}
-          <Box sx={{ mb: 4 }}>
-            <Typography
-              variant="h6"
-              component="h3"
-              align="center"
-              className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
-            >
-              <SpeedIcon className="mr-1 text-red-500" />
-              Development Practices
-            </Typography>
-            <div className="flex flex-wrap justify-center">
-              {technicalSkills.practices.map((skill, index) => (
-                <Chip
-                  key={index}
-                  label={skill}
-                  variant="outlined"
-                  className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-                />
-              ))}
-            </div>
-          </Box>
+            {/* Development Practices */}
+            <Box sx={{ mb: 4 }}>
+              <Typography
+                variant="h6"
+                component="h3"
+                align="center"
+                className="flex items-center justify-center text-gray-800 dark:text-gray-200 font-medium mb-2"
+              >
+                <SpeedIcon className="mr-1 text-red-500" />
+                Development Practices
+              </Typography>
+              <div className="flex flex-wrap justify-center">
+                {technicalSkills.practices.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    label={skill}
+                    variant="outlined"
+                    className="m-1 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                  />
+                ))}
+              </div>
+            </Box>
+          </div>
         </Box>
 
         <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
