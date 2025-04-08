@@ -398,10 +398,6 @@ export default function ProjectsList() {
 
   return (
     <>
-      <img
-        src="https://my-r2-proxy.geletaroba.workers.dev/assets/PPSLogo.ico"
-        alt="Logo"
-      />
       <Box sx={{ width: "100%" }}>
         <Box
           sx={{
