@@ -119,7 +119,6 @@ export default function UserProfile() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          mt: 6,
         }}
         maxWidth="xl"
         className=""
