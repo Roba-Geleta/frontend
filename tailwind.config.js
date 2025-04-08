@@ -10,6 +10,19 @@ export default {
       xl: "1440px",
     },
     extend: {
+      animation: {
+        "spin-rotate": "spin-and-rotate 2.5s ease-out forwards",
+      },
+      keyframes: {
+        "spin-and-rotate": {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "100%": {
+            transform: "rotate(765deg)", // 720 + 45 = 765
+          },
+        },
+      },
       colors: {
         lightBlue: "hsl(215.02, 98.39%, 51.18%)",
         darkBlue: "hsl(213.86, 58.82%, 46.67%)",

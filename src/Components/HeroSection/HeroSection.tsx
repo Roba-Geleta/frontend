@@ -1,13 +1,14 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import Hero from "../../assets/StocksHome/Hero.svg";
 
 interface HeroSectionProps {
   isLoggedIn: boolean;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ isLoggedIn }) => {
+  const Hero =
+    "https://my-r2-proxy.geletaroba.workers.dev/assets/StocksHome/Hero.svg";
   return (
     <section className="text-gray-600 body-font shadow-xl dark:shadow-gray-700 bg-[#f8f4e1] dark:bg-gray-900 !bg-opacity-90 rounded-lg">
       <div className="mx-auto flex px-5 py-24 md:flex-row flex-col items-center">

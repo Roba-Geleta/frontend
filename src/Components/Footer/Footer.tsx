@@ -14,9 +14,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationDisplay from "../LocationDisplay/LocationDisplay";
 import RobaLogo from "../RobaLogo/RobaLogo";
-import FinancialInsightsLogo from "../../assets/FIPLogoIconDark.svg";
 
 const Footer: React.FC = () => {
+  const FinancialInsightsLogo =
+    "https://my-r2-proxy.geletaroba.workers.dev/assets/FIPLogoIconDark.svg";
   return (
     <Box
       component="footer"

@@ -8,9 +8,10 @@ import { useAuth } from "../../Context/userAuth";
 import FeaturesSection from "../../Components/FeatureSection/FeatureSection";
 import { BeatLoader } from "react-spinners";
 import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
-import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 
 const StocksHomePage: React.FC = () => {
+  const FIPLogoIconDark =
+    "https://my-r2-proxy.geletaroba.workers.dev/assets/FIPLogoIconDark.svg";
   usePageMeta({
     title: "FIP - Home",
     favicon: FIPLogoIconDark,

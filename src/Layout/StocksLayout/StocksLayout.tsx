@@ -16,12 +16,14 @@ import { toast, ToastContainer } from "react-toastify";
 import Footer from "../../Components/Footer/Footer";
 import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
 import "react-toastify/dist/ReactToastify.css";
-import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 import "./StocksLayout.css";
 import { ThemeContext } from "../../Context/ThemeContext";
 import CookieConsentBanner from "../../Components/CookieConsentBanner/CookieConsentBanner";
 
 const StocksLayout: React.FC = () => {
+  const FIPLogoIconDark =
+    ".https://my-r2-proxy.geletaroba.workers.dev/assets/FIPLogoIconDark.svg";
+
   usePageMeta({
     title: "FIP",
     favicon: FIPLogoIconDark,

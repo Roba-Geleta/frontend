@@ -7,8 +7,10 @@ import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 import "./MainLayout.css";
 import { ThemeContext } from "../../Context/ThemeContext";
 import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
-import RobaAvatar from "../../assets/Roba-Notion-Avatar.svg";
+
 const MainLayout: React.FC = () => {
+  const RobaAvatar =
+    "https://my-r2-proxy.geletaroba.workers.dev/assets/Roba-Notion-Avatar.svg";
   const { mode } = useContext(ThemeContext);
   usePageMeta({
     title: "Roba",

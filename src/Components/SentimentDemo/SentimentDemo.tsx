@@ -78,9 +78,7 @@ const SentimentDemo: React.FC = () => {
           >
             <span
               className={`${
-                text.length < MIN_CHARS
-                  ? "text-yellow-500 dark:text-yellow-400"
-                  : ""
+                text.length < MIN_CHARS ? "text-red-500 dark:text-red-400" : ""
               }`}
             >
               {text.length}

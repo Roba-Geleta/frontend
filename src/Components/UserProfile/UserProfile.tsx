@@ -1,321 +1,36 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import {
-  Typography,
-  Button,
-  Chip,
-  Grid2 as Grid,
-  Divider,
-} from "@mui/material";
-import NewReleasesIcon from "@mui/icons-material/NewReleases";
-import AutoplayEmblaCarousel from "../EmblaCarousel/AutoPlayEmblaCarousel/AutoPlayEmblaCarousel";
-import { EmblaOptionsType } from "embla-carousel";
-import ExperienceDialog from "../ExperienceDialog/ExperienceDialog";
-import ProjectDialog from "../ProjectDialog/ProjectDialog";
+import { scroller } from "react-scroll";
+import { IconButton, Stack, Tooltip } from "@mui/material";
+import { Typography, Button, Chip, Divider } from "@mui/material";
 import "../../css/embla.css";
 import CodeIcon from "@mui/icons-material/Code";
 import BuildIcon from "@mui/icons-material/Build";
 import SpeedIcon from "@mui/icons-material/Speed";
 import Settings from "@mui/icons-material/Settings";
-import ConstructionIcon from "@mui/icons-material/Construction";
 import { ThemeContext } from "../../Context/ThemeContext";
-// Experience Images
-import PPSLogo from "../../assets/PPSLogo.svg";
-import PPSBackground from "../../assets/PPSBackground.webp";
-import OutlierAILogo from "../../assets/OutlierAILogo.svg";
-import OutlierAIBackground from "../../assets/OutlierAIBackground.webp";
-import CorranaLogo from "../../assets/CorranaLogo.webp";
-import CorranaBackground from "../../assets/CorranaBackground.webp";
-import AppBookingWithMeBackground from "../../assets/AppBookingWithMeBackground.webp";
 
-// Projects Images
-import AppBookingWithMeLogo from "../../assets/Projects/AppBookingWithMe/AppBookingWithMeLogo.png";
-import Sentiment from "../../assets/Projects/Sentiment/Sentiment.png";
-import SentimentLogo from "../../assets/Projects/Sentiment/Logo.png";
-import BookWorm from "../../assets/Projects/BookWorm/BookWorm.png";
-import BookWormLogo from "../../assets/Projects/BookWorm/bookWormLogo.webp";
-import Gratitude from "../../assets/Projects/Gratitude/Gratitude.png";
-import GratitudeLogo from "../../assets/Projects/Gratitude/GratitudeLogo.png";
-import Succinct from "../../assets/Projects/Succinct/Succinct.png";
-import SuccinctLogo from "../../assets/Projects/Succinct/SuccinctLogo.png";
-import Wikipedia from "../../assets/Projects/Wikipedia/Wikipedia.png";
-import WikipediaLogo from "../../assets/Projects/Wikipedia/Logo.png";
-import ScrapeRobot from "../../assets/Projects/ScrapeRobot/ScrapeRobot.png";
-import Hero from "../../assets/StocksHome/Hero.svg";
-import { DatabaseStatusContext } from "../../Context/DatabaseStatusContext";
-import ConnectionStatusFeedBack from "../ConnectionStatusFeedBack/ConnectionStatusFeedBack";
-import { NetworkStatusContext } from "../../Context/NetworkStatusContext";
-import AvatarWithIcons from "../AvatarWithIcons/AvatarWithIcons";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import EmailIcon from "@mui/icons-material/Email";
+
+import BackgroundWithIcons from "../BackgroundWithIcons/BackgroundWithIcons";
 import ContactForm from "../ContactForm/ContactForm";
-import SentimentDemo from "../SentimentDemo/SentimentDemo";
-import { MdOpenInNew } from "react-icons/md";
+import AnimatedAvatar from "../AnimatedAvatar/AnimatedAvatar";
+import ExperienceTimeLine from "../ExperienceTimeLine/ExperienceTimeLine";
+import ProjectsList from "../ProjectsList/ProjectsList";
 
 export default function UserProfile() {
+  const Roba = "https://my-r2-proxy.geletaroba.workers.dev/assets/Roba.webp";
   const { mode } = useContext(ThemeContext);
-  const { isDatabaseResuming, hasDatabaseRetriesExceeded } = useContext(
-    DatabaseStatusContext
-  );
-  const { isBackendReachable, hasNetworkErrorRetriesExceeded } =
-    useContext(NetworkStatusContext);
-  const [openDialog, setOpenDialog] = useState<number | null>(null);
-  const [openProjectDialog, setOpenProjectDialog] = useState<number | null>(
-    null
-  );
-
-  const valid = useMemo(
-    () =>
-      isDatabaseResuming ||
-      hasDatabaseRetriesExceeded ||
-      hasNetworkErrorRetriesExceeded ||
-      !isBackendReachable,
-    [
-      isDatabaseResuming,
-      hasDatabaseRetriesExceeded,
-      hasNetworkErrorRetriesExceeded,
-      isBackendReachable,
-    ]
-  );
-
-  // Experience Data
-  const experiences = [
-    {
-      title: "Junior Software Developer",
-      company: "Corrana (Avo Solutions Inc.)",
-      date: "Aug 2024 – Present",
-      location: "Winnipeg, MB",
-      summary:
-        "Conduct research on cost-effective APIs for external data collection (weather, economic trends, local events); develop and deploy robust data pipelines using TypeScript, Prisma, PostgreSQL, AWS CDK, and Lambda.",
-      link: "/experience/corrana",
-      image: CorranaLogo,
-      background: CorranaBackground,
-      technologies: "AWS CDK, Lambda, TypeScript, Prisma, PostgreSQL",
-      responsibilities: [
-        "Research and evaluate cost-effective APIs for accurate data collection on external factors (weather, economic trends, local events), enabling insightful analytics and business optimization.",
-        "Develop, rigorously test, and deploy TypeScript scripts and Prisma models, integrating PostgreSQL databases and automating data pipelines with AWS CDK and Lambda.",
-      ],
-    },
-    {
-      title: "Freelance Coding Expert | AI Model Trainer",
-      company: "Outlier AI",
-      date: "Sept 2024 – Oct 2024",
-      location: "Winnipeg, MB",
-      summary:
-        "Conducted detailed code reviews and provided quality assessments on AI-generated solutions across multiple programming languages, ensuring accuracy and adherence to best practices.",
-      link: "/experience/outlier-ai",
-      image: OutlierAILogo,
-      background: OutlierAIBackground, // Default background path
-      technologies: "Python, Java, JavaScript, C++",
-      responsibilities: [
-        "Conducted code reviews and rated AI-generated solutions in Python, Java, JavaScript, and C++, adhering to strict documentation and guidelines.",
-      ],
-    },
-    {
-      title: "Freelance Software Developer",
-      company: "App.Bookingwith.me",
-      date: "Jun 2024 – Aug 2024",
-      location: "Winnipeg, MB",
-      summary:
-        "Built a responsive booking platform with secure OAuth, automated notifications, and intuitive UI/UX using Svelte, Tailwind CSS, Twilio, and Stripe, boosting business efficiency and engagement.",
-      link: "/experience/app-bookingwithme",
-      image: AppBookingWithMeLogo, // Replace with actual image path
-      background: AppBookingWithMeBackground, // Replace with actual background path
-      technologies:
-        "Svelte, JavaScript, Tailwind CSS, Flowbite, OpenAI API, OAuth, Twilio, Stripe",
-      responsibilities: [
-        "Co-developed a real-time online booking platform enabling businesses to efficiently manage appointments and schedules, improving operational efficiency and user engagement.",
-        "Designed and built a responsive interface featuring interactive calendars and drag-and-drop functionality using Svelte, Tailwind CSS, and Flowbite.",
-        "Implemented secure OAuth authentication, automated SMS notifications, and integrated Google review requests via Twilio, enhancing customer interaction for 3 active businesses.",
-        "Delivered rapid feature updates under tight deadlines, demonstrating adaptability and effective project management.",
-      ],
-    },
-
-    {
-      title: "Software Developer Co-op - Partner Services",
-      company: "Priceline Partner Solution",
-      date: "Jan 2023 – Apr 2023",
-      location: "Winnipeg, MB",
-      summary:
-        "Built and improved Priceline's global partner product activation platform, managing diverse inventory and secure integrations using React, Go, SQL, and Google Secret Manager.",
-      link: "/experience/priceline",
-      image: PPSLogo, // Default image path
-      background: PPSBackground, // Default background path
-      technologies: "JavaScript, TypeScript, React, Go, Harness, SQL",
-      responsibilities: [
-        "Collaborated in a team to develop a user-friendly product activation page for Priceline’s partners across 200+ countries. Utilized React for UI components, Go for server-side logic, and SQL for database queries and analysis.",
-        "Implemented features to manage multiple inventory types and flexible payment options, applying agile methodologies and test-driven development throughout the process.",
-        "Enhanced project maintainability by updating documentation pages, converting JavaScript files to TypeScript, and resolving legacy lint errors, significantly improving code quality and type safety.",
-        "Implemented Google Secret Manager for Partner Services Division projects, replacing the outgoing Harness Secret Manager, thereby improving security and streamlining secret management processes.",
-      ],
-    },
-  ];
-
-  // Projects Data
-  const projects = [
-    {
-      title: "Binary Sentiment Feedback System",
-      technologies:
-        "Python, NLTK, scikit-learn, Google Cloud Functions, React, Joblib",
-      date: "Dec. 2023",
-      summary:
-        "A research project developed as part of a data mining course, focusing on binary sentiment classification of Amazon reviews via n-grams for context understanding.",
-      link: "/projects/sentiment-analysis", // or wherever you want to route
-      image: Sentiment, // or any placeholder
-      logo: SentimentLogo, // or any placeholder
-      githubLink: "",
-      websiteLink: "", // If you have a live URL
-      children: (
-        <div className="space-y-4">
-          <Typography
-            variant="body2"
-            sx={{ fontSize: "0.875rem" }}
-            color={mode === "dark" ? "grey.300" : "grey.700"}
-          >
-            To read the research paper, click{" "}
-            <a
-              href="https://link.springer.com/chapter/10.1007/978-3-031-78554-2_14"
-              target="_blank"
-              style={{
-                color: mode === "dark" ? "lightblue" : "blue",
-                textDecoration: "none",
-                display: "inline-block",
-                position: "relative",
-              }}
-            >
-              HERE
-              <MdOpenInNew
-                style={{
-                  position: "absolute",
-                  right: "-15px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "small",
-                }}
-              />
-            </a>
-          </Typography>
-          <SentimentDemo />
-        </div>
-      ),
-      details: [
-        "Utilized n-grams (bigram and trigram) to capture context in Amazon reviews, enhancing classification accuracy.",
-        "Implemented data preprocessing (HTML tag removal, tokenization, lemmatization, and stopword removal) to ensure higher quality input.",
-        "Fine-tuned SVM hyperparameters via GridSearch, achieving 86.4% accuracy on binary-class (positive/negative) Amazon reviews.",
-        "Integrated the trained model into an application using Google Cloud Functions, allowing users to submit reviews on the fly.",
-        "Highlighted the importance of balanced datasets and resource considerations for large-scale text classification.",
-      ],
-    },
-    {
-      title: "BookWorm Mobile Application",
-      technologies: "Java, Android SDK, Gradle, Adobe Premiere Pro, GitLab",
-      date: "Sept. 2023",
-      summary:
-        "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
-      link: "/projects/bookworm",
-      image: BookWorm,
-      logo: BookWormLogo,
-      githubLink: "https://github.com/jaredmdp/BookWorm",
-      websiteLink: "https://bookwormhonda.vercel.app/",
-      details: [
-        "Collaborated in the full-stack development of a mobile application similar to Goodreads, primarily focusing on architecture design, testing, and database management.",
-        "Contributed to promotional content creation using Adobe Premiere Pro and managed version control with Git.",
-      ],
-    },
-    {
-      title: "Succinct",
-      technologies:
-        "ReactJS, TypeScript, Python, MaterialUI, Google Cloud Functions",
-      date: "2022",
-      summary:
-        "Developed backend using Python and Google Cloud Functions, integrating APIs for video summarization, text classification, and topic extraction.",
-      link: "/projects/succinct",
-      image: Succinct,
-      logo: SuccinctLogo,
-      githubLink: "https://github.com/ArshSB/Succinct",
-      details: [
-        "Developed backend using Python and Google Cloud Functions,integrating APIs for video summarization, text classification, and topic extraction.",
-        "Collaborated to create a responsive frontend with ReactJS and MaterialUI, enabling users to obtain and interact with YouTube video summaries.",
-      ],
-    },
-    {
-      title: "Dark/Night Mode For Wikipedia",
-      technologies: "JavaScript, Chrome Extension API",
-      date: "2022",
-      summary:
-        "Developed a Chrome extension enabling dark mode for Wikipedia and sister projects, intelligently adjusting page elements’ colors to improve readability for 150+ users.",
-      link: "/projects/dark-mode-wikipedia",
-      image: Wikipedia,
-      logo: WikipediaLogo,
-      githubLink:
-        "https://github.com/Roba-Geleta/Dark-Night-Mode-For-Wikipedia",
-      details: [
-        "Developed a Chrome extension enabling dark mode for Wikipedia and sister projects, intelligently adjusting page elements’ colors to improve readability for 150+ users.",
-        "Implemented efficient tab management and state persistence, ensuring seamless dark mode activation across browser sessions.",
-      ],
-    },
-    {
-      title: "Gratitude Prototype",
-      technologies: "JavaScript, Bootstrap",
-      date: "2021",
-      summary:
-        "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
-      link: "/projects/gratitude-prototype",
-      image: Gratitude,
-      logo: GratitudeLogo,
-      githubLink: "https://github.com/scottjodoin/gratitude-prototype",
-      details: [
-        "Collaborated in a team to design a mood-tracking website as part of a university Human-Computer Interaction course, focusing on user-centered design principles and enhancing UI with Bootstrap.",
-        "Worked closely with stakeholders to gather requirements and feedback, ensuring the final product met user needs and expectations.",
-      ],
-    },
-    {
-      title: "Aurora-Selenium-Scrape & roBot",
-      technologies: "Python, Selenium, Discord, Webdriver, JSON",
-      date: "2021",
-      summary:
-        "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system. Developed 'roBot', a Discord bot hosted on Google Cloud Services, providing students with instant access to course information.",
-      link: "/projects/aurora-selenium-robot",
-      image: ScrapeRobot,
-      logo: ScrapeRobot,
-      githubLink: "https://github.com/Roba-Geleta/roBot",
-      details: [
-        "Engineered a robust web scraping tool using Selenium to extract and organize data for approximately 6,500 courses from the University of Manitoba’s Aurora system, implementing error handling and JSON storage for efficient management.",
-        "Developed and deployed ’roBot’, a Discord bot hosted on Google Cloud Services, which served 10 servers and provided students with instant access to course information, enhancing course planning efficiency.",
-      ],
-    },
-  ];
-
-  // Latest Project Data
-  const latestProject = {
-    title: "Financial Insights Platform",
-    description:
-      "Developed a secure platform for users to search and analyze comprehensive financial data of various companies. The platform features user authentication, portfolio management, and a community commenting system to foster user engagement and discussion.",
-    technologies: [
-      "ASP.NET Core",
-      "PostgreSQL",
-      "C#",
-      "TypeScript",
-      "React",
-      "AWS (Amplify, Elastic Beanstalk, RDS, Lambda)",
-      "Cloudflare",
-      "Financial Modeling Prep API",
-      "Google Cloud Functions",
-      "Github Actions",
-    ],
-    images: [Hero],
-    link: "/stocks",
-  };
-
-  // Function to render technologies as Typography
-  const renderTechnologyText = (technologies: string[]) => {
-    return technologies.join(", ");
-  };
+  const [isHovered, setIsHovered] = useState(false);
 
   // Updated Technical Skills
   const technicalSkills = {
     languages: [
-      "JavaScript",
       "TypeScript",
+      "JavaScript",
       "Python",
       "Java",
       "Go",
@@ -325,37 +40,29 @@ export default function UserProfile() {
       "SQL",
       "HTML5",
       "CSS",
-      "JSON",
     ],
     frameworks: [
       "React",
       "Svelte",
-      "Material-UI",
       "Bootstrap",
       "Tailwind CSS",
-      "Flowbite",
       "Android SDK",
       "ASP.NET Core",
     ],
     tools: [
       "GitHub",
+      "Google Cloud Services",
+      "AWS",
+      "Cloudflare",
       "JUnit",
       "JupyterLab",
       "Android Studio",
-      "Google Cloud Functions",
       "Stripe",
       "Twilio",
       "OpenAI API",
       "OAuth",
       "Selenium",
-      "SQL Server",
       "Chrome Extension",
-      "Google Cloud Services",
-      "AWS (Amplify, Elastic Beanstalk, RDS)",
-      "Cloudflare",
-      "Financial Modeling Prep API",
-      "Google Secret Manager",
-      "Harness",
     ],
     practices: [
       "Agile Methodologies",
@@ -363,8 +70,6 @@ export default function UserProfile() {
       "Rapid Iterative Development",
       "Version Control",
       "API Integration",
-      "Chrome Extension Development",
-      "Discord Bot Development",
       "User-Centered Design",
       "Architecture Design",
       "Database Management",
@@ -372,196 +77,40 @@ export default function UserProfile() {
     ],
   };
 
-  // Convert skills arrays to arrays of <Chip> components
-  // const renderChips = (
-  //   skills: string[],
-  //   color: "primary" | "secondary" | "success" | "warning"
-  // ) =>
-  //   skills.map((skill, index) => (
-  //     <Tooltip
-  //       key={index}
-  //       title={skill} // Add a tooltip for best practices
-  //     >
-  //       <Chip
-  //         key={index}
-  //         label={skill}
-  //         color={color}
-  //         variant="outlined"
-  //         sx={{ m: 0.5 }}
-  //         className="min-w-fit sm:!mx-[20px]"
-  //       />
-  //     </Tooltip>
-  //   ));
-
-  const experienceSlides = experiences.map((exp, index) => (
-    <Box
-      key={index}
-      className="experience-slide border-2 border-gray-300 dark:border-gray-500"
-      sx={{
-        position: "relative",
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        alignItems: "center",
-        padding: 3,
-        borderRadius: 2,
-        boxShadow: 3,
-        height: "100%",
-        boxSizing: "border-box",
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundImage: `url(${exp.background})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          filter: mode === "dark" ? "invert(1)" : "invert(0)",
-          opacity: 0.17,
-          zIndex: -1,
-        },
-      }}
-    >
-      {/* SVG Image */}
-      <Box
-        component="img"
-        src={exp.image}
-        alt={`${exp.company} Logo`}
-        sx={{
-          width: { xs: "80px", md: "120px" },
-          height: "auto",
-          marginRight: { md: 4 },
-          marginBottom: { xs: 2, md: 0 },
-        }}
-      />
-
-      {/* Content */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: { xs: "center", md: "flex-start" },
-          textAlign: { xs: "center", md: "left" },
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "bold",
-            color: mode === "dark" ? "common.white" : "text.primary",
-          }}
-        >
-          {exp.title}
-        </Typography>
-        <Typography
-          variant="subtitle2"
-          sx={{
-            color: mode === "dark" ? "grey.400" : "grey.700",
-            marginTop: 0.5,
-          }}
-        >
-          {exp.company} | {exp.date} | {exp.location}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{ mt: 1, color: mode === "dark" ? "grey.300" : "grey.700" }}
-        >
-          {exp.summary}
-        </Typography>
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          // href={exp.link} // Remove this since we're not navigating
-          onClick={() => setOpenDialog(index)} // Open the dialog for this experience
-          sx={{ mt: 2, alignSelf: { xs: "center", md: "flex-start" } }}
-        >
-          Read More
-        </Button>
-      </Box>
-    </Box>
-  ));
-
-  // Prepare Projects slides
-  const projectsSlides = projects.map((project, index) => (
-    <Grid
-      container
-      spacing={4}
-      alignItems="center"
-      key={index}
-      direction={index % 2 === 0 ? "row" : "row-reverse"} // Alternate image positions
-      sx={{ mb: 4 }}
-    >
-      {/* Image Section */}
-      <Grid size={{ xs: 12, md: 6 }}>
-        <Box
-          component="img"
-          src={project.image}
-          alt={project.title}
-          sx={{
-            width: "100%",
-            height: "auto",
-            borderRadius: 2,
-          }}
-        />
-      </Grid>
-
-      {/* Text Content Section */}
-      <Grid size={{ xs: 12, md: 6 }}>
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "bold",
-            color: mode === "dark" ? "common.white" : "text.primary",
-          }}
-        >
-          {project.title}
-        </Typography>
-        <Typography
-          variant="subtitle2"
-          sx={{
-            color: mode === "dark" ? "grey.400" : "grey.700",
-            marginTop: 0.5,
-          }}
-        >
-          {project.date}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{ mt: 1, color: mode === "dark" ? "grey.300" : "grey.700" }}
-        >
-          {project.summary}
-        </Typography>
-        <Typography
-          variant="caption"
-          sx={{
-            mt: 1,
-            display: "block",
-            color: mode === "dark" ? "grey.500" : "grey.600",
-          }}
-        >
-          <strong>Technologies:</strong> {project.technologies}
-        </Typography>
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          onClick={() => setOpenProjectDialog(index)} // Open the dialog
-          sx={{ mt: 2 }}
-        >
-          Read More
-        </Button>
-      </Grid>
-    </Grid>
-  ));
-
-  const carouselOptions: EmblaOptionsType = {
-    loop: false,
-    containScroll: "trimSnaps",
-    slidesToScroll: 1,
+  const technicalSkills2 = {
+    languages: [
+      "JavaScript",
+      "TypeScript",
+      "Python",
+      "Java",
+      "C#",
+      "SQL",
+      "HTML5",
+      "CSS",
+    ],
+    frameworks: ["React", "Svelte", "Tailwind CSS", "ASP.NET Core"],
+    tools: [
+      "GitHub",
+      "Android Studio",
+      "Google Cloud Services",
+      "AWS",
+      "Stripe",
+      "OpenAI API",
+      "SQL Server",
+      "Selenium",
+    ],
+    practices: [
+      "Agile Methodologies",
+      "Test-Driven Development",
+      "Rapid Iterative Development",
+      "API Integration",
+      "Architecture Design",
+      "Database Management",
+    ],
   };
+
+  const screwClassName =
+    "text-gray-500 dark:text-gray-300 animate-spin-rotate shadow-inner rounded-full opacity-50";
 
   return (
     <>
@@ -572,46 +121,204 @@ export default function UserProfile() {
           alignItems: "center",
         }}
         maxWidth="xl"
+        className=""
       >
-        <div id="Home" className="w-full flex justify-center">
-          <AvatarWithIcons mode={mode} />
-        </div>
-        <Typography
-          variant="h4"
-          component="h1"
-          align="center"
-          gutterBottom
-          className="text-gray-900 dark:text-white"
-        >
-          Roba Geleta
-        </Typography>
-        {/* Education */}
-        <Typography
-          variant="h6"
-          component="p"
-          align="center"
-          color="textSecondary"
-          sx={{ mb: 4 }}
-          className="text-gray-700 dark:text-gray-300"
-        >
-          Bachelor of Computer Science, Specializing in Human-Computer
-          Interaction and Computer Graphics
-        </Typography>
-        {/* About */}
-        <Typography
-          variant="body1"
-          align="center"
-          color="textSecondary"
-          sx={{ mb: 4, maxWidth: 800 }}
-          className="text-gray-700 dark:text-gray-300"
-        >
-          I'm a passionate Computer Science graduate with hands-on experience in
-          full-stack development. I thrive in collaborative environments and am
-          committed to building efficient, user-friendly digital solutions.
-        </Typography>
+        <div className=" w-full h-full justify-center items-center mb-4">
+          <div id="Home" className="h-full w-full justify-center">
+            <BackgroundWithIcons mode={mode} isHovered={true}>
+              <div className="space-y-1 md:space-y-0 flex flex-col md:flex-row w-full min-h-[80vh] justify-between md:justify-center items-center bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8">
+                <div className="relative w-full md:h-full md:w-fit h-auto flex items-center justify-center">
+                  <div
+                    className={`absolute w-1 border-2 border-gray-700 dark:border-white border-dotted opacity-10 rounded-full h-full z-[-2] `}
+                  />
+                  <div
+                    className={`absolute h-1 border-2 border-gray-700 dark:border-white border-dotted opacity-10  rounded-full w-full z-[-2] `}
+                  />
 
+                  <div
+                    className="w-full md:max-h-1/2 h-auto flex flex-col items-center justify-center bg-slate-200 dark:bg-gray-800 border-y-4 !bg-opacity-45 rounded-lg md:rounded-3xl shadow-lg p-3 md:m-2"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    style={{
+                      transition:
+                        "transform 1s ease-in-out, box-shadow 1s ease-in-out",
+                      transform: isHovered ? "scale(1.05)" : undefined,
+                    }}
+                  >
+                    {/* <AddCircleIcon
+                    className={`absolute top-1 right-1 ${screwClassName}`}
+                    color="action"
+                  />
+                  <AddCircleIcon
+                    className={`absolute top-1 left-1 ${screwClassName}`}
+                    color="action"
+                  />
+                  <AddCircleIcon
+                    className={`absolute bottom-1 left-1 ${screwClassName}`}
+                    color="action"
+                  />
+                  <AddCircleIcon
+                    className={`absolute bottom-1 right-1 ${screwClassName}`}
+                    color="action"
+                  /> */}
+
+                    <AnimatedAvatar
+                      alt="Roba Geleta"
+                      src={Roba}
+                      sx={{
+                        width: { md: "200px", xs: "150px" },
+                        height: { md: "200px", xs: "150px" },
+                        zIndex: 0,
+                      }}
+                      isHovered={isHovered}
+                    />
+                    <Typography
+                      variant="h4"
+                      component="h1"
+                      align="center"
+                      gutterBottom
+                      className="text-gray-900 dark:text-white pt-2 !font-mono !font-semibold"
+                    >
+                      Roba Geleta
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      align="center"
+                      gutterBottom
+                      // color="textSecondary"
+                      className="text-gray-700 dark:text-gray-300 text-nowrap"
+                    >
+                      <Box
+                        component="img"
+                        src="https://umanitoba.ca/sites/default/files/2022-10/UM-logo-horizontal-black.png"
+                        alt="University of Manitoba Logo"
+                        sx={{
+                          width: "80px",
+                          height: "auto",
+                          borderRadius: "8px",
+                          mb: 1,
+                          display: "inline",
+                        }}
+                        className="dark:invert"
+                      />{" "}
+                      Bachelor of Computer Science
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      align="center"
+                      gutterBottom
+                      // color="textSecondary"
+                      className="text-gray-700 dark:text-gray-300 text-wrap"
+                    >
+                      Specializing in Human-Computer Interaction and Computer
+                      Graphics
+                    </Typography>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      mb={0}
+                      justifyContent={{ xs: "center", sm: "flex-start" }}
+                      alignItems="center"
+                    >
+                      <Tooltip title="LinkedIn">
+                        <IconButton
+                          color="info"
+                          component="a"
+                          href="https://www.linkedin.com/in/roba-geleta/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="LinkedIn"
+                        >
+                          <LinkedInIcon />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="GitHub">
+                        <IconButton
+                          color="info"
+                          component="a"
+                          href="https://github.com/Roba-Geleta"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="GitHub"
+                        >
+                          <GitHubIcon />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Email">
+                        <IconButton
+                          color="info"
+                          component="a"
+                          href="mailto:contact@geleta.ca"
+                          aria-label="Email"
+                        >
+                          <EmailIcon />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Typography
+                        variant="body2"
+                        className="text-gray-700 dark:text-gray-300 !text-xs ml-1"
+                      >
+                        contact@geleta.ca
+                      </Typography>
+                    </Stack>
+                  </div>
+                </div>
+
+                <div className="relative flex-1 w-full md:w-1/2 md:h-full flex flex-col justify-center items-center px-4 space-y-1 md:space-y-4 ">
+                  <Box
+                    component="img"
+                    src="https://cdn.akamai.steamstatic.com/apps/dota2/videos/dota_react/heroes/renders/ogre_magi.png"
+                    alt="Dota 2 Ogre Magi"
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                    }}
+                    className="absolute dark:invert z-0 opacity-[3%]"
+                  />
+                  <Typography
+                    align="center"
+                    color="info"
+                    className="text-gray-700 dark:text-gray-300 !text-3xl md:!text-6xl  "
+                  >
+                    Full Stack Developer
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    color="textSecondary"
+                    className="text-gray-700 dark:text-gray-300  "
+                  >
+                    I'm a passionate Computer Science graduate with hands-on
+                    experience in full-stack development. I thrive in
+                    collaborative environments and am committed to building
+                    efficient, user-friendly digital solutions.
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={() =>
+                      scroller.scrollTo("Experience", {
+                        smooth: true,
+                        duration: 500,
+                        offset: -100,
+                      })
+                    }
+                    className="text-gray-800 dark:text-gray-100 border-gray-400 dark:border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-blue-500 dark:hover:border-blue-400 transition duration-300 px-6 py-2 rounded-md shadow-sm"
+                  >
+                    My Work Experience
+                  </Button>
+                </div>
+              </div>
+            </BackgroundWithIcons>
+          </div>
+
+          {/* About */}
+        </div>
         {/* Technical Skills Section */}
-        <Box sx={{ mt: 6, width: "100%" }} className="">
+        <Box sx={{ mt: 6, width: "100%" }}>
           {/* Main Technical Skills Header */}
 
           <Typography
@@ -725,7 +432,10 @@ export default function UserProfile() {
         </Box>
 
         {/* Experiences Section */}
-        <Box sx={{ mt: 6, width: "100%" }}>
+        <Box
+          sx={{ mt: 6, width: "100%" }}
+          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
+        >
           <Typography
             id="Experience"
             variant="h4"
@@ -746,23 +456,18 @@ export default function UserProfile() {
             sx={{
               width: "100%",
               mt: 4,
-              // minHeight: "100%",
             }}
-            className="sm:h-[400px] h-[500px] overflow-auto"
+            className=""
           >
-            <AutoplayEmblaCarousel
-              slides={experienceSlides}
-              options={carouselOptions}
-              autoplayOptions={{
-                playOnInit: true,
-                startDelay: 8000, // 4 seconds
-              }}
-            />
+            <ExperienceTimeLine />
           </Box>
         </Box>
 
         {/* Projects Section */}
-        <Box sx={{ mt: 6, width: "100%" }}>
+        <Box
+          sx={{ mt: 6, width: "100%" }}
+          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
+        >
           <Typography
             id="Projects"
             variant="h4"
@@ -779,189 +484,21 @@ export default function UserProfile() {
             Projects
           </Typography>
           <Divider className="!mb-4 dark:bg-gray-700" />
-
           <Box
             sx={{
-              position: "relative",
-              display: "flex",
-              flexDirection: { xs: "column-reverse", lg: "row" },
               width: "100%",
-
-              borderRadius: "0.62rem",
-              overflow: "hidden",
-              boxShadow:
-                mode === "dark"
-                  ? "0 0 15px rgba(255, 215, 0, 0.7)"
-                  : "0 0 15px rgba(255, 165, 0, 0.7)",
-              border: `2px solid ${mode === "dark" ? "#FFD700" : "#FFA500"}`,
-              mb: 4,
-              backgroundColor: mode === "dark" ? "#2c2c2c" : "#fff8e1",
-              padding: { xs: 2, md: 0 },
+              mt: 4,
             }}
+            className=""
           >
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: -1,
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.9)",
-                padding: "3px 6px",
-                zIndex: 2,
-                boxShadow: 1,
-              }}
-              className="rounded-br-lg z-10"
-            >
-              <NewReleasesIcon sx={{ color: "warning.main", mr: 0.5 }} />
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  fontWeight: "bold",
-                  color: "warning.main",
-                }}
-              >
-                Latest Project
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                width: { xs: "100%", lg: "60%" },
-                padding: { xs: 2, lg: 4 },
-                textAlign: { xs: "center", lg: "left" },
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: "bold",
-                  mb: 1,
-                  color: mode === "dark" ? "grey.100" : "grey.900",
-                }}
-              >
-                {latestProject.title}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: { xs: "center", md: "flex-start" },
-                  }}
-                >
-                  <ConstructionIcon
-                    sx={{ color: "warning.main", fontSize: "1rem", mr: 0.3 }}
-                  />
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: "warning.main",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Work In Progress
-                  </Typography>
-                </Box>
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ mb: 2, color: mode === "dark" ? "grey.300" : "grey.800" }}
-              >
-                {latestProject.description}
-              </Typography>
-              {/* Technologies Section */}
-              <Typography
-                variant="caption"
-                sx={{
-                  mt: 1,
-                  display: "block",
-                  color: mode === "dark" ? "grey.500" : "grey.600",
-                }}
-              >
-                <strong>Technologies:</strong>{" "}
-                {renderTechnologyText(latestProject.technologies)}
-              </Typography>
-              <ConnectionStatusFeedBack />
-              <Button
-                size="medium"
-                variant={"contained"}
-                color={"primary"}
-                href={latestProject.link}
-                sx={{
-                  mt: 2,
-                  color: !valid
-                    ? mode == "light"
-                      ? "white !important"
-                      : "white !important"
-                    : mode == "dark"
-                    ? "white !important"
-                    : "gray !important",
-                }}
-                disabled={valid}
-              >
-                {/* {isDatabaseResumin || } */}
-                {!isBackendReachable && !hasNetworkErrorRetriesExceeded ? (
-                  <span>Connecting to Backend... </span>
-                ) : isDatabaseResuming && !hasDatabaseRetriesExceeded ? (
-                  <span>Database Resuming... </span>
-                ) : (
-                  "Visit Stocks Page"
-                )}
-              </Button>
-            </Box>
-
-            {/* Image Section */}
-            <Box
-              sx={{
-                width: { xs: "100%", lg: "40%" },
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: { xs: 2, lg: 1 },
-                order: { xs: 1, lg: 2 },
-              }}
-            >
-              <Box
-                component="img"
-                src={latestProject.images[0]}
-                alt="Stocks Project Screenshot"
-                sx={{
-                  width: { xs: "100%", md: "100%" },
-                  height: "auto",
-                  objectFit: "cover",
-                }}
-              />
-            </Box>
+            <ProjectsList />
           </Box>
-
-          <Box sx={{ mt: 2 }}>{projectsSlides}</Box>
         </Box>
 
         <Box sx={{ mt: 6, width: "100%", maxWidth: 800 }}>
           <ContactForm />
         </Box>
       </Container>
-
-      {/* Experience Dialog */}
-      {openDialog !== null && (
-        <ExperienceDialog
-          open={openDialog !== null}
-          onClose={() => setOpenDialog(null)}
-          experience={experiences[openDialog]}
-          mode={mode}
-        />
-      )}
-      {/* Project Dialog */}
-      {openProjectDialog !== null && (
-        <ProjectDialog
-          open={openProjectDialog !== null}
-          onClose={() => setOpenProjectDialog(null)}
-          project={projects[openProjectDialog]}
-          mode={mode}
-        />
-      )}
     </>
   );
 }

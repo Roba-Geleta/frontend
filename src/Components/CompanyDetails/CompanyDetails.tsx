@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import { Typography } from "@mui/material";
 import PortfolioMenu from "../PortfolioMenu/PortfolioMenu";
-import FIPLogoIconDark from "../../assets/FIPLogoIconDark.svg";
 import usePageMeta from "../../hooks/usePageMeta/usePageMeta";
 import { CompanyProfile } from "../../company";
 
@@ -41,6 +40,9 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({
   handleDelete,
   ticker,
 }) => {
+  const FIPLogoIconDark =
+    "https://my-r2-proxy.geletaroba.workers.dev/FIPLogoIconDark.svg";
+
   const companyImage = company.defaultImage ? FIPLogoIconDark : company.image;
   usePageMeta({
     title: "FIP - " + company.symbol,
