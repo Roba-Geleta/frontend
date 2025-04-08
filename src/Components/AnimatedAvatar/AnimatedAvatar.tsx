@@ -20,21 +20,32 @@ const glow = keyframes`
   }
 `;
 
-const StyledAvatar = styled(Avatar)<AvatarProps>(() => ({
+interface StyledAvatarProps extends AvatarProps {
+  isHovered?: boolean;
+}
+
+const StyledAvatar = styled(Avatar, {
+  shouldForwardProp: (prop) => prop !== "isHovered",
+})<StyledAvatarProps>(({ isHovered }) => ({
   transition: "transform 1s ease-in-out, box-shadow 1s ease-in-out",
   borderRadius: "50%",
-  "&:hover": {
-    animation: `${glow} 1.5s infinite`,
-    transform: "scale(1.05)",
-  },
+  animation: isHovered ? `${glow} 2.5s infinite` : undefined,
+  transform: isHovered ? "scale(1.05)" : undefined,
 }));
 
-const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
+const AnimatedAvatar: React.FC<StyledAvatarProps> = ({
+  isHovered,
+  ...props
+}) => {
   const { mode } = useContext(ThemeContext);
   const avatarRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(0);
   const [borderWidth, setBorderWidth] = useState("");
   const [drawing, setDrawing] = useState(true);
+
+  // useEffect(() => {
+  //   console.log("isHovered:", isHovered);
+  // }, [isHovered]);
 
   useLayoutEffect(() => {
     if (avatarRef.current) {
@@ -59,7 +70,7 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
     <AvatarWrapper ref={avatarRef}>
       <StyledAvatar
         {...props}
-        // key={borderWidth}
+        isHovered={isHovered}
         style={{
           borderWidth: "6px",
           borderColor:
@@ -77,7 +88,6 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
         }`}
       />
 
-      {/* {drawing && ( */}
       <svg
         style={{
           position: "absolute",
@@ -117,7 +127,6 @@ const AnimatedAvatar: React.FC<AvatarProps> = (props) => {
           `}
         </style>
       </svg>
-      {/* )} */}
     </AvatarWrapper>
   );
 };

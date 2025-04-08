@@ -1,9 +1,6 @@
-// AvatarWithIcons.tsx
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Box, keyframes } from "@mui/material";
 import { IconContext } from "react-icons";
-
-// import Roba from "../../assets/Roba-Notion-Avatar.svg";
 
 // Import technology icons
 import {
