@@ -82,7 +82,7 @@ const AppAppBar: React.FC = () => {
       scroller.scrollTo(place, {
         smooth: true,
         duration: 500,
-        offset: -100,
+        offset: -120,
       });
     }
   };
