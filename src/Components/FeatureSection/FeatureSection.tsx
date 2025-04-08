@@ -1,8 +1,14 @@
 import React from "react";
-import PortfolioManagement from "../../assets/StocksHome/PortfolioManagement.png";
-import FinancialReports from "../../assets/StocksHome/FinancialReports.png";
-import CommentingSystem from "../../assets/StocksHome/CommentingSystem.png";
-import QuickSearch from "../../assets/StocksHome/QuickSearch.png";
+
+const PortfolioManagement =
+  "https://my-r2-proxy.geletaroba.workers.dev/assets/StocksHome/PortfolioManagement.png";
+const FinancialReports =
+  "https://my-r2-proxy.geletaroba.workers.dev/assets/StocksHome/FinancialReports.png";
+const CommentingSystem =
+  "https://my-r2-proxy.geletaroba.workers.dev/assets/StocksHome/CommentingSystem.png";
+const QuickSearch =
+  "https://my-r2-proxy.geletaroba.workers.dev/assets/StocksHome/QuickSearch.png";
+
 const FeaturesSection: React.FC = () => {
   const features = [
     {
