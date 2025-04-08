@@ -140,15 +140,7 @@ const AppAppBar: React.FC = () => {
                 Home
               </Button>
             </Link>
-            <Button
-              onClick={() => handleProjectsClick("Skills")}
-              variant="text"
-              color="info"
-              size="small"
-              className="dark:text-gray-300"
-            >
-              Skills
-            </Button>
+
             <Button
               onClick={() => handleProjectsClick("Experience")}
               variant="text"
@@ -166,6 +158,16 @@ const AppAppBar: React.FC = () => {
               className="dark:text-gray-300"
             >
               Projects
+            </Button>
+
+            <Button
+              onClick={() => handleProjectsClick("Skills")}
+              variant="text"
+              color="info"
+              size="small"
+              className="dark:text-gray-300"
+            >
+              Skills
             </Button>
 
             <Button

@@ -317,8 +317,76 @@ export default function UserProfile() {
 
           {/* About */}
         </div>
+
+        {/* Experiences Section */}
+        <Box
+          sx={{ mt: 6, width: "100%" }}
+          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
+        >
+          <Typography
+            id="Experience"
+            variant="h4"
+            component="h2"
+            align="center"
+            gutterBottom
+            className="text-gray-900 dark:text-white"
+            sx={{
+              fontWeight: "bold",
+              mb: 3,
+              fontSize: { xs: "2rem", sm: "2.5rem" },
+            }}
+          >
+            Experience
+          </Typography>
+          <Divider className="!mb-4 dark:bg-gray-700" />
+          <Box
+            sx={{
+              width: "100%",
+              mt: 4,
+            }}
+            className=""
+          >
+            <ExperienceTimeLine />
+          </Box>
+        </Box>
+
+        {/* Projects Section */}
+        <Box
+          sx={{ mt: 6, width: "100%" }}
+          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
+        >
+          <Typography
+            id="Projects"
+            variant="h4"
+            component="h2"
+            align="center"
+            gutterBottom
+            className="text-gray-900 dark:text-white"
+            sx={{
+              fontWeight: "bold",
+              mb: 3,
+              fontSize: { xs: "2rem", sm: "2.5rem" },
+            }}
+          >
+            Projects
+          </Typography>
+          <Divider className="!mb-4 dark:bg-gray-700" />
+          <Box
+            sx={{
+              width: "100%",
+              mt: 4,
+            }}
+            className=""
+          >
+            <ProjectsList />
+          </Box>
+        </Box>
+
         {/* Technical Skills Section */}
-        <Box sx={{ mt: 6, width: "100%" }}>
+        <Box
+          sx={{ mt: 6, width: "100%" }}
+          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
+        >
           {/* Main Technical Skills Header */}
 
           <Typography
@@ -428,70 +496,6 @@ export default function UserProfile() {
                 />
               ))}
             </div>
-          </Box>
-        </Box>
-
-        {/* Experiences Section */}
-        <Box
-          sx={{ mt: 6, width: "100%" }}
-          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
-        >
-          <Typography
-            id="Experience"
-            variant="h4"
-            component="h2"
-            align="center"
-            gutterBottom
-            className="text-gray-900 dark:text-white"
-            sx={{
-              fontWeight: "bold",
-              mb: 3,
-              fontSize: { xs: "2rem", sm: "2.5rem" },
-            }}
-          >
-            Experience
-          </Typography>
-          <Divider className="!mb-4 dark:bg-gray-700" />
-          <Box
-            sx={{
-              width: "100%",
-              mt: 4,
-            }}
-            className=""
-          >
-            <ExperienceTimeLine />
-          </Box>
-        </Box>
-
-        {/* Projects Section */}
-        <Box
-          sx={{ mt: 6, width: "100%" }}
-          className="bg-slate-200 !bg-opacity-30 dark:bg-gray-800 border-x-4 shadow-md border-x-slate-300 dark:border-x-gray-700 rounded-lg p-1 md:p-8"
-        >
-          <Typography
-            id="Projects"
-            variant="h4"
-            component="h2"
-            align="center"
-            gutterBottom
-            className="text-gray-900 dark:text-white"
-            sx={{
-              fontWeight: "bold",
-              mb: 3,
-              fontSize: { xs: "2rem", sm: "2.5rem" },
-            }}
-          >
-            Projects
-          </Typography>
-          <Divider className="!mb-4 dark:bg-gray-700" />
-          <Box
-            sx={{
-              width: "100%",
-              mt: 4,
-            }}
-            className=""
-          >
-            <ProjectsList />
           </Box>
         </Box>
 
